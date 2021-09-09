@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 //import java.util.Random;
 import java.lang.Math;
+import java.util.Objects;
 
 //public abstract class Account<Client extends Comparable<? super Client>> implements Comparable<Account<Client>> {
 public abstract class Account {
@@ -164,11 +165,17 @@ public abstract class Account {
     public boolean equals(Object obj) {
         if (obj instanceof Account) {
             Account other = (Account) obj;
-            return (accountNo == other.getAccountNo() && accountName.equalsIgnoreCase(other.getAccountName()) &&
+            return (accountNo == other.getAccountNo() &&
+                    accountName.equalsIgnoreCase(other.getAccountName()) &&
                     client.equals(other.client) && (Math.abs(balance - other.getBalance()) < .01) &&
                     joint == other.isJoint() &&
+//                    Objects.equals(joint, other.getJointClient())
+//                    &&
+//                    jointClient == other.getJointClient() &&
                     (joint ? jointClient.equals(other.getJointClient()) : jointClient == other.getJointClient()) &&
                     (open.compareTo(other.getOpen()) == 0) && (close.compareTo(other.getClose()) == 0));
+
+            // Not sure if  Objects.equals(joint, other.getJointClient()) replaces the jointClient comparison above
         } else {
             return false;
         }
