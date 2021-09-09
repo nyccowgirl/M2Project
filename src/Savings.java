@@ -5,67 +5,67 @@ public class Savings extends Account {
     private final static String DEFAULT_SAVINGS_NAME = "General Savings Account";
 
     // Constructors
-    public Savings(String accountName, int clientID, double balance, boolean joint, int jointID, LocalDate open) {
-        super(accountName, clientID, balance, joint, jointID, open);
+    public Savings(String accountName, Client client, double balance, boolean joint, Client jointClient, LocalDate open) {
+        super(accountName, client, balance, joint, jointClient, open);
     }
 
-    public Savings(int clientID, double balance, boolean joint, int jointID, LocalDate open) {
-        super(DEFAULT_SAVINGS_NAME, clientID, balance, joint, jointID, open);
+    public Savings(Client client, double balance, boolean joint, Client jointClient, LocalDate open) {
+        super(DEFAULT_SAVINGS_NAME, client, balance, joint, jointClient, open);
     }
 
-    public Savings(String accountName, int clientID, double balance, boolean joint, int jointID) {
-        super(accountName, clientID, balance, joint, jointID);
+    public Savings(String accountName, Client client, double balance, boolean joint, Client jointClient) {
+        super(accountName, client, balance, joint, jointClient);
     }
 
-    public Savings(int clientID, double balance, boolean joint, int jointID) {
-        super(DEFAULT_SAVINGS_NAME, clientID, balance, joint, jointID);
+    public Savings(Client client, double balance, boolean joint, Client jointClient) {
+        super(DEFAULT_SAVINGS_NAME, client, balance, joint, jointClient);
     }
 
-    public Savings(String accountName, int clientID, double balance, LocalDate open) {
-        super(accountName, clientID, balance, open);
+    public Savings(String accountName, Client client, double balance, LocalDate open) {
+        super(accountName, client, balance, open);
     }
 
-    public Savings(int clientID, double balance, LocalDate open) {
-        super(DEFAULT_SAVINGS_NAME, clientID, balance, open);
+    public Savings(Client client, double balance, LocalDate open) {
+        super(DEFAULT_SAVINGS_NAME, client, balance, open);
     }
 
-    public Savings(String accountName, int clientID, boolean joint, int jointID, LocalDate open) {
-        super(accountName, clientID, joint, jointID, open);
+    public Savings(String accountName, Client client, boolean joint, Client jointClient, LocalDate open) {
+        super(accountName, client, joint, jointClient, open);
     }
 
-    public Savings(int clientID, boolean joint, int jointID, LocalDate open) {
-        super(DEFAULT_SAVINGS_NAME, clientID, joint, jointID, open);
+    public Savings(Client client, boolean joint, Client jointClient, LocalDate open) {
+        super(DEFAULT_SAVINGS_NAME, client, joint, jointClient, open);
     }
 
-    public Savings(String accountName, int clientID, double balance) {
-        super(accountName, clientID, balance);
+    public Savings(String accountName, Client client, double balance) {
+        super(accountName, client, balance);
     }
 
-    public Savings(int clientID, double balance) {
-        super(DEFAULT_SAVINGS_NAME, clientID, balance);
+    public Savings(Client client, double balance) {
+        super(DEFAULT_SAVINGS_NAME, client, balance);
     }
 
-    public Savings(String accountName, int clientID, boolean joint, int jointID) {
-        super(accountName, clientID, joint, jointID);
+    public Savings(String accountName, Client client, boolean joint, Client jointClient) {
+        super(accountName, client, joint, jointClient);
     }
 
-    public Savings(int clientID, boolean joint, int jointID) {
-        super(DEFAULT_SAVINGS_NAME, clientID, joint, jointID);
+    public Savings(Client client, boolean joint, Client jointClient) {
+        super(DEFAULT_SAVINGS_NAME, client, joint, jointClient);
     }
 
-    public Savings(String accountName, int clientID, LocalDate open) {
-        super(accountName, clientID, open);
+    public Savings(String accountName, Client client, LocalDate open) {
+        super(accountName, client, open);
     }
 
-    public Savings(int clientID, LocalDate open) {
-        super(DEFAULT_SAVINGS_NAME, clientID, open);
+    public Savings(Client client, LocalDate open) {
+        super(DEFAULT_SAVINGS_NAME, client, open);
     }
 
-    public Savings(String accountName, int clientID) {
-        super(accountName, clientID);
+    public Savings(String accountName, Client client) {
+        super(accountName, client);
     }
 
-    public Savings(int clientID) {
-        super(DEFAULT_SAVINGS_NAME, clientID);
+    public Savings(Client client) {
+        super(DEFAULT_SAVINGS_NAME, client);
     }
 }

@@ -10,374 +10,373 @@ public class Credit extends Account {
     private static final double DEFAULT_CREDIT_LINE = 5000;
 
     // Constructors
-    public Credit(String accountName, int clientID, double balance, boolean joint, int jointID, LocalDate open,
+    public Credit(String accountName, Client client, double balance, boolean joint, Client jointClient, LocalDate open,
                   LocalDate maturityDate, double creditLine) {
-        super(accountName, clientID, balance, joint, jointID, open);
+        super(accountName, client, balance, joint, jointClient, open);
         this.maturityDate = maturityDate;
         this.creditLine = creditLine;
     }
 
-    public Credit(String accountName, int clientID, double balance, boolean joint, int jointID, LocalDate open,
+    public Credit(String accountName, Client client, double balance, boolean joint, Client jointClient, LocalDate open,
                   double creditLine) {
-        super(accountName, clientID, balance, joint, jointID, open);
+        super(accountName, client, balance, joint, jointClient, open);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = creditLine;
     }
 
-    public Credit(String accountName, int clientID, double balance, boolean joint, int jointID, LocalDate open,
+    public Credit(String accountName, Client client, double balance, boolean joint, Client jointClient, LocalDate open,
                   LocalDate maturityDate) {
-        super(accountName, clientID, balance, joint, jointID, open);
+        super(accountName, client, balance, joint, jointClient, open);
         this.maturityDate = maturityDate;
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(String accountName, int clientID, double balance, boolean joint, int jointID, LocalDate open) {
-        super(accountName, clientID, balance, joint, jointID, open);
+    public Credit(String accountName, Client client, double balance, boolean joint, Client jointClient, LocalDate open) {
+        super(accountName, client, balance, joint, jointClient, open);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(int clientID, double balance, boolean joint, int jointID, LocalDate open, LocalDate maturityDate,
+    public Credit(Client client, double balance, boolean joint, Client jointClient, LocalDate open, LocalDate maturityDate,
                   double creditLine) {
-        super(DEFAULT_CREDIT_NAME, clientID, balance, joint, jointID, open);
+        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient, open);
         this.maturityDate = maturityDate;
         this.creditLine = creditLine;
     }
 
-    public Credit(int clientID, double balance, boolean joint, int jointID, LocalDate open, double creditLine) {
-        super(DEFAULT_CREDIT_NAME, clientID, balance, joint, jointID, open);
+    public Credit(Client client, double balance, boolean joint, Client jointClient, LocalDate open, double creditLine) {
+        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient, open);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = creditLine;
     }
 
-    public Credit(int clientID, double balance, boolean joint, int jointID, LocalDate open, LocalDate maturityDate) {
-        super(DEFAULT_CREDIT_NAME, clientID, balance, joint, jointID, open);
+    public Credit(Client client, double balance, boolean joint, Client jointClient, LocalDate open, LocalDate maturityDate) {
+        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient, open);
         this.maturityDate = maturityDate;
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(int clientID, double balance, boolean joint, int jointID, LocalDate open) {
-        super(DEFAULT_CREDIT_NAME, clientID, balance, joint, jointID, open);
+    public Credit(Client client, double balance, boolean joint, Client jointClient, LocalDate open) {
+        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient, open);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-
-    public Credit(String accountName, int clientID, double balance, boolean joint, int jointID, double creditLine,
+    public Credit(String accountName, Client client, double balance, boolean joint, Client jointClient, double creditLine,
                   LocalDate maturityDate) {
-        super(accountName, clientID, balance, joint, jointID);
+        super(accountName, client, balance, joint, jointClient);
         this.maturityDate = maturityDate;
         this.creditLine = creditLine;
     }
 
-    public Credit(String accountName, int clientID, double balance, boolean joint, int jointID, double creditLine) {
-        super(accountName, clientID, balance, joint, jointID);
+    public Credit(String accountName, Client client, double balance, boolean joint, Client jointClient, double creditLine) {
+        super(accountName, client, balance, joint, jointClient);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = creditLine;
     }
 
-    public Credit(String accountName, int clientID, double balance, boolean joint, LocalDate maturityDate, int jointID) {
-        super(accountName, clientID, balance, joint, jointID);
+    public Credit(String accountName, Client client, double balance, boolean joint, LocalDate maturityDate,
+                  Client jointClient) {
+        super(accountName, client, balance, joint, jointClient);
         this.maturityDate = maturityDate;
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(String accountName, int clientID, double balance, boolean joint, int jointID) {
-        super(accountName, clientID, balance, joint, jointID);
+    public Credit(String accountName, Client client, double balance, boolean joint, Client jointClient) {
+        super(accountName, client, balance, joint, jointClient);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(int clientID, double balance, boolean joint, int jointID, double creditLine,
+    public Credit(Client client, double balance, boolean joint, Client jointClient, double creditLine,
                   LocalDate maturityDate) {
-        super(DEFAULT_CREDIT_NAME, clientID, balance, joint, jointID);
+        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient);
         this.maturityDate = maturityDate;
         this.creditLine = creditLine;
     }
 
-    public Credit(int clientID, double balance, boolean joint, int jointID, double creditLine) {
-        super(DEFAULT_CREDIT_NAME, clientID, balance, joint, jointID);
+    public Credit(Client client, double balance, boolean joint, Client jointClient, double creditLine) {
+        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = creditLine;
     }
 
-    public Credit(int clientID, double balance, boolean joint, LocalDate maturityDate, int jointID) {
-        super(DEFAULT_CREDIT_NAME, clientID, balance, joint, jointID);
+    public Credit(Client client, double balance, boolean joint, LocalDate maturityDate, Client jointClient) {
+        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient);
         this.maturityDate = maturityDate;
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-
-    public Credit(int clientID, double balance, boolean joint, int jointID) {
-        super(DEFAULT_CREDIT_NAME, clientID, balance, joint, jointID);
+    public Credit(Client client, double balance, boolean joint, Client jointClient) {
+        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(String accountName, int clientID, double balance, LocalDate open, LocalDate maturityDate,
+    public Credit(String accountName, Client client, double balance, LocalDate open, LocalDate maturityDate,
                   double creditLine) {
-        super(accountName, clientID, balance, open);
+        super(accountName, client, balance, open);
         this.maturityDate = maturityDate;
         this.creditLine = creditLine;
     }
 
-    public Credit(String accountName, int clientID, double balance, LocalDate open, double creditLine) {
-        super(accountName, clientID, balance, open);
+    public Credit(String accountName, Client client, double balance, LocalDate open, double creditLine) {
+        super(accountName, client, balance, open);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = creditLine;
     }
 
-    public Credit(String accountName, int clientID, double balance, LocalDate open, LocalDate maturityDate) {
-        super(accountName, clientID, balance, open);
+    public Credit(String accountName, Client client, double balance, LocalDate open, LocalDate maturityDate) {
+        super(accountName, client, balance, open);
         this.maturityDate = maturityDate;
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(String accountName, int clientID, double balance, LocalDate open) {
-        super(accountName, clientID, balance, open);
+    public Credit(String accountName, Client client, double balance, LocalDate open) {
+        super(accountName, client, balance, open);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(String accountName, int clientID, boolean joint, int jointID, LocalDate open, LocalDate maturityDate,
+    public Credit(String accountName, Client client, boolean joint, Client jointClient, LocalDate open, LocalDate maturityDate,
                   double creditLine) {
-        super(accountName, clientID, joint, jointID, open);
+        super(accountName, client, joint, jointClient, open);
         this.maturityDate = maturityDate;
         this.creditLine = creditLine;
     }
 
-    public Credit(String accountName, int clientID, boolean joint, int jointID, LocalDate open, double creditLine) {
-        super(accountName, clientID, joint, jointID, open);
+    public Credit(String accountName, Client client, boolean joint, Client jointClient, LocalDate open, double creditLine) {
+        super(accountName, client, joint, jointClient, open);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = creditLine;
     }
 
-    public Credit(String accountName, int clientID, boolean joint, int jointID, LocalDate open, LocalDate maturityDate) {
-        super(accountName, clientID, joint, jointID, open);
+    public Credit(String accountName, Client client, boolean joint, Client jointClient, LocalDate open, LocalDate maturityDate) {
+        super(accountName, client, joint, jointClient, open);
         this.maturityDate = maturityDate;
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(String accountName, int clientID, boolean joint, int jointID, LocalDate open) {
-        super(accountName, clientID, joint, jointID, open);
+    public Credit(String accountName, Client client, boolean joint, Client jointClient, LocalDate open) {
+        super(accountName, client, joint, jointClient, open);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(int clientID, boolean joint, int jointID, LocalDate open, LocalDate maturityDate,
+    public Credit(Client client, boolean joint, Client jointClient, LocalDate open, LocalDate maturityDate,
                   double creditLine) {
-        super(DEFAULT_CREDIT_NAME, clientID, joint, jointID, open);
+        super(DEFAULT_CREDIT_NAME, client, joint, jointClient, open);
         this.maturityDate = maturityDate;
         this.creditLine = creditLine;
     }
 
-    public Credit(int clientID, boolean joint, int jointID, LocalDate open, double creditLine) {
-        super(DEFAULT_CREDIT_NAME, clientID, joint, jointID, open);
+    public Credit(Client client, boolean joint, Client jointClient, LocalDate open, double creditLine) {
+        super(DEFAULT_CREDIT_NAME, client, joint, jointClient, open);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = creditLine;
     }
 
-    public Credit(int clientID, boolean joint, int jointID, LocalDate open, LocalDate maturityDate) {
-        super(DEFAULT_CREDIT_NAME, clientID, joint, jointID, open);
+    public Credit(Client client, boolean joint, Client jointClient, LocalDate open, LocalDate maturityDate) {
+        super(DEFAULT_CREDIT_NAME, client, joint, jointClient, open);
         this.maturityDate = maturityDate;
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(int clientID, boolean joint, int jointID, LocalDate open) {
-        super(DEFAULT_CREDIT_NAME, clientID, joint, jointID, open);
+    public Credit(Client client, boolean joint, Client jointClient, LocalDate open) {
+        super(DEFAULT_CREDIT_NAME, client, joint, jointClient, open);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(String accountName, int clientID, double balance, double creditLine, LocalDate maturityDate) {
-        super(accountName, clientID, balance);
-        this.maturityDate = maturityDate;
-        this.creditLine = creditLine;
-    }
-
-    public Credit(String accountName, int clientID, double balance, double creditLine) {
-        super(accountName, clientID, balance);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = creditLine;
-    }
-
-    public Credit(String accountName, int clientID, LocalDate maturityDate, double balance) {
-        super(accountName, clientID, balance);
-        this.maturityDate = maturityDate;
-        this.creditLine = DEFAULT_CREDIT_LINE;
-    }
-
-    public Credit(String accountName, int clientID, double balance) {
-        super(accountName, clientID, balance);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = DEFAULT_CREDIT_LINE;
-    }
-
-    public Credit(int clientID, double balance, LocalDate maturityDate, double creditLine) {
-        super(DEFAULT_CREDIT_NAME, clientID, balance);
+    public Credit(String accountName, Client client, double balance, double creditLine, LocalDate maturityDate) {
+        super(accountName, client, balance);
         this.maturityDate = maturityDate;
         this.creditLine = creditLine;
     }
 
-    public Credit(int clientID, double balance, double creditLine) {
-        super(DEFAULT_CREDIT_NAME, clientID, balance);
+    public Credit(String accountName, Client client, double balance, double creditLine) {
+        super(accountName, client, balance);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = creditLine;
     }
 
-    public Credit(int clientID, double balance, LocalDate maturityDate) {
-        super(DEFAULT_CREDIT_NAME, clientID, balance);
+    public Credit(String accountName, Client client, LocalDate maturityDate, double balance) {
+        super(accountName, client, balance);
         this.maturityDate = maturityDate;
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(int clientID, double balance) {
-        super(DEFAULT_CREDIT_NAME, clientID, balance);
+    public Credit(String accountName, Client client, double balance) {
+        super(accountName, client, balance);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(String accountName, int clientID, boolean joint, int jointID, double creditLine,
+    public Credit(Client client, double balance, LocalDate maturityDate, double creditLine) {
+        super(DEFAULT_CREDIT_NAME, client, balance);
+        this.maturityDate = maturityDate;
+        this.creditLine = creditLine;
+    }
+
+    public Credit(Client client, double balance, double creditLine) {
+        super(DEFAULT_CREDIT_NAME, client, balance);
+        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+        this.creditLine = creditLine;
+    }
+
+    public Credit(Client client, double balance, LocalDate maturityDate) {
+        super(DEFAULT_CREDIT_NAME, client, balance);
+        this.maturityDate = maturityDate;
+        this.creditLine = DEFAULT_CREDIT_LINE;
+    }
+
+    public Credit(Client client, double balance) {
+        super(DEFAULT_CREDIT_NAME, client, balance);
+        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+        this.creditLine = DEFAULT_CREDIT_LINE;
+    }
+
+    public Credit(String accountName, Client client, boolean joint, Client jointClient, double creditLine,
                   LocalDate maturityDate) {
-        super(accountName, clientID, joint, jointID);
+        super(accountName, client, joint, jointClient);
         this.maturityDate = maturityDate;
         this.creditLine = creditLine;
     }
 
-    public Credit(String accountName, int clientID, boolean joint, int jointID, double creditLine) {
-        super(accountName, clientID, joint, jointID);
+    public Credit(String accountName, Client client, boolean joint, Client jointClient, double creditLine) {
+        super(accountName, client, joint, jointClient);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = creditLine;
     }
 
-    public Credit(String accountName, int clientID, boolean joint, LocalDate maturityDate, int jointID) {
-        super(accountName, clientID, joint, jointID);
+    public Credit(String accountName, Client client, boolean joint, LocalDate maturityDate, Client jointClient) {
+        super(accountName, client, joint, jointClient);
         this.maturityDate = maturityDate;
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(String accountName, int clientID, boolean joint, int jointID) {
-        super(accountName, clientID, joint, jointID);
+    public Credit(String accountName, Client client, boolean joint, Client jointClient) {
+        super(accountName, client, joint, jointClient);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(int clientID, boolean joint, int jointID, double creditLine, LocalDate maturityDate) {
-        super(DEFAULT_CREDIT_NAME, clientID, joint, jointID);
+    public Credit(Client client, boolean joint, Client jointClient, double creditLine, LocalDate maturityDate) {
+        super(DEFAULT_CREDIT_NAME, client, joint, jointClient);
         this.maturityDate = maturityDate;
         this.creditLine = creditLine;
     }
 
-    public Credit(int clientID, boolean joint, int jointID, double creditLine) {
-        super(DEFAULT_CREDIT_NAME, clientID, joint, jointID);
+    public Credit(Client client, boolean joint, Client jointClient, double creditLine) {
+        super(DEFAULT_CREDIT_NAME, client, joint, jointClient);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = creditLine;
     }
 
-    public Credit(int clientID, boolean joint, LocalDate maturityDate, int jointID) {
-        super(DEFAULT_CREDIT_NAME, clientID, joint, jointID);
+    public Credit(Client client, boolean joint, LocalDate maturityDate, Client jointClient) {
+        super(DEFAULT_CREDIT_NAME, client, joint, jointClient);
         this.maturityDate = maturityDate;
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(int clientID, boolean joint, int jointID) {
-        super(DEFAULT_CREDIT_NAME, clientID, joint, jointID);
+    public Credit(Client client, boolean joint, Client jointClient) {
+        super(DEFAULT_CREDIT_NAME, client, joint, jointClient);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(String accountName, int clientID, LocalDate open, LocalDate maturityDate, double creditLine) {
-        super(accountName, clientID, open);
+    public Credit(String accountName, Client client, LocalDate open, LocalDate maturityDate, double creditLine) {
+        super(accountName, client, open);
         this.maturityDate = maturityDate;
         this.creditLine = creditLine;
     }
 
-    public Credit(String accountName, double creditLine, int clientID, LocalDate open) {
-        super(accountName, clientID, open);
+    public Credit(String accountName, double creditLine, Client client, LocalDate open) {
+        super(accountName, client, open);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = creditLine;
     }
 
-    public Credit(String accountName, int clientID, LocalDate open, LocalDate maturityDate) {
-        super(accountName, clientID, open);
+    public Credit(String accountName, Client client, LocalDate open, LocalDate maturityDate) {
+        super(accountName, client, open);
         this.maturityDate = maturityDate;
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(String accountName, int clientID, LocalDate open) {
-        super(accountName, clientID, open);
+    public Credit(String accountName, Client client, LocalDate open) {
+        super(accountName, client, open);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(int clientID, LocalDate open, LocalDate maturityDate, double creditLine) {
-        super(DEFAULT_CREDIT_NAME, clientID, open);
+    public Credit(Client client, LocalDate open, LocalDate maturityDate, double creditLine) {
+        super(DEFAULT_CREDIT_NAME, client, open);
         this.maturityDate = maturityDate;
         this.creditLine = creditLine;
     }
 
-    public Credit(int clientID, LocalDate open, double creditLine) {
-        super(DEFAULT_CREDIT_NAME, clientID, open);
+    public Credit(Client client, LocalDate open, double creditLine) {
+        super(DEFAULT_CREDIT_NAME, client, open);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = creditLine;
     }
 
-    public Credit(int clientID, LocalDate open, LocalDate maturityDate) {
-        super(DEFAULT_CREDIT_NAME, clientID, open);
+    public Credit(Client client, LocalDate open, LocalDate maturityDate) {
+        super(DEFAULT_CREDIT_NAME, client, open);
         this.maturityDate = maturityDate;
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(int clientID, LocalDate open) {
-        super(DEFAULT_CREDIT_NAME, clientID, open);
+    public Credit(Client client, LocalDate open) {
+        super(DEFAULT_CREDIT_NAME, client, open);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(double creditLine, String accountName, int clientID, LocalDate maturityDate) {
-        super(accountName, clientID);
+    public Credit(double creditLine, String accountName, Client client, LocalDate maturityDate) {
+        super(accountName, client);
         this.maturityDate = maturityDate;
         this.creditLine = creditLine;
     }
 
-    public Credit(double creditLine, String accountName, int clientID) {
-        super(accountName, clientID);
+    public Credit(double creditLine, String accountName, Client client) {
+        super(accountName, client);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = creditLine;
     }
 
-    public Credit(String accountName, LocalDate maturityDate, int clientID) {
-        super(accountName, clientID);
+    public Credit(String accountName, LocalDate maturityDate, Client client) {
+        super(accountName, client);
         this.maturityDate = maturityDate;
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(String accountName, int clientID) {
-        super(accountName, clientID);
+    public Credit(String accountName, Client client) {
+        super(accountName, client);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(double creditLine, int clientID, LocalDate maturityDate) {
-        super(DEFAULT_CREDIT_NAME, clientID);
+    public Credit(double creditLine, Client client, LocalDate maturityDate) {
+        super(DEFAULT_CREDIT_NAME, client);
         this.maturityDate = maturityDate;
         this.creditLine = creditLine;
     }
 
-    public Credit(double creditLine, int clientID) {
-        super(DEFAULT_CREDIT_NAME, clientID);
+    public Credit(double creditLine, Client client) {
+        super(DEFAULT_CREDIT_NAME, client);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = creditLine;
     }
 
-    public Credit(LocalDate maturityDate, int clientID) {
-        super(DEFAULT_CREDIT_NAME, clientID);
+    public Credit(LocalDate maturityDate, Client client) {
+        super(DEFAULT_CREDIT_NAME, client);
         this.maturityDate = maturityDate;
         this.creditLine = DEFAULT_CREDIT_LINE;
     }
 
-    public Credit(int clientID) {
-        super(DEFAULT_CREDIT_NAME, clientID);
+    public Credit(Client client) {
+        super(DEFAULT_CREDIT_NAME, client);
         this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
         this.creditLine = DEFAULT_CREDIT_LINE;
     }

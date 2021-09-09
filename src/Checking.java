@@ -8,152 +8,152 @@ public class Checking extends Account {
     private final static boolean DEFAULT_OVERDRAFT_PROTECTION = false;
 
     // Constructors
-    public Checking(String accountName, int clientID, double balance, boolean joint, int jointID, LocalDate open,
+    public Checking(String accountName, Client client, double balance, boolean joint, Client jointClient, LocalDate open,
                     boolean overdraftProtection) {
-        super(accountName, clientID, balance, joint, jointID, open);
+        super(accountName, client, balance, joint, jointClient, open);
         this.overdraftProtection = overdraftProtection;
     }
 
-    public Checking(String accountName, int clientID, double balance, boolean joint, int jointID, LocalDate open) {
-        super(accountName, clientID, balance, joint, jointID, open);
+    public Checking(String accountName, Client client, double balance, boolean joint, Client jointClient, LocalDate open) {
+        super(accountName, client, balance, joint, jointClient, open);
         this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
     }
 
-    public Checking(int clientID, double balance, boolean joint, int jointID, LocalDate open,
+    public Checking(Client client, double balance, boolean joint, Client jointClient, LocalDate open,
                     boolean overdraftProtection) {
-        this(DEFAULT_CHECKING_NAME, clientID, balance, joint, jointID, open, overdraftProtection);
+        this(DEFAULT_CHECKING_NAME, client, balance, joint, jointClient, open, overdraftProtection);
     }
 
-    public Checking(int clientID, double balance, boolean joint, int jointID, LocalDate open) {
-        this(DEFAULT_CHECKING_NAME, clientID, balance, joint, jointID, open, DEFAULT_OVERDRAFT_PROTECTION);
+    public Checking(Client client, double balance, boolean joint, Client jointClient, LocalDate open) {
+        this(DEFAULT_CHECKING_NAME, client, balance, joint, jointClient, open, DEFAULT_OVERDRAFT_PROTECTION);
     }
 
-    public Checking(String accountName, int clientID, double balance, boolean joint, int jointID,
+    public Checking(String accountName, Client client, double balance, boolean joint, Client jointClient,
                     boolean overdraftProtection) {
-        super(accountName, clientID, balance, joint, jointID);
+        super(accountName, client, balance, joint, jointClient);
         this.overdraftProtection = overdraftProtection;
     }
 
-    public Checking(String accountName, int clientID, double balance, boolean joint, int jointID) {
-        super(accountName, clientID, balance, joint, jointID);
+    public Checking(String accountName, Client client, double balance, boolean joint, Client jointClient) {
+        super(accountName, client, balance, joint, jointClient);
         this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
     }
 
-    public Checking(int clientID, double balance, boolean joint, int jointID, boolean overdraftProtection) {
-        this(DEFAULT_CHECKING_NAME, clientID, balance, joint, jointID, overdraftProtection);
+    public Checking(Client client, double balance, boolean joint, Client jointClient, boolean overdraftProtection) {
+        this(DEFAULT_CHECKING_NAME, client, balance, joint, jointClient, overdraftProtection);
     }
 
-    public Checking(int clientID, double balance, boolean joint, int jointID) {
-        this(DEFAULT_CHECKING_NAME, clientID, balance, joint, jointID, DEFAULT_OVERDRAFT_PROTECTION);
+    public Checking(Client client, double balance, boolean joint, Client jointClient) {
+        this(DEFAULT_CHECKING_NAME, client, balance, joint, jointClient, DEFAULT_OVERDRAFT_PROTECTION);
     }
 
-    public Checking(String accountName, int clientID, double balance, LocalDate open, boolean overdraftProtection) {
-        super(accountName, clientID, balance, open);
+    public Checking(String accountName, Client client, double balance, LocalDate open, boolean overdraftProtection) {
+        super(accountName, client, balance, open);
         this.overdraftProtection = overdraftProtection;
     }
 
-    public Checking(String accountName, int clientID, double balance, LocalDate open) {
-        super(accountName, clientID, balance, open);
+    public Checking(String accountName, Client client, double balance, LocalDate open) {
+        super(accountName, client, balance, open);
         this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
     }
 
-    public Checking(int clientID, double balance, LocalDate open, boolean overdraftProtection) {
-        this(DEFAULT_CHECKING_NAME, clientID, balance, open, overdraftProtection);
+    public Checking(Client client, double balance, LocalDate open, boolean overdraftProtection) {
+        this(DEFAULT_CHECKING_NAME, client, balance, open, overdraftProtection);
     }
 
-    public Checking(int clientID, double balance, LocalDate open) {
-        this(DEFAULT_CHECKING_NAME, clientID, balance, open, DEFAULT_OVERDRAFT_PROTECTION);
+    public Checking(Client client, double balance, LocalDate open) {
+        this(DEFAULT_CHECKING_NAME, client, balance, open, DEFAULT_OVERDRAFT_PROTECTION);
     }
 
-    public Checking(String accountName, int clientID, boolean joint, int jointID, LocalDate open,
+    public Checking(String accountName, Client client, boolean joint, Client jointClient, LocalDate open,
                     boolean overdraftProtection) {
-        super(accountName, clientID, joint, jointID, open);
+        super(accountName, client, joint, jointClient, open);
         this.overdraftProtection = overdraftProtection;
     }
 
-    public Checking(String accountName, int clientID, boolean joint, int jointID, LocalDate open) {
-        super(accountName, clientID, joint, jointID, open);
+    public Checking(String accountName, Client client, boolean joint, Client jointClient, LocalDate open) {
+        super(accountName, client, joint, jointClient, open);
         this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
     }
 
-    public Checking(int clientID, boolean joint, int jointID, LocalDate open, boolean overdraftProtection) {
-        this(DEFAULT_CHECKING_NAME, clientID, joint, jointID, open, overdraftProtection);
+    public Checking(Client client, boolean joint, Client jointClient, LocalDate open, boolean overdraftProtection) {
+        this(DEFAULT_CHECKING_NAME, client, joint, jointClient, open, overdraftProtection);
     }
 
-    public Checking(int clientID, boolean joint, int jointID, LocalDate open) {
-        this(DEFAULT_CHECKING_NAME, clientID, joint, jointID, open, DEFAULT_OVERDRAFT_PROTECTION);
+    public Checking(Client client, boolean joint, Client jointClient, LocalDate open) {
+        this(DEFAULT_CHECKING_NAME, client, joint, jointClient, open, DEFAULT_OVERDRAFT_PROTECTION);
     }
 
-    public Checking(String accountName, int clientID, double balance, boolean overdraftProtection) {
-        super(accountName, clientID, balance);
+    public Checking(String accountName, Client client, double balance, boolean overdraftProtection) {
+        super(accountName, client, balance);
         this.overdraftProtection = overdraftProtection;
     }
 
-    public Checking(String accountName, int clientID, double balance) {
-        super(accountName, clientID, balance);
+    public Checking(String accountName, Client client, double balance) {
+        super(accountName, client, balance);
         this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
     }
 
-    public Checking(int clientID, double balance, boolean overdraftProtection) {
-        this(DEFAULT_CHECKING_NAME, clientID, balance, overdraftProtection);
+    public Checking(Client client, double balance, boolean overdraftProtection) {
+        this(DEFAULT_CHECKING_NAME, client, balance, overdraftProtection);
     }
 
-    public Checking(int clientID, double balance) {
-        this(DEFAULT_CHECKING_NAME, clientID, balance, DEFAULT_OVERDRAFT_PROTECTION);
+    public Checking(Client client, double balance) {
+        this(DEFAULT_CHECKING_NAME, client, balance, DEFAULT_OVERDRAFT_PROTECTION);
     }
 
-    public Checking(String accountName, int clientID, boolean joint, int jointID, boolean overdraftProtection) {
-        super(accountName, clientID, joint, jointID);
+    public Checking(String accountName, Client client, boolean joint, Client jointClient, boolean overdraftProtection) {
+        super(accountName, client, joint, jointClient);
         this.overdraftProtection = overdraftProtection;
     }
 
-    public Checking(String accountName, int clientID, boolean joint, int jointID) {
-        super(accountName, clientID, joint, jointID);
+    public Checking(String accountName, Client client, boolean joint, Client jointClient) {
+        super(accountName, client, joint, jointClient);
         this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
     }
 
-    public Checking(int clientID, boolean joint, int jointID, boolean overdraftProtection) {
-        this(DEFAULT_CHECKING_NAME, clientID, joint, jointID, overdraftProtection);
+    public Checking(Client client, boolean joint, Client jointClient, boolean overdraftProtection) {
+        this(DEFAULT_CHECKING_NAME, client, joint, jointClient, overdraftProtection);
     }
 
-    public Checking(int clientID, boolean joint, int jointID) {
-        this(DEFAULT_CHECKING_NAME, clientID, joint, jointID, DEFAULT_OVERDRAFT_PROTECTION);
+    public Checking(Client client, boolean joint, Client jointClient) {
+        this(DEFAULT_CHECKING_NAME, client, joint, jointClient, DEFAULT_OVERDRAFT_PROTECTION);
     }
 
-    public Checking(String name, int clientID, LocalDate open, boolean overdraftProtection) {
-        super(name, clientID, open);
+    public Checking(String name, Client client, LocalDate open, boolean overdraftProtection) {
+        super(name, client, open);
         this.overdraftProtection = overdraftProtection;
     }
 
-    public Checking(String name, int clientID, LocalDate open) {
-        super(name, clientID, open);
+    public Checking(String name, Client client, LocalDate open) {
+        super(name, client, open);
         this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
     }
 
-    public Checking(int clientID, LocalDate open, boolean overdraftProtection) {
-        this(DEFAULT_CHECKING_NAME, clientID, open, overdraftProtection);
+    public Checking(Client client, LocalDate open, boolean overdraftProtection) {
+        this(DEFAULT_CHECKING_NAME, client, open, overdraftProtection);
     }
 
-    public Checking(int clientID, LocalDate open) {
-        this(DEFAULT_CHECKING_NAME, clientID, open, DEFAULT_OVERDRAFT_PROTECTION);
+    public Checking(Client client, LocalDate open) {
+        this(DEFAULT_CHECKING_NAME, client, open, DEFAULT_OVERDRAFT_PROTECTION);
     }
 
-    public Checking(String name, int clientID, boolean overdraftProtection) {
-        super(name, clientID);
+    public Checking(String name, Client client, boolean overdraftProtection) {
+        super(name, client);
         this.overdraftProtection = overdraftProtection;
     }
 
-    public Checking(String name, int clientID) {
-        super(name, clientID);
+    public Checking(String name, Client client) {
+        super(name, client);
         this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
     }
 
-    public Checking(int clientID, boolean overdraftProtection) {
-        this(DEFAULT_CHECKING_NAME, clientID, overdraftProtection);
+    public Checking(Client client, boolean overdraftProtection) {
+        this(DEFAULT_CHECKING_NAME, client, overdraftProtection);
     }
 
-    public Checking(int clientID) {
-        this(DEFAULT_CHECKING_NAME, clientID, DEFAULT_OVERDRAFT_PROTECTION);
+    public Checking(Client client) {
+        this(DEFAULT_CHECKING_NAME, client, DEFAULT_OVERDRAFT_PROTECTION);
     }
 
     // Getters and Setters
@@ -186,7 +186,7 @@ public class Checking extends Account {
     @Override
     public void withdrawal(double amount) {
         if (overdraftProtection) {
-            super.setBalance(getBalance() - amount);
+            super.setBalance(getBalance() + amount);            // Currently withdrawal is meant to be - balance
             super.printBalance();
         } else {
             super.withdrawal(amount);

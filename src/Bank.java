@@ -4,26 +4,28 @@ public class Bank {
     private String bankName;
     private String bankAddress;
 
-    // Future versions: increment bankID within the class, similar to Account class to avoid duplication.
-    private final static String DEFAULT_BANK_ADDRESS = "Zoneless";
+    private static int nextBankID = 1;                          // M2 HOMEWORK STATIC
+    private final static String DEFAULT_BANK_ADDRESS = "N/A";
 
     // Constructors
-    public Bank(int bankId, String bankName, String bankAddress) {
-        this.bankId = bankId;
+    public Bank(String bankName, String bankAddress) {
+        this.bankId = nextBankID;                               // M2 HOMEWORK STATIC
+        nextBankID++;                                           // M2 HOMEWORK STATIC
         this.bankName = bankName;
         this.bankAddress = bankAddress;
     }
 
-    public Bank(int bankId, String bankName) {
-        this(bankId, bankName, DEFAULT_BANK_ADDRESS);
+    public Bank(String bankName) {
+        this(bankName, DEFAULT_BANK_ADDRESS);
     }
 
     // Getters and Setters
     public int getBankId() {
         return this.bankId;
     }
-    public void setBankId(int bankId) {
-        this.bankId = bankId;
+    public void setBankId() {
+        this.bankId = nextBankID;                               // M2 HOMEWORK STATIC
+        nextBankID++;                                           // M2 HOMEWORK STATIC
     }
     public String getBankName() {
         return this.bankName;

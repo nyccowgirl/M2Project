@@ -5,10 +5,10 @@ public class Main {
     public static void main(String[] args) {
         // Test Client Class
 
-        Client client1=new Client(101,"Ali","San Francisco");
-        Client client2=new Client(102, "Baba");
-        Client client3=new Client(103, "Johny Cash");
-        Client client4=new Client("Joye","Belmont");
+        Client client1 = new Client("Ali", "San Francisco");
+        Client client2 = new Client("Baba");
+        Client client3 = new Client("Johny Cash");
+        Client client4 = new Client("Joye","Belmont");
         System.out.println(client1);
         System.out.println("Client3.equals(Client2)= " + client3.equals(client2));
         System.out.println("Client3.equals(Client4)= " +client3.equals(client4));
@@ -16,9 +16,9 @@ public class Main {
 
         // Test Bank Class
 
-        Bank bank1=new Bank(10001,"Bank Of America","San Francisco");
-        Bank bank2=new Bank(10002,"Chase");
-        Bank bank3=new Bank(10003,"Wells Fargo");
+        Bank bank1=new Bank("Bank Of America","San Francisco");
+        Bank bank2=new Bank("Chase");
+        Bank bank3=new Bank("Wells Fargo");
 
         System.out.println(bank1);
         System.out.println("Bank3.equals(Bank2)= " + bank3.equals( bank2));
@@ -27,9 +27,9 @@ public class Main {
 
         // Test automated account number assignment
 
-        Checking checkAcct1 = new Checking(client1.getClientId(), 5500);
-        Savings savingsAcct1 = new Savings(client2.getClientId(), 10000, LocalDate.now());
-        Credit creditAcct1 = new Credit(-777.00, client3.getClientId());
+        Checking checkAcct1 = new Checking(client1, 5500);
+        Savings savingsAcct1 = new Savings(client2, 10000, LocalDate.now());
+        Credit creditAcct1 = new Credit(-777.00, client3);
 
         System.out.println(creditAcct1);
         System.out.println(savingsAcct1);

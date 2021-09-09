@@ -1,72 +1,67 @@
 import java.time.LocalDate;
-import java.util.Random;
+//import java.util.Random;
 import java.lang.Math;
 
+//public abstract class Account<Client extends Comparable<? super Client>> implements Comparable<Account<Client>> {
 public abstract class Account {
 
     private int accountNo;          // This should be unique so would not have a default (see static variable)
     private String accountName;     // Default account name should be at child class
-    private int clientID;           // Future versions would have this and jointD be Client objects
+    private Client client;           // Future versions would have this and jointD be Client objects
     private double balance;
     private boolean joint;          // Maybe only add in personal account if we separate client types further
-    private int jointID;            // Default to -1 if joint is false
+    private Client jointClient;            // Default to -1 if joint is false
     private LocalDate open;         // Represents date (year, month, day (yyyy-MM-dd))
     private LocalDate close;
 
-    private static int nextAccountNo = 1;           // Increment account number to avoid duplications
+    private static int nextAccountNo = 1;                           // M2 HOMEWORK STATIC
     private final static double DEFAULT_BALANCE = 0;
     private final static boolean DEFAULT_JOINT = false;
-    private final static int DEFAULT_JOINTID = -1;
+    private final static Client DEFAULT_JOINT_CLIENT = null;
     private final static LocalDate DEFAULT_OPEN_DATE = LocalDate.now();
     private final static int DEFAULT_CLOSE_TERM = 100;
 
     // Constructors
     // Utilizing automatic assignment of account number
-    public Account(String accountName, int clientID, double balance, boolean joint, int jointID,
+    public Account(String accountName, Client client, double balance, boolean joint, Client jointClient,
                    LocalDate open) {
-        if (clientID <= 0) {
-            throw new IllegalArgumentException("Client ID cannot be less than 1.");
-        } else if (joint && !(jointID > 0)) {
-            throw new IllegalArgumentException("Joint ID is required for joint accounts and cannot be less than 1.");
-        } else {
-            this.accountNo = nextAccountNo;
-            nextAccountNo++;
-            this.accountName = accountName;
-            this.clientID = clientID;
-            this.balance = balance;
-            this.joint = joint;
-            this.jointID = jointID;
-            this.open = open;
-            this.close = open.plusYears(DEFAULT_CLOSE_TERM);
-        }
+        this.accountNo = nextAccountNo;                         // M2 HOMEWORK STATIC
+        nextAccountNo++;                                        // M2 HOMEWORK STATIC
+        this.accountName = accountName;
+        this.client = client;
+        this.balance = balance;
+        this.joint = joint;
+        this.jointClient = jointClient;
+        this.open = open;
+        this.close = open.plusYears(DEFAULT_CLOSE_TERM);
     }
 
-    public Account(String accountName, int clientID, double balance, boolean joint, int jointID) {
-        this(accountName, clientID, balance, joint, jointID, DEFAULT_OPEN_DATE);
+    public Account(String accountName, Client client, double balance, boolean joint, Client jointClient) {
+        this(accountName, client, balance, joint, jointClient, DEFAULT_OPEN_DATE);
     }
 
-    public Account(String accountName, int clientID, double balance, LocalDate open) {
-        this(accountName, clientID, balance, DEFAULT_JOINT, DEFAULT_JOINTID, open);
+    public Account(String accountName, Client client, double balance, LocalDate open) {
+        this(accountName, client, balance, DEFAULT_JOINT, DEFAULT_JOINT_CLIENT, open);
     }
 
-    public Account(String accountName, int clientID, boolean joint, int jointID, LocalDate open) {
-        this(accountName, clientID, DEFAULT_BALANCE, joint, jointID, open);
+    public Account(String accountName, Client client, boolean joint, Client jointClient, LocalDate open) {
+        this(accountName, client, DEFAULT_BALANCE, joint, jointClient, open);
     }
 
-    public Account(String accountName, int clientID, double balance) {
-        this(accountName, clientID, balance, DEFAULT_JOINT, DEFAULT_JOINTID, DEFAULT_OPEN_DATE);
+    public Account(String accountName, Client client, double balance) {
+        this(accountName, client, balance, DEFAULT_JOINT, DEFAULT_JOINT_CLIENT, DEFAULT_OPEN_DATE);
     }
 
-    public Account(String accountName, int clientID, boolean joint, int jointID) {
-        this(accountName, clientID, DEFAULT_BALANCE, joint, jointID, DEFAULT_OPEN_DATE);
+    public Account(String accountName, Client client, boolean joint, Client jointClient) {
+        this(accountName, client, DEFAULT_BALANCE, joint, jointClient, DEFAULT_OPEN_DATE);
     }
 
-    public Account(String accountName, int clientID, LocalDate open) {
-        this(accountName, clientID, DEFAULT_BALANCE, DEFAULT_JOINT, DEFAULT_JOINTID, open);
+    public Account(String accountName, Client client, LocalDate open) {
+        this(accountName, client, DEFAULT_BALANCE, DEFAULT_JOINT, DEFAULT_JOINT_CLIENT, open);
     }
 
-    public Account(String accountName, int clientID) {
-        this(accountName, clientID, DEFAULT_BALANCE, DEFAULT_JOINT, DEFAULT_JOINTID, DEFAULT_OPEN_DATE);
+    public Account(String accountName, Client client) {
+        this(accountName, client, DEFAULT_BALANCE, DEFAULT_JOINT, DEFAULT_JOINT_CLIENT, DEFAULT_OPEN_DATE);
     }
 
     // Getters and Setters
@@ -75,9 +70,8 @@ public abstract class Account {
     }
 
     public void setAccountNo() {
-        // Automatically sets account number based on next available number to avoid duplicates
-        this.accountNo = nextAccountNo;
-        nextAccountNo++;
+        this.accountNo = nextAccountNo;                             // M2 HOMEWORK STATIC
+        nextAccountNo++;                                            // M2 HOMEWORK STATIC
     }
 
     public String getAccountName() {
@@ -88,15 +82,13 @@ public abstract class Account {
         this.accountName = accountName;
     }
 
-    public int getClientID() {
-        return clientID;
+    public Client getClientID() {
+        return client;
     }
 
     // Should be rare but in cases of transfer of accounts to other parties for death or divorce, etc.
-    public void setClientID(int clientID) {
-        if (clientID >= 0) {
-            this.clientID = clientID;
-        }
+    public void setClientID(Client client) {
+        this.client = client;
     }
 
     public double getBalance() {
@@ -116,21 +108,21 @@ public abstract class Account {
     public void setJoint(boolean joint) {
         this.joint = joint;
 
-        if (joint && (jointID <= 0)) {
+        if (joint && (jointClient == null)) {
             System.out.println("Please update joint ID.");
         } else if (!joint) {
-            jointID = DEFAULT_JOINTID;
+            jointClient = DEFAULT_JOINT_CLIENT;
         }
     }
 
-    public int getJointID() {
-        return jointID;
+    public Client getJointClient() {
+        return jointClient;
     }
 
-    public void setJointID(int jointID) {
-        if (joint && jointID > 0) {
-            this.jointID = jointID;
-        } else if (!joint && jointID > 0) {
+    public void setJointID(Client jointClient) {
+        if (joint) {
+            this.jointClient = jointClient;
+        } else {
             System.out.println("This is not a joint account.");
         }
     }
@@ -159,10 +151,10 @@ public abstract class Account {
     public String toString() {
         return "Account: \n\tAccount No.: " + accountNo +
                 "\n\tAccount Name: " + accountName +
-                "\n\tClient ID: " + clientID +
+                "\n\tClient ID: " + client.getClientId() +
                 "\n\tAccount Balance: " + balance +
                 "\n\tJoint Account: " + (joint ? "yes" : "no") +
-                "\n\tJoint ID: " + (joint ? jointID : "N/A") +
+                "\n\tJoint ID: " + (joint ? jointClient.getClientId() : "N/A") +
                 "\n\tOpen Date: " + open +
                 "\n\tClose Date: " + close;
     }
@@ -173,8 +165,9 @@ public abstract class Account {
         if (obj instanceof Account) {
             Account other = (Account) obj;
             return (accountNo == other.getAccountNo() && accountName.equalsIgnoreCase(other.getAccountName()) &&
-                    clientID == other.getClientID() && (Math.abs(balance - other.getBalance()) < .01) &&
-                    joint == other.isJoint() && jointID == other.getJointID() &&
+                    client.equals(other.client) && (Math.abs(balance - other.getBalance()) < .01) &&
+                    joint == other.isJoint() &&
+                    (joint ? jointClient.equals(other.getJointClient()) : jointClient == other.getJointClient()) &&
                     (open.compareTo(other.getOpen()) == 0) && (close.compareTo(other.getClose()) == 0));
         } else {
             return false;
@@ -208,11 +201,11 @@ public abstract class Account {
         System.out.println("Current balance: " + balance);
     }
 
-    public static int generateAccountNumber()
-    {
-        Random rand = new Random();
-        int newAccountNumber = rand.nextInt(1000000000);
-
-        return newAccountNumber;
-    }
+//    public static int generateAccountNumber()
+//    {
+//        Random rand = new Random();
+//        int newAccountNumber = rand.nextInt(1000000000);
+//
+//        return newAccountNumber;
+//    }
 }

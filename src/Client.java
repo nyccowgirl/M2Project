@@ -5,31 +5,28 @@ public class Client {
     private String clientName;
     private String clientAddress;
 
-    // Future versions: increment this within the class, similar to Account class to avoid duplication.
-    private final static int DEFAULT_CLIENT_ID = 1;
-    private final static String DEFAULT_CLIENT_ADDRESS = "Zoneless";
+    private static int nextClientID = 1;                            // M2 HOMEWORK STATIC
+    private final static String DEFAULT_CLIENT_ADDRESS = "N/A";
 
     // Constructors
-    public Client (int clientId, String clientName, String clientAddress) {
-        this.clientId = clientId;
+    public Client(String clientName, String clientAddress) {
+        this.clientId = nextClientID;                               // M2 HOMEWORK STATIC
+        nextClientID++;                                             // M2 HOMEWORK STATIC
         this.clientName = clientName;
         this.clientAddress = clientAddress;
     }
 
-    public Client (String clientName, String clientAddress) {
-        this(DEFAULT_CLIENT_ID, clientName, clientAddress);
-    }
-
-    public Client (int clientId, String clientName) {
-        this(clientId,clientName,DEFAULT_CLIENT_ADDRESS);
+    public Client(String clientName) {
+        this(clientName, DEFAULT_CLIENT_ADDRESS);
     }
 
     // Getters and Setters
     public int getClientId() {
         return this.clientId;
     }
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
+    public void setClientId() {
+        this.clientId = nextClientID;                               // M2 HOMEWORK STATIC
+        nextClientID++;                                             // M2 HOMEWORK STATIC
     }
     public String getClientName() {
         return this.clientName;
