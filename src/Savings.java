@@ -86,7 +86,18 @@ public class Savings extends Account {
         Savings.totalSavingsBalances += super.getBalance();     // M2 HOMEWORK STATIC
     }
 
-    // Getter
+    // Getter and Setter
+    @Override
+    public boolean setClose(LocalDate close) {                  // M2 HOMEWORK STATIC
+        double currentBalance = super.getBalance();
+        if (super.setClose(close)) {
+            Savings.totalSavingsBalances -= currentBalance;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static double getTotalSavingsBalance() {             // M2 HOMEWORK STATIC
         return Savings.totalSavingsBalances;
     }
@@ -99,8 +110,15 @@ public class Savings extends Account {
     }
 
     @Override
+    protected boolean withdrawalCheck(double amount) {
+        throw new IllegalAccessError();                         // M2 HOMEWORK STATIC
+    }
+
+    @Override
     public void withdrawal(double amount) {                     // M2 HOMEWORK STATIC
-        super.withdrawal(amount);
-        Savings.totalSavingsBalances -= amount;
+        if (super.withdrawalCheck(amount)) {
+            super.withdrawal(amount);
+            Savings.totalSavingsBalances -= amount;
+        }
     }
 }

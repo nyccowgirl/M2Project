@@ -196,13 +196,22 @@ public abstract class Account {
     }
 
     public void withdrawal(double amount) {
-        if (amount < 0) {
-            System.out.println("Reflect withdrawal as positive amount.");
-        } else if (amount > balance) {
-            System.out.println("Insufficient funds");
-        } else {
+        if (withdrawalCheck(amount)) {
             this.balance -= amount;
             printBalance();
+        }
+    }
+
+    // Helper method
+    protected boolean withdrawalCheck(double amount) {
+        if (amount < 0) {
+            System.out.println("Reflect withdrawal as positive amount.");
+            return false;
+        } else if (amount > balance) {
+            System.out.println("Insufficient funds");
+            return false;
+        } else {
+            return true;
         }
     }
 

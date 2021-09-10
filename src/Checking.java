@@ -4,6 +4,7 @@ import java.lang.Math;
 public class Checking extends Account {
     private boolean overdraftProtection;        // Can also add overdraft limit for more complexity (or pull from Credit class)
 
+    private static double totalCheckingBalances = 0;                // M2 HOMEWORK STATIC
     private final static String DEFAULT_CHECKING_NAME = "General Checking Account";
     private final static boolean DEFAULT_OVERDRAFT_PROTECTION = false;
 
@@ -12,11 +13,13 @@ public class Checking extends Account {
                     boolean overdraftProtection) {
         super(accountName, client, balance, joint, jointClient, open);
         this.overdraftProtection = overdraftProtection;
+        Checking.totalCheckingBalances += balance;                  // M2 HOMEWORK STATIC
     }
 
     public Checking(String accountName, Client client, double balance, boolean joint, Client jointClient, LocalDate open) {
         super(accountName, client, balance, joint, jointClient, open);
         this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
+        Checking.totalCheckingBalances += balance;                  // M2 HOMEWORK STATIC
     }
 
     public Checking(Client client, double balance, boolean joint, Client jointClient, LocalDate open,
@@ -32,11 +35,13 @@ public class Checking extends Account {
                     boolean overdraftProtection) {
         super(accountName, client, balance, joint, jointClient);
         this.overdraftProtection = overdraftProtection;
+        Checking.totalCheckingBalances += balance;                  // M2 HOMEWORK STATIC
     }
 
     public Checking(String accountName, Client client, double balance, boolean joint, Client jointClient) {
         super(accountName, client, balance, joint, jointClient);
         this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
+        Checking.totalCheckingBalances += balance;                  // M2 HOMEWORK STATIC
     }
 
     public Checking(Client client, double balance, boolean joint, Client jointClient, boolean overdraftProtection) {
@@ -50,11 +55,13 @@ public class Checking extends Account {
     public Checking(String accountName, Client client, double balance, LocalDate open, boolean overdraftProtection) {
         super(accountName, client, balance, open);
         this.overdraftProtection = overdraftProtection;
+        Checking.totalCheckingBalances += balance;                  // M2 HOMEWORK STATIC
     }
 
     public Checking(String accountName, Client client, double balance, LocalDate open) {
         super(accountName, client, balance, open);
         this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
+        Checking.totalCheckingBalances += balance;                  // M2 HOMEWORK STATIC
     }
 
     public Checking(Client client, double balance, LocalDate open, boolean overdraftProtection) {
@@ -69,11 +76,13 @@ public class Checking extends Account {
                     boolean overdraftProtection) {
         super(accountName, client, joint, jointClient, open);
         this.overdraftProtection = overdraftProtection;
+        Checking.totalCheckingBalances += super.getBalance();       // M2 HOMEWORK STATIC
     }
 
     public Checking(String accountName, Client client, boolean joint, Client jointClient, LocalDate open) {
         super(accountName, client, joint, jointClient, open);
         this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
+        Checking.totalCheckingBalances += super.getBalance();       // M2 HOMEWORK STATIC
     }
 
     public Checking(Client client, boolean joint, Client jointClient, LocalDate open, boolean overdraftProtection) {
@@ -87,11 +96,13 @@ public class Checking extends Account {
     public Checking(String accountName, Client client, double balance, boolean overdraftProtection) {
         super(accountName, client, balance);
         this.overdraftProtection = overdraftProtection;
+        Checking.totalCheckingBalances += balance;                  // M2 HOMEWORK STATIC
     }
 
     public Checking(String accountName, Client client, double balance) {
         super(accountName, client, balance);
         this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
+        Checking.totalCheckingBalances += balance;                  // M2 HOMEWORK STATIC
     }
 
     public Checking(Client client, double balance, boolean overdraftProtection) {
@@ -105,11 +116,13 @@ public class Checking extends Account {
     public Checking(String accountName, Client client, boolean joint, Client jointClient, boolean overdraftProtection) {
         super(accountName, client, joint, jointClient);
         this.overdraftProtection = overdraftProtection;
+        Checking.totalCheckingBalances += super.getBalance();       // M2 HOMEWORK STATIC
     }
 
     public Checking(String accountName, Client client, boolean joint, Client jointClient) {
         super(accountName, client, joint, jointClient);
         this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
+        Checking.totalCheckingBalances += super.getBalance();       // M2 HOMEWORK STATIC
     }
 
     public Checking(Client client, boolean joint, Client jointClient, boolean overdraftProtection) {
@@ -123,11 +136,13 @@ public class Checking extends Account {
     public Checking(String name, Client client, LocalDate open, boolean overdraftProtection) {
         super(name, client, open);
         this.overdraftProtection = overdraftProtection;
+        Checking.totalCheckingBalances += super.getBalance();       // M2 HOMEWORK STATIC
     }
 
     public Checking(String name, Client client, LocalDate open) {
         super(name, client, open);
         this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
+        Checking.totalCheckingBalances += super.getBalance();       // M2 HOMEWORK STATIC
     }
 
     public Checking(Client client, LocalDate open, boolean overdraftProtection) {
@@ -141,11 +156,13 @@ public class Checking extends Account {
     public Checking(String name, Client client, boolean overdraftProtection) {
         super(name, client);
         this.overdraftProtection = overdraftProtection;
+        Checking.totalCheckingBalances += super.getBalance();       // M2 HOMEWORK STATIC
     }
 
     public Checking(String name, Client client) {
         super(name, client);
         this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
+        Checking.totalCheckingBalances += super.getBalance();       // M2 HOMEWORK STATIC
     }
 
     public Checking(Client client, boolean overdraftProtection) {
@@ -157,12 +174,27 @@ public class Checking extends Account {
     }
 
     // Getters and Setters
+    @Override
+    public boolean setClose(LocalDate close) {                      // M2 HOMEWORK STATIC
+        double currentBalance = super.getBalance();
+        if (super.setClose(close)) {
+            Checking.totalCheckingBalances -= currentBalance;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public boolean isOverdraftProtection() {
         return overdraftProtection;
     }
 
     public void setOverdraftProtection(boolean overdraftProtection) {
         this.overdraftProtection = overdraftProtection;
+    }
+
+    public static double getTotalCheckingBalances() {               // M2 HOMEWORK STATIC
+        return Checking.totalCheckingBalances;
     }
 
     // toString
@@ -182,14 +214,29 @@ public class Checking extends Account {
         }
     }
 
-    // Class-Specific Method
+    // Class-Specific Methods
     @Override
-    public void withdrawal(double amount) {
+    public void deposit(double amount) {                                // M2 HOMEWORK STATIC
+        super.deposit(amount);
+        Checking.totalCheckingBalances += amount;
+    }
+
+    @Override
+    protected boolean withdrawalCheck(double amount) {                  // M2 HOMEWORK STATIC
+        throw new IllegalAccessError();
+    }
+
+    @Override
+    public void withdrawal(double amount) {                             // M2 HOMEWORK STATIC
         if (overdraftProtection) {
             super.setBalance(getBalance() - amount);
+            Checking.totalCheckingBalances -= amount;
             super.printBalance();
         } else {
-            super.withdrawal(amount);
+            if (super.withdrawalCheck(amount)) {
+                super.withdrawal(amount);
+                Checking.totalCheckingBalances -= amount;
+            }
         }
     }
 }
