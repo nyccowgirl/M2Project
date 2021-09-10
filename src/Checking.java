@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.lang.Math;
 
 public class Checking extends Account {
     private boolean overdraftProtection;        // Can also add overdraft limit for more complexity (or pull from Credit class)
