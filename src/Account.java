@@ -169,13 +169,8 @@ public abstract class Account {
                     accountName.equalsIgnoreCase(other.getAccountName()) &&
                     client.equals(other.client) && (Math.abs(balance - other.getBalance()) < .01) &&
                     joint == other.isJoint() &&
-//                    Objects.equals(joint, other.getJointClient())
-//                    &&
-//                    jointClient == other.getJointClient() &&
-                    (joint ? jointClient.equals(other.getJointClient()) : jointClient == other.getJointClient()) &&
+                    Objects.equals(jointClient, other.getJointClient()) &&
                     (open.compareTo(other.getOpen()) == 0) && (close.compareTo(other.getClose()) == 0));
-
-            // Not sure if  Objects.equals(joint, other.getJointClient()) replaces the jointClient comparison above
         } else {
             return false;
         }

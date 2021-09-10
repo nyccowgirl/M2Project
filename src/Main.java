@@ -63,9 +63,7 @@ public class Main {
             {
                 Credit creditAcc = (Credit) childrenAccounts[i];
                 System.out.println("\n\nThe current array member " + i  + ": is of type of Credit account ");
-//                System.out.println(creditAcc.getJointClient());
-//                System.out.println(childrenAccounts[i].getJointClient());
-//                System.out.println(Objects.equals(creditAcc.getJointClient(), childrenAccounts[i].getJointClient()));
+
                 if (creditAcc.equals(childrenAccounts[i]))
                 {
                     System.out.println("Following CreditAcc:\n " + creditAcc + "\n\n and array member:\n\n "
