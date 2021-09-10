@@ -19,7 +19,7 @@ public abstract class Account<T extends Comparable<? super T>> implements Compar
     private final static boolean DEFAULT_JOINT = false;
     private final static Client DEFAULT_JOINT_CLIENT = null;
     private final static LocalDate DEFAULT_OPEN_DATE = LocalDate.now();
-    private final static int DEFAULT_CLOSE_TERM = 50;
+    private final static int DEFAULT_CLOSE_TERM = 100;
 
     // Constructors
     // Utilizing automatic assignment of account number
@@ -139,7 +139,7 @@ public abstract class Account<T extends Comparable<? super T>> implements Compar
 
     public boolean setClose(LocalDate close) {
         // Updates close date if it is same or a later date than open date
-        if (open.compareTo(close) <= 0) {
+        if ((open.compareTo(close) <= 0) && (close.compareTo(LocalDate.now()) <= 0)) {
             this.close = close;
             balance = 0;
             this.status = Status.INACTIVE;                                      // M2 HOMEWORK ENUM USE
@@ -237,4 +237,6 @@ public abstract class Account<T extends Comparable<? super T>> implements Compar
     public void reactivate() {                                              // M2 HOMEWORK ENUM USE
         status = Status.ACTIVE;
     }
+
+    // TO DO: Add helper method to check if close date is expired and should be extended.
 }
