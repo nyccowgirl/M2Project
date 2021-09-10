@@ -162,7 +162,7 @@ public abstract class Account<T extends Comparable<? super T>> implements Compar
                 "\n\tAccount Balance: " + balance +
                 "\n\tJoint Account: " + (joint ? "yes" : "no") +
                 "\n\tJoint ID: " + (joint ? jointClient.getClientId() : "N/A") +
-                "\n\tOpen Date: " + open + "\tClose Date: " + close +
+                "\n\tOpen Date: " + open + "\tClose Date: " + (status != Status.INACTIVE ? "N/A" : close) +
                 "\n\tStatus: " + status.getAbbreviation();                      // M2 HOMEWORK ENUM USE
     }
 
@@ -187,6 +187,7 @@ public abstract class Account<T extends Comparable<? super T>> implements Compar
     // compareTo
     @Override
     public int compareTo(Account<T> obj) {
+//        return accountName.compareTo(obj.getAccountName());
         if (Double.compare(balance, obj.getBalance()) != 0) {
             return Double.compare(balance, obj.getBalance());
         } else {
