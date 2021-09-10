@@ -174,13 +174,19 @@ public class Checking extends Account {
 
     // Getters and Setters
     @Override
+    public void setBalance(double balance) {                        // M2 HOMEWORK STATIC
+        Checking.totalCheckingBalances += (balance - super.getBalance());
+        super.setBalance(balance);
+    }
+
+    @Override
     public boolean setClose(LocalDate close) {                      // M2 HOMEWORK STATIC
         double currentBalance = super.getBalance();
-        if (super.setClose(close)) {
+        if (!super.setClose(close)) {
             Checking.totalCheckingBalances -= currentBalance;
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
     }
 
@@ -237,5 +243,10 @@ public class Checking extends Account {
                 Checking.totalCheckingBalances -= amount;
             }
         }
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
     }
 }

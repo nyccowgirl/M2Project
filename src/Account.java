@@ -1,10 +1,8 @@
 import java.time.LocalDate;
-//import java.util.Random;
 import java.lang.Math;
 import java.util.Objects;
 
-//public abstract class Account<Client extends Comparable<? super Client>> implements Comparable<Account<Client>> {
-public abstract class Account {
+public abstract class Account<T extends Comparable<? super T>> implements Comparable<Account<T>> {
 
     private int accountNo;              // This should be unique so would not have a default (see static variable)
     private String accountName;         // Default account name should be at child class
@@ -14,13 +12,14 @@ public abstract class Account {
     private Client jointClient;         // Default to null if joint is false
     private LocalDate open;             // Represents date (year, month, day (yyyy-MM-dd))
     private LocalDate close;
+    private Status status;                                          // M2 HOMEWORK ENUM USE
 
     private static int nextAccountNo = 1;                           // M2 HOMEWORK STATIC
     private final static double DEFAULT_BALANCE = 0;
     private final static boolean DEFAULT_JOINT = false;
     private final static Client DEFAULT_JOINT_CLIENT = null;
     private final static LocalDate DEFAULT_OPEN_DATE = LocalDate.now();
-    private final static int DEFAULT_CLOSE_TERM = 100;
+    private final static int DEFAULT_CLOSE_TERM = 50;
 
     // Constructors
     // Utilizing automatic assignment of account number
@@ -35,6 +34,7 @@ public abstract class Account {
         this.jointClient = jointClient;
         this.open = open;
         this.close = open.plusYears(DEFAULT_CLOSE_TERM);
+        this.status = Status.ACTIVE;                                // M2 HOMEWORK ENUM USE
     }
 
     public Account(String accountName, Client client, double balance, boolean joint, Client jointClient) {
@@ -69,16 +69,6 @@ public abstract class Account {
     public int getAccountNo() {
         return accountNo;
     }
-
-    /*
-    If new account number is needed, then old account should be closed in order to properly calculate total balances
-    opened for all accounts. Would need new account instance set up.
-
-    public void setAccountNo() {
-        this.accountNo = nextAccountNo;
-        nextAccountNo++;
-    }
-     */
 
     public String getAccountName() {
         return accountName;
@@ -115,7 +105,7 @@ public abstract class Account {
         this.joint = joint;
 
         if (joint && (jointClient == null)) {
-            System.out.println("Please update joint ID.");
+            System.out.println("Please update joint client.");
         } else if (!joint) {
             jointClient = DEFAULT_JOINT_CLIENT;
         }
@@ -138,7 +128,9 @@ public abstract class Account {
     }
 
     public void setOpen(LocalDate open) {
-        this.open = open;
+        if (open.compareTo(close) <= 0) {
+            this.open = open;
+        }
     }
 
     public LocalDate getClose() {
@@ -147,13 +139,18 @@ public abstract class Account {
 
     public boolean setClose(LocalDate close) {
         // Updates close date if it is same or a later date than open date
-        if (close.compareTo(open) >= 0) {
+        if (open.compareTo(close) <= 0) {
             this.close = close;
             balance = 0;
+            this.status = Status.INACTIVE;                                      // M2 HOMEWORK ENUM USE
             return true;
         } else {
             return false;
         }
+    }
+
+    public Status getStatus() {                                                 // M2 HOMEWORK ENUM USE
+        return status;
     }
 
     // toString
@@ -165,23 +162,35 @@ public abstract class Account {
                 "\n\tAccount Balance: " + balance +
                 "\n\tJoint Account: " + (joint ? "yes" : "no") +
                 "\n\tJoint ID: " + (joint ? jointClient.getClientId() : "N/A") +
-                "\n\tOpen Date: " + open +
-                "\n\tClose Date: " + close;
+                "\n\tOpen Date: " + open + "\tClose Date: " + close +
+                "\n\tStatus: " + status.getAbbreviation();                      // M2 HOMEWORK ENUM USE
     }
 
     // equals
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Account) {
-            Account other = (Account) obj;
+        if (obj instanceof Account<?>) {
+            @SuppressWarnings("unchecked")
+            Account<T> other = (Account<T>) obj;
             return (accountNo == other.getAccountNo() &&
                     accountName.equalsIgnoreCase(other.getAccountName()) &&
                     client.equals(other.client) && (Math.abs(balance - other.getBalance()) < .01) &&
                     joint == other.isJoint() &&
                     Objects.equals(jointClient, other.getJointClient()) &&
-                    (open.compareTo(other.getOpen()) == 0) && (close.compareTo(other.getClose()) == 0));
+                    (open.compareTo(other.getOpen()) == 0) && (close.compareTo(other.getClose()) == 0) &&
+                    status.equals(other.getStatus()));                          // M2 HOMEWORK ENUM USE
         } else {
             return false;
+        }
+    }
+
+    // compareTo
+    @Override
+    public int compareTo(Account<T> obj) {
+        if (Double.compare(balance, obj.getBalance()) != 0) {
+            return Double.compare(balance, obj.getBalance());
+        } else {
+            return open.compareTo(obj.getOpen());
         }
     }
 
@@ -189,6 +198,8 @@ public abstract class Account {
     public void deposit(double amount) {
         if (amount < 0) {
             System.out.println("Deposit cannot be negative.");
+        } else if (status == Status.SUSPENDED || status == Status.INACTIVE) {   // M2 HOMEWORK ENUM USE
+            System.out.println("Account is closed or suspended.");
         } else {
             this.balance += amount;
             printBalance();
@@ -219,11 +230,11 @@ public abstract class Account {
         System.out.println("Current balance: " + balance);
     }
 
-//    public static int generateAccountNumber()
-//    {
-//        Random rand = new Random();
-//        int newAccountNumber = rand.nextInt(1000000000);
-//
-//        return newAccountNumber;
-//    }
+    public void suspend() {
+        status = Status.SUSPENDED;                                          // M2 HOMEWORK ENUM USE
+    }
+
+    public void reactivate() {                                              // M2 HOMEWORK ENUM USE
+        status = Status.ACTIVE;
+    }
 }
