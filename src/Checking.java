@@ -186,7 +186,7 @@ public class Checking extends Account {
     @Override
     public void withdrawal(double amount) {
         if (overdraftProtection) {
-            super.setBalance(getBalance() + amount);            // Currently withdrawal is meant to be - balance
+            super.setBalance(getBalance() - amount);
             super.printBalance();
         } else {
             super.withdrawal(amount);

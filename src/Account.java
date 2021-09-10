@@ -6,13 +6,13 @@ import java.util.Objects;
 //public abstract class Account<Client extends Comparable<? super Client>> implements Comparable<Account<Client>> {
 public abstract class Account {
 
-    private int accountNo;          // This should be unique so would not have a default (see static variable)
-    private String accountName;     // Default account name should be at child class
-    private Client client;           // Future versions would have this and jointD be Client objects
+    private int accountNo;              // This should be unique so would not have a default (see static variable)
+    private String accountName;         // Default account name should be at child class
+    private Client client;
     private double balance;
-    private boolean joint;          // Maybe only add in personal account if we separate client types further
-    private Client jointClient;            // Default to -1 if joint is false
-    private LocalDate open;         // Represents date (year, month, day (yyyy-MM-dd))
+    private boolean joint;              // Maybe only add in personal account if we separate client types further
+    private Client jointClient;         // Default to null if joint is false
+    private LocalDate open;             // Represents date (year, month, day (yyyy-MM-dd))
     private LocalDate close;
 
     private static int nextAccountNo = 1;                           // M2 HOMEWORK STATIC
@@ -26,8 +26,8 @@ public abstract class Account {
     // Utilizing automatic assignment of account number
     public Account(String accountName, Client client, double balance, boolean joint, Client jointClient,
                    LocalDate open) {
-        this.accountNo = nextAccountNo;                         // M2 HOMEWORK STATIC
-        nextAccountNo++;                                        // M2 HOMEWORK STATIC
+        this.accountNo = nextAccountNo;                             // M2 HOMEWORK STATIC
+        nextAccountNo++;                                            // M2 HOMEWORK STATIC
         this.accountName = accountName;
         this.client = client;
         this.balance = balance;
@@ -70,10 +70,15 @@ public abstract class Account {
         return accountNo;
     }
 
+    /*
+    If new account number is needed, then old account should be closed in order to properly calculate total balances
+    opened for all accounts. Would need new account instance set up.
+
     public void setAccountNo() {
-        this.accountNo = nextAccountNo;                             // M2 HOMEWORK STATIC
-        nextAccountNo++;                                            // M2 HOMEWORK STATIC
+        this.accountNo = nextAccountNo;
+        nextAccountNo++;
     }
+     */
 
     public String getAccountName() {
         return accountName;
@@ -140,10 +145,14 @@ public abstract class Account {
         return close;
     }
 
-    public void setClose(LocalDate close) {
+    public boolean setClose(LocalDate close) {
         // Updates close date if it is same or a later date than open date
         if (close.compareTo(open) >= 0) {
             this.close = close;
+            balance = 0;
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -186,15 +195,13 @@ public abstract class Account {
         }
     }
 
-    // Currently have amount as negative for withdrawals since Credit balances would be negative; however, if it
-    // makes more sense to change to positive, adjust formulas throughout.
     public void withdrawal(double amount) {
-        if (amount > 0) {
-            System.out.println("Withdrawal should be negative.");
-        } else if (Math.abs(amount) > balance) {
+        if (amount < 0) {
+            System.out.println("Reflect withdrawal as positive amount.");
+        } else if (amount > balance) {
             System.out.println("Insufficient funds");
         } else {
-            this.balance += amount;
+            this.balance -= amount;
             printBalance();
         }
     }

@@ -426,7 +426,7 @@ public class Credit extends Account {
     @Override
     public void withdrawal(double amount) {
         double remainingCredit = creditLine + getBalance();         // balance is reflected as negative for credit
-        if (remainingCredit < 0 || (-amount > remainingCredit)) {
+        if (remainingCredit < 0 || (amount > remainingCredit)) {
             System.out.println("Insufficient credit line.");
         } else {
             super.withdrawal(amount);
