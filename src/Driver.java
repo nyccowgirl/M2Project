@@ -15,7 +15,7 @@ public class Driver {
 
         ArrayList<Bank> branchList = new ArrayList<>();
 
-        Bank branch1 = new Bank(Corporate.CORPORATE.name(), Corporate.CORPORATE.getAddress());
+        Bank branch1 = new Bank(Corporate.CORPORATE.name(), Corporate.CORPORATE.getAddress());  // M2 HOMEWORK ENUM USE
         Bank branch2 = new Bank("Branch 789", "Vatican City");
         Bank branch3 = new Bank("Branch 654", "Machu Picchu");
 

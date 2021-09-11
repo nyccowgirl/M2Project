@@ -80,5 +80,5 @@ public class Client implements Comparable<Client> {
     // CLASS-SPECIFIC METHODS
     public static int getTotalClients() {                                                        // M2 HOMEWORK STATIC
         return nextClientID - 1;
-    }
+    }                           // M2 HOMEWORK STATIC
 }
