@@ -1,7 +1,5 @@
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.lang.Math;
-import java.math.RoundingMode;
 
 public class Credit extends Account {
     private LocalDate maturityDate;
@@ -13,7 +11,7 @@ public class Credit extends Account {
     private static final int DEFAULT_MATURITY_TERM = 5;
     private static final BigDecimal DEFAULT_CREDIT_LINE = new BigDecimal(5000);
 
-    // Constructors
+    // CONSTRUCTORS
     public Credit(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
                   LocalDate open, LocalDate maturityDate, BigDecimal creditLine) {
         super(accountName, client, balance, joint, jointClient, open);
@@ -451,15 +449,15 @@ public class Credit extends Account {
         addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
     }
 
-    // Getters and Setters
+    // GETTERS/SETTERS
     @Override
-    public void setBalance(BigDecimal balance) {                                    // M2 HOMEWORK STATIC
+    public void setBalance(BigDecimal balance) {                                                // M2 HOMEWORK STATIC
         Credit.totalCreditUtilization = Credit.totalCreditUtilization.add(super.getBalance().subtract(balance));
         super.setBalance(balance);
     }
 
     @Override
-    public boolean setClose(LocalDate close) {                                  // M2 HOMEWORK STATIC
+    public boolean setClose(LocalDate close) {                                                  // M2 HOMEWORK STATIC
         BigDecimal currentBalance = super.getBalance();
         if (!super.setClose(close)) {
             Credit.totalCreditUtilization = Credit.totalCreditUtilization.add(currentBalance);
@@ -493,22 +491,13 @@ public class Credit extends Account {
         }
     }
 
-    public static BigDecimal getTotalCreditLines() {                                // M2 HOMEWORK STATIC
-        return Credit.totalCreditLines;
-    }
-
-    public static BigDecimal getTotalCreditUtilization() {                          // M2 HOMEWORK STATIC
-        return Credit.totalCreditUtilization;
-    }
-
-    // toString
+    // OVERRIDE METHODS
     @Override
     public String toString() {
         return super.toString() + "\n\tMaturity Date: " + maturityDate + "\n\tCredit Limit: " +
-                creditLine.setScale(super.DECIMALS, super.ROUNDING_MODE);
+                df.format(creditLine.setScale(super.DECIMALS, super.ROUNDING_MODE));
     }
 
-    // equals
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Credit) {
@@ -520,15 +509,16 @@ public class Credit extends Account {
         }
     }
 
-    // Class-specific method
+
+    // CLASS-SPECIFIC METHODS
     @Override
-    public void deposit(BigDecimal amount) {                                        // M2 HOMEWORK STATIC
+    public void deposit(BigDecimal amount) {                                                // M2 HOMEWORK STATIC
         super.deposit(amount);
         Credit.totalCreditUtilization = Credit.totalCreditUtilization.subtract(amount);
     }
 
     @Override
-    public void withdrawal(BigDecimal amount) {                                     // M2 HOMEWORK STATIC
+    public void withdrawal(BigDecimal amount) {                                             // M2 HOMEWORK STATIC
         BigDecimal remainingCredit = creditLine.add(getBalance());         // balance is reflected as negative for credit
         if (remainingCredit.compareTo(BigDecimal.valueOf(0)) < 0 || (amount.compareTo(remainingCredit) > 0)) {
             System.out.println("Insufficient credit line.");
@@ -540,11 +530,19 @@ public class Credit extends Account {
         }
     }
 
-    public static BigDecimal totalCreditAvailable() {                       // M2 HOMEWORK STATIC
+    public static BigDecimal getTotalCreditLines() {                                // M2 HOMEWORK STATIC
+        return Credit.totalCreditLines;
+    }
+
+    public static BigDecimal getTotalCreditUtilization() {                          // M2 HOMEWORK STATIC
+        return Credit.totalCreditUtilization;
+    }
+
+    public static BigDecimal totalCreditAvailable() {                                       // M2 HOMEWORK STATIC
         return Credit.totalCreditLines.subtract(Credit.totalCreditUtilization);
     }
 
-    // Helper methods
+    // HELPER METHOD
     private void addTotalCredit(BigDecimal balance, BigDecimal creditLine) {
         Credit.totalCreditLines = Credit.totalCreditLines.add(creditLine);                  // M2 HOMEWORK STATIC
         Credit.totalCreditUtilization = Credit.totalCreditUtilization.subtract(balance);    // M2 HOMEWORK STATIC

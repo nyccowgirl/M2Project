@@ -1,18 +1,17 @@
 public class Client implements Comparable<Client> {
 
-    // Future versions: consider adding in Bank object for branch that services each client and to link the classes.
     private int clientId;
     private String clientName;
     private String clientAddress;
     private Bank branch;
 
-    private static int nextClientID = 1;                            // M2 HOMEWORK STATIC
+    private static int nextClientID = 1;                                                // M2 HOMEWORK STATIC
     private final static String DEFAULT_CLIENT_ADDRESS = "N/A";
 
-    // Constructors
+    // CONSTRUCTORS
     public Client(String clientName, String clientAddress, Bank branch) {
-        this.clientId = nextClientID;                               // M2 HOMEWORK STATIC
-        nextClientID++;                                             // M2 HOMEWORK STATIC
+        this.clientId = nextClientID;                                                   // M2 HOMEWORK STATIC
+        nextClientID++;                                                                 // M2 HOMEWORK STATIC
         this.clientName = clientName;
         this.clientAddress = clientAddress;
         this.branch = branch;
@@ -22,7 +21,7 @@ public class Client implements Comparable<Client> {
         this(clientName, DEFAULT_CLIENT_ADDRESS, branch);
     }
 
-    // Getters and Setters
+    // GETTERS/SETTERS
     public int getClientId() {
         return clientId;
     }
@@ -51,14 +50,13 @@ public class Client implements Comparable<Client> {
         this.branch = branch;
     }
 
-    // toString
+    // OVERRIDE METHODS
     @Override
     public String toString() {
         return "Client: \n\tID: " + clientId + "\n\tName: " + clientName + "\n\tAddress: " + clientAddress +
                 "\n\tBranch: " + branch.getBankId() + " " + branch.getBankName();
     }
 
-    // equals
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Client) {
@@ -77,5 +75,10 @@ public class Client implements Comparable<Client> {
         } else {
             return clientAddress.compareTo((obj.getClientAddress()));
         }
+    }
+
+    // CLASS-SPECIFIC METHODS
+    public static int getTotalClients() {                                                        // M2 HOMEWORK STATIC
+        return nextClientID - 1;
     }
 }

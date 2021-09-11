@@ -178,14 +178,14 @@ public class Checking extends Account {
 
     // Getters and Setters
     @Override
-    public void setBalance(BigDecimal balance) {                        // M2 HOMEWORK STATIC
+    public void setBalance(BigDecimal balance) {                                                // M2 HOMEWORK STATIC
 //        Checking.totalCheckingBalances += (balance - super.getBalance());
         Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(balance.subtract(super.getBalance()));
         super.setBalance(balance);
     }
 
     @Override
-    public boolean setClose(LocalDate close) {                          // M2 HOMEWORK STATIC
+    public boolean setClose(LocalDate close) {                                                  // M2 HOMEWORK STATIC
         BigDecimal currentBalance = super.getBalance();
         if (!super.setClose(close)) {
             Checking.totalCheckingBalances = Checking.totalCheckingBalances.subtract(currentBalance);
@@ -203,17 +203,12 @@ public class Checking extends Account {
         this.overdraftProtection = overdraftProtection;
     }
 
-    public static BigDecimal getTotalCheckingBalances() {               // M2 HOMEWORK STATIC
-        return Checking.totalCheckingBalances;
-    }
-
-    // toString
+    // Override Methods
     @Override
     public String toString() {
         return super.toString() + "\n\tOverdraft Protection: " + (overdraftProtection ? "yes" : "no");
     }
 
-    // equals
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Checking) {
@@ -226,18 +221,13 @@ public class Checking extends Account {
 
     // Class-Specific Methods
     @Override
-    public void deposit(BigDecimal amount) {                                // M2 HOMEWORK STATIC
+    public void deposit(BigDecimal amount) {                                                    // M2 HOMEWORK STATIC
         super.deposit(amount);
         Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(amount);
     }
-//
-//    @Override
-//    protected boolean withdrawalCheck(double amount) {                  // M2 HOMEWORK STATIC
-//        throw new IllegalAccessError();
-//    }
 
     @Override
-    public void withdrawal(BigDecimal amount) {                             // M2 HOMEWORK STATIC
+    public void withdrawal(BigDecimal amount) {                                                 // M2 HOMEWORK STATIC
         if (overdraftProtection) {
             super.setBalance(super.getBalance().subtract(amount));
             Checking.totalCheckingBalances = Checking.totalCheckingBalances.subtract(amount);
@@ -248,5 +238,10 @@ public class Checking extends Account {
                 Checking.totalCheckingBalances = Checking.totalCheckingBalances.subtract(amount);
             }
         }
+    }
+
+    // CLASS-SPECIFIC METHOD
+    public static BigDecimal getTotalCheckingBalances() {                                       // M2 HOMEWORK STATIC
+        return Checking.totalCheckingBalances;
     }
 }

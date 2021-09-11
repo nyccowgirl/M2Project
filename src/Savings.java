@@ -88,7 +88,7 @@ public class Savings extends Account {
         Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
     }
 
-    // Getter and Setter
+    // GETTERS/SETTERS
     @Override
     public void setBalance(BigDecimal balance) {                                                // M2 HOMEWORK STATIC
         Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance.subtract(super.getBalance()));
@@ -106,11 +106,7 @@ public class Savings extends Account {
         }
     }
 
-    public static BigDecimal getTotalSavingsBalance() {             // M2 HOMEWORK STATIC
-        return Savings.totalSavingsBalances;
-    }
-
-    // Class-specific methods
+    // OVERRIDE METHODS
     @Override
     public void deposit(BigDecimal amount) {                                                    // M2 HOMEWORK STATIC
         super.deposit(amount);
@@ -118,10 +114,16 @@ public class Savings extends Account {
     }
 
     @Override
-    public void withdrawal(BigDecimal amount) {                                                     // M2 HOMEWORK STATIC
+    public void withdrawal(BigDecimal amount) {                                                 // M2 HOMEWORK STATIC
         if (super.withdrawalCheck(amount)) {
             super.withdrawal(amount);
             Savings.totalSavingsBalances = Savings.totalSavingsBalances.subtract(amount);
         }
     }
+
+    // CLASS-SPECIFIC METHOD
+    public static BigDecimal getTotalSavingsBalance() {                                         // M2 HOMEWORK STATIC
+        return Savings.totalSavingsBalances;
+    }
+
 }

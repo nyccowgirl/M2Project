@@ -1,5 +1,5 @@
 public enum Corporate {
-    CORPORATE("CORP");
+    CORPORATE("CORP"), HEADQUARTERS("HQ");
     String address = "N/A";
 
     String abbreviation;
