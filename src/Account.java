@@ -1,13 +1,14 @@
 import java.time.LocalDate;
-import java.lang.Math;
 import java.util.Objects;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public abstract class Account implements Comparable<Account> {
 
     private int accountNo;              // This should be unique so would not have a default (see static variable)
     private String accountName;         // Default account name should be at child class
     private Client client;
-    private double balance;
+    private BigDecimal balance;
     private boolean joint;              // Maybe only add in personal account if we separate client types further
     private Client jointClient;         // Default to null if joint is false
     private LocalDate open;             // Represents date (year, month, day (yyyy-MM-dd))
@@ -15,7 +16,9 @@ public abstract class Account implements Comparable<Account> {
     private Status status;                                          // M2 HOMEWORK ENUM USE
 
     private static int nextAccountNo = 1;                           // M2 HOMEWORK STATIC
-    private final static double DEFAULT_BALANCE = 0;
+    protected static int DECIMALS = 2;
+    protected static RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
+    private final static BigDecimal DEFAULT_BALANCE = new BigDecimal(0);
     private final static boolean DEFAULT_JOINT = false;
     private final static Client DEFAULT_JOINT_CLIENT = null;
     private final static LocalDate DEFAULT_OPEN_DATE = LocalDate.now();
@@ -23,7 +26,7 @@ public abstract class Account implements Comparable<Account> {
 
     // Constructors
     // Utilizing automatic assignment of account number
-    public Account(String accountName, Client client, double balance, boolean joint, Client jointClient,
+    public Account(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
                    LocalDate open) {
         this.accountNo = nextAccountNo;                             // M2 HOMEWORK STATIC
         nextAccountNo++;                                            // M2 HOMEWORK STATIC
@@ -37,11 +40,11 @@ public abstract class Account implements Comparable<Account> {
         this.status = Status.ACTIVE;                                // M2 HOMEWORK ENUM USE
     }
 
-    public Account(String accountName, Client client, double balance, boolean joint, Client jointClient) {
+    public Account(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient) {
         this(accountName, client, balance, joint, jointClient, DEFAULT_OPEN_DATE);
     }
 
-    public Account(String accountName, Client client, double balance, LocalDate open) {
+    public Account(String accountName, Client client, BigDecimal balance, LocalDate open) {
         this(accountName, client, balance, DEFAULT_JOINT, DEFAULT_JOINT_CLIENT, open);
     }
 
@@ -49,7 +52,7 @@ public abstract class Account implements Comparable<Account> {
         this(accountName, client, DEFAULT_BALANCE, joint, jointClient, open);
     }
 
-    public Account(String accountName, Client client, double balance) {
+    public Account(String accountName, Client client, BigDecimal balance) {
         this(accountName, client, balance, DEFAULT_JOINT, DEFAULT_JOINT_CLIENT, DEFAULT_OPEN_DATE);
     }
 
@@ -87,13 +90,13 @@ public abstract class Account implements Comparable<Account> {
         this.client = client;
     }
 
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
     // Consider in future versions whether this should be an option or if all balances default to zero and only
     // deposit and withdrawal methods are used.
-    public void setBalance(double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
@@ -141,7 +144,7 @@ public abstract class Account implements Comparable<Account> {
         // Updates close date if it is same or a later date than open date
         if ((open.compareTo(close) <= 0) && (close.compareTo(LocalDate.now()) <= 0)) {
             this.close = close;
-            balance = 0;
+            balance = DEFAULT_BALANCE;
             this.status = Status.INACTIVE;                                      // M2 HOMEWORK ENUM USE
             return true;
         } else {
@@ -159,7 +162,7 @@ public abstract class Account implements Comparable<Account> {
         return "Account: \n\tAccount No.: " + accountNo +
                 "\n\tAccount Name: " + accountName +
                 "\n\tClient ID: " + client.getClientId() +
-                "\n\tAccount Balance: " + balance +
+                "\n\tAccount Balance: " + balance.setScale(DECIMALS, ROUNDING_MODE) +
                 "\n\tJoint Account: " + (joint ? "yes" : "no") +
                 "\n\tJoint ID: " + (joint ? jointClient.getClientId() : "N/A") +
                 "\n\tOpen Date: " + open + "\tClose Date: " + (status != Status.INACTIVE ? "N/A" : close) +
@@ -174,7 +177,7 @@ public abstract class Account implements Comparable<Account> {
             Account other = (Account) obj;
             return (accountNo == other.getAccountNo() &&
                     accountName.equalsIgnoreCase(other.getAccountName()) &&
-                    client.equals(other.client) && (Math.abs(balance - other.getBalance()) < .01) &&
+                    client.equals(other.client) && balance.equals(other.getBalance()) &&
                     joint == other.isJoint() &&
                     Objects.equals(jointClient, other.getJointClient()) &&
                     (open.compareTo(other.getOpen()) == 0) && (close.compareTo(other.getClose()) == 0) &&
@@ -188,38 +191,38 @@ public abstract class Account implements Comparable<Account> {
     @Override
     public int compareTo(Account obj) {
 //        return accountName.compareTo(obj.getAccountName());
-        if (Double.compare(balance, obj.getBalance()) != 0) {
-            return Double.compare(balance, obj.getBalance());
+        if (balance.compareTo(obj.getBalance()) != 0) {
+            return balance.compareTo(obj.getBalance());
         } else {
             return open.compareTo(obj.getOpen());
         }
     }
 
     // Class-Specific Methods
-    public void deposit(double amount) {
-        if (amount < 0) {
+    public void deposit(BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.valueOf(0)) < 0) {
             System.out.println("Deposit cannot be negative.");
         } else if (status == Status.SUSPENDED || status == Status.INACTIVE) {   // M2 HOMEWORK ENUM USE
             System.out.println("Account is closed or suspended.");
         } else {
-            this.balance += amount;
+            this.balance = balance.add(amount);
             printBalance();
         }
     }
 
-    public void withdrawal(double amount) {
+    public void withdrawal(BigDecimal amount) {
         if (withdrawalCheck(amount)) {
-            this.balance -= amount;
+            this.balance = balance.subtract(amount);
             printBalance();
         }
     }
 
     // Helper method
-    protected boolean withdrawalCheck(double amount) {
-        if (amount < 0) {
+    protected boolean withdrawalCheck(BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.valueOf(0)) < 0) {
             System.out.println("Reflect withdrawal as positive amount.");
             return false;
-        } else if (amount > balance) {
+        } else if (amount.compareTo(balance) > 0) {
             System.out.println("Insufficient funds");
             return false;
         } else {
