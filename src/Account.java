@@ -2,7 +2,7 @@ import java.time.LocalDate;
 import java.lang.Math;
 import java.util.Objects;
 
-public abstract class Account<T extends Comparable<? super T>> implements Comparable<Account<T>> {
+public abstract class Account implements Comparable<Account> {
 
     private int accountNo;              // This should be unique so would not have a default (see static variable)
     private String accountName;         // Default account name should be at child class
@@ -169,9 +169,9 @@ public abstract class Account<T extends Comparable<? super T>> implements Compar
     // equals
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Account<?>) {
-            @SuppressWarnings("unchecked")
-            Account<T> other = (Account<T>) obj;
+        if (obj instanceof Account) {
+//            @SuppressWarnings("unchecked")
+            Account other = (Account) obj;
             return (accountNo == other.getAccountNo() &&
                     accountName.equalsIgnoreCase(other.getAccountName()) &&
                     client.equals(other.client) && (Math.abs(balance - other.getBalance()) < .01) &&
@@ -186,7 +186,7 @@ public abstract class Account<T extends Comparable<? super T>> implements Compar
 
     // compareTo
     @Override
-    public int compareTo(Account<T> obj) {
+    public int compareTo(Account obj) {
 //        return accountName.compareTo(obj.getAccountName());
         if (Double.compare(balance, obj.getBalance()) != 0) {
             return Double.compare(balance, obj.getBalance());

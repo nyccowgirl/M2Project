@@ -127,9 +127,4 @@ public class Savings extends Account {
             Savings.totalSavingsBalances -= amount;
         }
     }
-
-    @Override
-    public int compareTo(Object o) {
-        return 0;
-    }
 }

@@ -598,9 +598,4 @@ public class Credit extends Account {
     public static double totalCreditAvailable() {                       // M2 HOMEWORK STATIC
         return Credit.totalCreditLines - Credit.totalCreditUtilization;
     }
-
-    @Override
-    public int compareTo(Object o) {
-        return 0;
-    }
 }

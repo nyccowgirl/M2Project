@@ -244,9 +244,4 @@ public class Checking extends Account {
             }
         }
     }
-
-    @Override
-    public int compareTo(Object o) {
-        return 0;
-    }
 }
