@@ -7,447 +7,488 @@ public class Credit extends Account {
 
     private static BigDecimal totalCreditLines = new BigDecimal(0);                     // M2 HOMEWORK STATIC
     private static BigDecimal totalCreditUtilization = new BigDecimal(0);               // M2 HOMEWORK STATIC
-    private static final String DEFAULT_CREDIT_NAME = "General Credit Line";
+//    private static final String DEFAULT_CREDIT_NAME = "General Credit Line";
     private static final int DEFAULT_MATURITY_TERM = 5;
-    private static final BigDecimal DEFAULT_CREDIT_LINE = new BigDecimal(5000);
+//    private static final BigDecimal DEFAULT_CREDIT_LINE = new BigDecimal(5000);
 
     // CONSTRUCTORS
-    public Credit(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
-                  LocalDate open, LocalDate maturityDate, BigDecimal creditLine) {
-        super(accountName, client, balance, joint, jointClient, open);
-        this.maturityDate = maturityDate;
-        this.creditLine = creditLine;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+    private Credit(Builder builder) {
+        super(builder);
+        this.maturityDate = builder.maturityDate;
+        this.creditLine = builder.creditLine;
     }
 
-    public Credit(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
-                  LocalDate open, BigDecimal creditLine) {
-        super(accountName, client, balance, joint, jointClient, open);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = creditLine;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
+    public static class Builder extends Account.Builder<Builder> {
 
-    public Credit(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
-                  LocalDate open, LocalDate maturityDate) {
-        super(accountName, client, balance, joint, jointClient, open);
-        this.maturityDate = maturityDate;
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
+        private LocalDate maturityDate = super.build().getOpen().plusYears(DEFAULT_MATURITY_TERM);
+        private BigDecimal creditLine = new BigDecimal(5000);
 
-    public Credit(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
-                  LocalDate open) {
-        super(accountName, client, balance, joint, jointClient, open);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
+//        private String accountName = "General Credit Line";
 
-    public Credit(Client client, BigDecimal balance, boolean joint, Client jointClient, LocalDate open,
-                  LocalDate maturityDate, BigDecimal creditLine) {
-        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient, open);
-        this.maturityDate = maturityDate;
-        this.creditLine = creditLine;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
+        public Builder(Client client) {
+            super(client);
+//            accountName(accountName);
+        }
 
-    public Credit(Client client, BigDecimal balance, boolean joint, Client jointClient, LocalDate open,
-                  BigDecimal creditLine) {
-        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient, open);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = creditLine;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
+//        @Override
+//        public Savings.Builder accountName() {
+//            this.accountName = accountName;
+//            return this;
+//        }
 
-    public Credit(Client client, BigDecimal balance, boolean joint, Client jointClient, LocalDate open,
-                  LocalDate maturityDate) {
-        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient, open);
-        this.maturityDate = maturityDate;
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
+        public Builder maturityDate(LocalDate maturityDate) {
+            if (maturityDate.compareTo(super.build().getOpen()) >= 0) {
+                this.maturityDate = maturityDate;
+            }
+            return this;
+        }
 
-    public Credit(Client client, BigDecimal balance, boolean joint, Client jointClient, LocalDate open) {
-        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient, open);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
+        public Builder creditLine(BigDecimal creditLine) {
+            this.creditLine = creditLine;
+            return this;
+        }
 
-    public Credit(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
-                  BigDecimal creditLine, LocalDate maturityDate) {
-        super(accountName, client, balance, joint, jointClient);
-        this.maturityDate = maturityDate;
-        this.creditLine = creditLine;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+        // IS THIS NEEDED IF EVERYTHING IS CASTED?
+        public Credit build() {
+            return new Credit(this);
+        }
     }
-
-    public Credit(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
-                  BigDecimal creditLine) {
-        super(accountName, client, balance, joint, jointClient);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = creditLine;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, BigDecimal balance, boolean joint, LocalDate maturityDate,
-                  Client jointClient) {
-        super(accountName, client, balance, joint, jointClient);
-        this.maturityDate = maturityDate;
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient) {
-        super(accountName, client, balance, joint, jointClient);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, BigDecimal balance, boolean joint, Client jointClient, BigDecimal creditLine,
-                  LocalDate maturityDate) {
-        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient);
-        this.maturityDate = maturityDate;
-        this.creditLine = creditLine;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, BigDecimal balance, boolean joint, Client jointClient, BigDecimal creditLine) {
-        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = creditLine;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, BigDecimal balance, boolean joint, LocalDate maturityDate, Client jointClient) {
-        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient);
-        this.maturityDate = maturityDate;
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, BigDecimal balance, boolean joint, Client jointClient) {
-        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, BigDecimal balance, LocalDate open, LocalDate maturityDate,
-                  BigDecimal creditLine) {
-        super(accountName, client, balance, open);
-        this.maturityDate = maturityDate;
-        this.creditLine = creditLine;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, BigDecimal balance, LocalDate open, BigDecimal creditLine) {
-        super(accountName, client, balance, open);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = creditLine;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, BigDecimal balance, LocalDate open, LocalDate maturityDate) {
-        super(accountName, client, balance, open);
-        this.maturityDate = maturityDate;
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, BigDecimal balance, LocalDate open) {
-        super(accountName, client, balance, open);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, boolean joint, Client jointClient, LocalDate open,
-                  LocalDate maturityDate, BigDecimal creditLine) {
-        super(accountName, client, joint, jointClient, open);
-        this.maturityDate = maturityDate;
-        this.creditLine = creditLine;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, boolean joint, Client jointClient, LocalDate open,
-                  BigDecimal creditLine) {
-        super(accountName, client, joint, jointClient, open);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = creditLine;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, boolean joint, Client jointClient, LocalDate open,
-                  LocalDate maturityDate) {
-        super(accountName, client, joint, jointClient, open);
-        this.maturityDate = maturityDate;
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, boolean joint, Client jointClient, LocalDate open) {
-        super(accountName, client, joint, jointClient, open);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, boolean joint, Client jointClient, LocalDate open, LocalDate maturityDate,
-                  BigDecimal creditLine) {
-        super(DEFAULT_CREDIT_NAME, client, joint, jointClient, open);
-        this.maturityDate = maturityDate;
-        this.creditLine = creditLine;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, boolean joint, Client jointClient, LocalDate open, BigDecimal creditLine) {
-        super(DEFAULT_CREDIT_NAME, client, joint, jointClient, open);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = creditLine;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, boolean joint, Client jointClient, LocalDate open, LocalDate maturityDate) {
-        super(DEFAULT_CREDIT_NAME, client, joint, jointClient, open);
-        this.maturityDate = maturityDate;
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, boolean joint, Client jointClient, LocalDate open) {
-        super(DEFAULT_CREDIT_NAME, client, joint, jointClient, open);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, BigDecimal balance, BigDecimal creditLine, LocalDate maturityDate) {
-        super(accountName, client, balance);
-        this.maturityDate = maturityDate;
-        this.creditLine = creditLine;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, BigDecimal balance, BigDecimal creditLine) {
-        super(accountName, client, balance);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = creditLine;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, LocalDate maturityDate, BigDecimal balance) {
-        super(accountName, client, balance);
-        this.maturityDate = maturityDate;
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, BigDecimal balance) {
-        super(accountName, client, balance);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, BigDecimal balance, LocalDate maturityDate, BigDecimal creditLine) {
-        super(DEFAULT_CREDIT_NAME, client, balance);
-        this.maturityDate = maturityDate;
-        this.creditLine = creditLine;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, BigDecimal balance, BigDecimal creditLine) {
-        super(DEFAULT_CREDIT_NAME, client, balance);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = creditLine;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, BigDecimal balance, LocalDate maturityDate) {
-        super(DEFAULT_CREDIT_NAME, client, balance);
-        this.maturityDate = maturityDate;
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, BigDecimal balance) {
-        super(DEFAULT_CREDIT_NAME, client, balance);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, boolean joint, Client jointClient, BigDecimal creditLine,
-                  LocalDate maturityDate) {
-        super(accountName, client, joint, jointClient);
-        this.maturityDate = maturityDate;
-        this.creditLine = creditLine;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, boolean joint, Client jointClient, BigDecimal creditLine) {
-        super(accountName, client, joint, jointClient);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = creditLine;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, boolean joint, LocalDate maturityDate, Client jointClient) {
-        super(accountName, client, joint, jointClient);
-        this.maturityDate = maturityDate;
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, boolean joint, Client jointClient) {
-        super(accountName, client, joint, jointClient);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, boolean joint, Client jointClient, BigDecimal creditLine, LocalDate maturityDate) {
-        super(DEFAULT_CREDIT_NAME, client, joint, jointClient);
-        this.maturityDate = maturityDate;
-        this.creditLine = creditLine;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, boolean joint, Client jointClient, BigDecimal creditLine) {
-        super(DEFAULT_CREDIT_NAME, client, joint, jointClient);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = creditLine;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, boolean joint, LocalDate maturityDate, Client jointClient) {
-        super(DEFAULT_CREDIT_NAME, client, joint, jointClient);
-        this.maturityDate = maturityDate;
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, boolean joint, Client jointClient) {
-        super(DEFAULT_CREDIT_NAME, client, joint, jointClient);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, LocalDate open, LocalDate maturityDate, BigDecimal creditLine) {
-        super(accountName, client, open);
-        this.maturityDate = maturityDate;
-        this.creditLine = creditLine;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, BigDecimal creditLine, Client client, LocalDate open) {
-        super(accountName, client, open);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = creditLine;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, LocalDate open, LocalDate maturityDate) {
-        super(accountName, client, open);
-        this.maturityDate = maturityDate;
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client, LocalDate open) {
-        super(accountName, client, open);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, LocalDate open, LocalDate maturityDate, BigDecimal creditLine) {
-        super(DEFAULT_CREDIT_NAME, client, open);
-        this.maturityDate = maturityDate;
-        this.creditLine = creditLine;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, LocalDate open, BigDecimal creditLine) {
-        super(DEFAULT_CREDIT_NAME, client, open);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = creditLine;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, LocalDate open, LocalDate maturityDate) {
-        super(DEFAULT_CREDIT_NAME, client, open);
-        this.maturityDate = maturityDate;
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client, LocalDate open) {
-        super(DEFAULT_CREDIT_NAME, client, open);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(BigDecimal creditLine, String accountName, Client client, LocalDate maturityDate) {
-        super(accountName, client);
-        this.maturityDate = maturityDate;
-        this.creditLine = creditLine;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(BigDecimal creditLine, String accountName, Client client) {
-        super(accountName, client);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = creditLine;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, LocalDate maturityDate, Client client) {
-        super(accountName, client);
-        this.maturityDate = maturityDate;
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(String accountName, Client client) {
-        super(accountName, client);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(BigDecimal creditLine, Client client, LocalDate maturityDate) {
-        super(DEFAULT_CREDIT_NAME, client);
-        this.maturityDate = maturityDate;
-        this.creditLine = creditLine;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(BigDecimal creditLine, Client client) {
-        super(DEFAULT_CREDIT_NAME, client);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = creditLine;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(LocalDate maturityDate, Client client) {
-        super(DEFAULT_CREDIT_NAME, client);
-        this.maturityDate = maturityDate;
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
-
-    public Credit(Client client) {
-        super(DEFAULT_CREDIT_NAME, client);
-        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        this.creditLine = DEFAULT_CREDIT_LINE;
-        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
-    }
+//    public Credit(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
+//                  LocalDate open, LocalDate maturityDate, BigDecimal creditLine) {
+//        super(accountName, client, balance, joint, jointClient, open);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = creditLine;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
+//                  LocalDate open, BigDecimal creditLine) {
+//        super(accountName, client, balance, joint, jointClient, open);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = creditLine;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
+//                  LocalDate open, LocalDate maturityDate) {
+//        super(accountName, client, balance, joint, jointClient, open);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
+//                  LocalDate open) {
+//        super(accountName, client, balance, joint, jointClient, open);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, BigDecimal balance, boolean joint, Client jointClient, LocalDate open,
+//                  LocalDate maturityDate, BigDecimal creditLine) {
+//        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient, open);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = creditLine;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, BigDecimal balance, boolean joint, Client jointClient, LocalDate open,
+//                  BigDecimal creditLine) {
+//        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient, open);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = creditLine;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, BigDecimal balance, boolean joint, Client jointClient, LocalDate open,
+//                  LocalDate maturityDate) {
+//        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient, open);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, BigDecimal balance, boolean joint, Client jointClient, LocalDate open) {
+//        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient, open);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
+//                  BigDecimal creditLine, LocalDate maturityDate) {
+//        super(accountName, client, balance, joint, jointClient);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = creditLine;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
+//                  BigDecimal creditLine) {
+//        super(accountName, client, balance, joint, jointClient);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = creditLine;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, BigDecimal balance, boolean joint, LocalDate maturityDate,
+//                  Client jointClient) {
+//        super(accountName, client, balance, joint, jointClient);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient) {
+//        super(accountName, client, balance, joint, jointClient);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, BigDecimal balance, boolean joint, Client jointClient, BigDecimal creditLine,
+//                  LocalDate maturityDate) {
+//        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = creditLine;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, BigDecimal balance, boolean joint, Client jointClient, BigDecimal creditLine) {
+//        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = creditLine;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, BigDecimal balance, boolean joint, LocalDate maturityDate, Client jointClient) {
+//        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, BigDecimal balance, boolean joint, Client jointClient) {
+//        super(DEFAULT_CREDIT_NAME, client, balance, joint, jointClient);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, BigDecimal balance, LocalDate open, LocalDate maturityDate,
+//                  BigDecimal creditLine) {
+//        super(accountName, client, balance, open);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = creditLine;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, BigDecimal balance, LocalDate open, BigDecimal creditLine) {
+//        super(accountName, client, balance, open);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = creditLine;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, BigDecimal balance, LocalDate open, LocalDate maturityDate) {
+//        super(accountName, client, balance, open);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, BigDecimal balance, LocalDate open) {
+//        super(accountName, client, balance, open);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, boolean joint, Client jointClient, LocalDate open,
+//                  LocalDate maturityDate, BigDecimal creditLine) {
+//        super(accountName, client, joint, jointClient, open);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = creditLine;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, boolean joint, Client jointClient, LocalDate open,
+//                  BigDecimal creditLine) {
+//        super(accountName, client, joint, jointClient, open);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = creditLine;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, boolean joint, Client jointClient, LocalDate open,
+//                  LocalDate maturityDate) {
+//        super(accountName, client, joint, jointClient, open);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, boolean joint, Client jointClient, LocalDate open) {
+//        super(accountName, client, joint, jointClient, open);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, boolean joint, Client jointClient, LocalDate open, LocalDate maturityDate,
+//                  BigDecimal creditLine) {
+//        super(DEFAULT_CREDIT_NAME, client, joint, jointClient, open);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = creditLine;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, boolean joint, Client jointClient, LocalDate open, BigDecimal creditLine) {
+//        super(DEFAULT_CREDIT_NAME, client, joint, jointClient, open);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = creditLine;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, boolean joint, Client jointClient, LocalDate open, LocalDate maturityDate) {
+//        super(DEFAULT_CREDIT_NAME, client, joint, jointClient, open);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, boolean joint, Client jointClient, LocalDate open) {
+//        super(DEFAULT_CREDIT_NAME, client, joint, jointClient, open);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, BigDecimal balance, BigDecimal creditLine, LocalDate maturityDate) {
+//        super(accountName, client, balance);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = creditLine;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, BigDecimal balance, BigDecimal creditLine) {
+//        super(accountName, client, balance);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = creditLine;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, LocalDate maturityDate, BigDecimal balance) {
+//        super(accountName, client, balance);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, BigDecimal balance) {
+//        super(accountName, client, balance);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, BigDecimal balance, LocalDate maturityDate, BigDecimal creditLine) {
+//        super(DEFAULT_CREDIT_NAME, client, balance);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = creditLine;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, BigDecimal balance, BigDecimal creditLine) {
+//        super(DEFAULT_CREDIT_NAME, client, balance);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = creditLine;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, BigDecimal balance, LocalDate maturityDate) {
+//        super(DEFAULT_CREDIT_NAME, client, balance);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, BigDecimal balance) {
+//        super(DEFAULT_CREDIT_NAME, client, balance);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(balance, creditLine);                                                     // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, boolean joint, Client jointClient, BigDecimal creditLine,
+//                  LocalDate maturityDate) {
+//        super(accountName, client, joint, jointClient);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = creditLine;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, boolean joint, Client jointClient, BigDecimal creditLine) {
+//        super(accountName, client, joint, jointClient);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = creditLine;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, boolean joint, LocalDate maturityDate, Client jointClient) {
+//        super(accountName, client, joint, jointClient);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, boolean joint, Client jointClient) {
+//        super(accountName, client, joint, jointClient);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, boolean joint, Client jointClient, BigDecimal creditLine, LocalDate maturityDate) {
+//        super(DEFAULT_CREDIT_NAME, client, joint, jointClient);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = creditLine;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, boolean joint, Client jointClient, BigDecimal creditLine) {
+//        super(DEFAULT_CREDIT_NAME, client, joint, jointClient);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = creditLine;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, boolean joint, LocalDate maturityDate, Client jointClient) {
+//        super(DEFAULT_CREDIT_NAME, client, joint, jointClient);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, boolean joint, Client jointClient) {
+//        super(DEFAULT_CREDIT_NAME, client, joint, jointClient);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, LocalDate open, LocalDate maturityDate, BigDecimal creditLine) {
+//        super(accountName, client, open);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = creditLine;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, BigDecimal creditLine, Client client, LocalDate open) {
+//        super(accountName, client, open);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = creditLine;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, LocalDate open, LocalDate maturityDate) {
+//        super(accountName, client, open);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client, LocalDate open) {
+//        super(accountName, client, open);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, LocalDate open, LocalDate maturityDate, BigDecimal creditLine) {
+//        super(DEFAULT_CREDIT_NAME, client, open);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = creditLine;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, LocalDate open, BigDecimal creditLine) {
+//        super(DEFAULT_CREDIT_NAME, client, open);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = creditLine;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, LocalDate open, LocalDate maturityDate) {
+//        super(DEFAULT_CREDIT_NAME, client, open);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client, LocalDate open) {
+//        super(DEFAULT_CREDIT_NAME, client, open);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(BigDecimal creditLine, String accountName, Client client, LocalDate maturityDate) {
+//        super(accountName, client);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = creditLine;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(BigDecimal creditLine, String accountName, Client client) {
+//        super(accountName, client);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = creditLine;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, LocalDate maturityDate, Client client) {
+//        super(accountName, client);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(String accountName, Client client) {
+//        super(accountName, client);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(BigDecimal creditLine, Client client, LocalDate maturityDate) {
+//        super(DEFAULT_CREDIT_NAME, client);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = creditLine;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(BigDecimal creditLine, Client client) {
+//        super(DEFAULT_CREDIT_NAME, client);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = creditLine;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(LocalDate maturityDate, Client client) {
+//        super(DEFAULT_CREDIT_NAME, client);
+//        this.maturityDate = maturityDate;
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Credit(Client client) {
+//        super(DEFAULT_CREDIT_NAME, client);
+//        this.maturityDate = super.getOpen().plusYears(DEFAULT_MATURITY_TERM);
+//        this.creditLine = DEFAULT_CREDIT_LINE;
+//        addTotalCredit(super.getBalance(), creditLine);                                          // M2 HOMEWORK STATIC
+//    }
 
     // GETTERS/SETTERS
     @Override

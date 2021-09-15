@@ -1,6 +1,5 @@
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.math.RoundingMode;
 
 public class Checking extends Account {
     private boolean overdraftProtection;        // Can also add overdraft limit for more complexity (or pull from Credit class)
@@ -10,25 +9,38 @@ public class Checking extends Account {
 //    private final static boolean DEFAULT_OVERDRAFT_PROTECTION = false;
 
     // Constructors
-    public Checking(AccountBuilder builder) {
+//    private Checking(CheckingBuilder builder) {
+//        super(builder);
+//    }
+
+    private Checking(Builder builder) {
         super(builder);
+        this.overdraftProtection = builder.overdraftProtection;
     }
 
-    public static class CheckingBuilder extends Account.AccountBuilder {
+    public static class Builder extends Account.Builder<Builder> {
 
-        private String accountName = "General Checking Account";
+//        private String accountName = "General Checking Account";
         private boolean overdraftProtection = false;
 
-        public CheckingBuilder(Client client) {
+        public Builder(Client client) {
             super(client);
-
-//            if
-            accountName(accountName);
         }
 
-        public CheckingBuilder overdraftProtection(boolean overdraftProtection) {
+//        @Override
+//        public Builder accountName() {
+//            this.accountName(accountName);
+//            return this;
+//        }
+
+        public Builder overdraftProtection(boolean overdraftProtection) {
             this.overdraftProtection = overdraftProtection;
             return this;
+        }
+
+        // IS THIS NEEDED IF EVERYTHING IS CASTED?
+        public Checking build() {
+            return new Checking(this);
         }
     }
 

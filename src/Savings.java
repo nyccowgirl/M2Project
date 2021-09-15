@@ -4,89 +4,114 @@ import java.time.LocalDate;
 public class Savings extends Account {
 
     private static BigDecimal totalSavingsBalances = new BigDecimal(0);                     // M2 HOMEWORK STATIC
-    private final static String DEFAULT_SAVINGS_NAME = "General Savings Account";
+//    private final static String DEFAULT_SAVINGS_NAME = "General Savings Account";
 
     // Constructors
-    public Savings(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
-                   LocalDate open) {
-        super(accountName, client, balance, joint, jointClient, open);
-        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
+
+    private Savings(Builder builder) {
+        super(builder);
     }
 
-    public Savings(Client client, BigDecimal balance, boolean joint, Client jointClient, LocalDate open) {
-        super(DEFAULT_SAVINGS_NAME, client, balance, joint, jointClient, open);
-        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
+    public static class Builder extends Account.Builder<Builder> {
+
+//        private String accountName = "General Savings Account";
+
+        public Builder(Client client) {
+            super(client);
+        }
+
+//        @Override
+//        public Builder accountName() {
+//            this.accountName(accountName);
+//            return this;
+//        }
+
+        // IS THIS NEEDED IF EVERYTHING IS CASTED?
+        public Savings build() {
+            return new Savings(this);
+        }
     }
 
-    public Savings(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient) {
-        super(accountName, client, balance, joint, jointClient);
-        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
-    }
-
-    public Savings(Client client, BigDecimal balance, boolean joint, Client jointClient) {
-        super(DEFAULT_SAVINGS_NAME, client, balance, joint, jointClient);
-        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
-    }
-
-    public Savings(String accountName, Client client, BigDecimal balance, LocalDate open) {
-        super(accountName, client, balance, open);
-        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
-    }
-
-    public Savings(Client client, BigDecimal balance, LocalDate open) {
-        super(DEFAULT_SAVINGS_NAME, client, balance, open);
-        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
-    }
-
-    public Savings(String accountName, Client client, boolean joint, Client jointClient, LocalDate open) {
-        super(accountName, client, joint, jointClient, open);
-        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
-    }
-
-    public Savings(Client client, boolean joint, Client jointClient, LocalDate open) {
-        super(DEFAULT_SAVINGS_NAME, client, joint, jointClient, open);
-        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
-    }
-
-    public Savings(String accountName, Client client, BigDecimal balance) {
-        super(accountName, client, balance);
-        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
-    }
-
-    public Savings(Client client, BigDecimal balance) {
-        super(DEFAULT_SAVINGS_NAME, client, balance);
-        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
-    }
-
-    public Savings(String accountName, Client client, boolean joint, Client jointClient) {
-        super(accountName, client, joint, jointClient);
-        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
-    }
-
-    public Savings(Client client, boolean joint, Client jointClient) {
-        super(DEFAULT_SAVINGS_NAME, client, joint, jointClient);
-        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
-    }
-
-    public Savings(String accountName, Client client, LocalDate open) {
-        super(accountName, client, open);
-        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
-    }
-
-    public Savings(Client client, LocalDate open) {
-        super(DEFAULT_SAVINGS_NAME, client, open);
-        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
-    }
-
-    public Savings(String accountName, Client client) {
-        super(accountName, client);
-        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
-    }
-
-    public Savings(Client client) {
-        super(DEFAULT_SAVINGS_NAME, client);
-        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
-    }
+//    public Savings(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
+//                   LocalDate open) {
+//        super(accountName, client, balance, joint, jointClient, open);
+//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
+//    }
+//
+//    public Savings(Client client, BigDecimal balance, boolean joint, Client jointClient, LocalDate open) {
+//        super(DEFAULT_SAVINGS_NAME, client, balance, joint, jointClient, open);
+//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
+//    }
+//
+//    public Savings(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient) {
+//        super(accountName, client, balance, joint, jointClient);
+//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
+//    }
+//
+//    public Savings(Client client, BigDecimal balance, boolean joint, Client jointClient) {
+//        super(DEFAULT_SAVINGS_NAME, client, balance, joint, jointClient);
+//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
+//    }
+//
+//    public Savings(String accountName, Client client, BigDecimal balance, LocalDate open) {
+//        super(accountName, client, balance, open);
+//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
+//    }
+//
+//    public Savings(Client client, BigDecimal balance, LocalDate open) {
+//        super(DEFAULT_SAVINGS_NAME, client, balance, open);
+//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
+//    }
+//
+//    public Savings(String accountName, Client client, boolean joint, Client jointClient, LocalDate open) {
+//        super(accountName, client, joint, jointClient, open);
+//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
+//    }
+//
+//    public Savings(Client client, boolean joint, Client jointClient, LocalDate open) {
+//        super(DEFAULT_SAVINGS_NAME, client, joint, jointClient, open);
+//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
+//    }
+//
+//    public Savings(String accountName, Client client, BigDecimal balance) {
+//        super(accountName, client, balance);
+//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
+//    }
+//
+//    public Savings(Client client, BigDecimal balance) {
+//        super(DEFAULT_SAVINGS_NAME, client, balance);
+//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
+//    }
+//
+//    public Savings(String accountName, Client client, boolean joint, Client jointClient) {
+//        super(accountName, client, joint, jointClient);
+//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
+//    }
+//
+//    public Savings(Client client, boolean joint, Client jointClient) {
+//        super(DEFAULT_SAVINGS_NAME, client, joint, jointClient);
+//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
+//    }
+//
+//    public Savings(String accountName, Client client, LocalDate open) {
+//        super(accountName, client, open);
+//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
+//    }
+//
+//    public Savings(Client client, LocalDate open) {
+//        super(DEFAULT_SAVINGS_NAME, client, open);
+//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
+//    }
+//
+//    public Savings(String accountName, Client client) {
+//        super(accountName, client);
+//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
+//    }
+//
+//    public Savings(Client client) {
+//        super(DEFAULT_SAVINGS_NAME, client);
+//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
+//    }
 
     // GETTERS/SETTERS
     @Override

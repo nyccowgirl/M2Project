@@ -27,7 +27,7 @@ public class Account implements Comparable<Account> {
     DecimalFormat df = new DecimalFormat("$#,##0.00");
 
     // Constructors
-    protected Account(AccountBuilder builder) {
+    protected Account(Builder builder) {
         this.accountNo = builder.accountNo;
         this.accountName = builder.accountName;
         this.client = builder.client;
@@ -39,7 +39,7 @@ public class Account implements Comparable<Account> {
         this.status = builder.status;
     }
 
-    public static class AccountBuilder {
+    public static class Builder<T extends Builder<T>> {
         private int accountNo;
         private Client client;
 
@@ -51,45 +51,45 @@ public class Account implements Comparable<Account> {
         private LocalDate close = open.plusYears(DEFAULT_CLOSE_TERM);
         private Status status = Status.ACTIVE;                                              // M2 HOMEWORK ENUM USE
 
-        public AccountBuilder(Client client) {
+        public Builder(Client client) {
             this.accountNo = nextAccountNo;                                                 // M2 HOMEWORK STATIC
             nextAccountNo++;                                                                // M2 HOMEWORK STATIC
             this.client = client;
         }
 
-        public AccountBuilder accountName(String accountName) {
+        public Builder accountName(String accountName) {
             this.accountName = accountName;
             return this;
         }
 
-        public AccountBuilder balance(BigDecimal balance) {
+        public T balance(BigDecimal balance) {
             this.balance = balance;
-            return this;
+            return (T) this;
         }
 
-        public AccountBuilder joint(boolean joint) {
+        public T joint(boolean joint) {
             this.joint = joint;
-            return this;
+            return (T) this;
         }
 
-        public AccountBuilder jointClient(Client jointClient) {
+        public T jointClient(Client jointClient) {
             this.jointClient = jointClient;
-            return this;
+            return (T) this;
         }
 
-        public AccountBuilder open(LocalDate open) {
+        public T open(LocalDate open) {
             this.open = open;
-            return this;
+            return (T) this;
         }
 
-        public AccountBuilder close(LocalDate close) {
+        public T close(LocalDate close) {
             this.close = close;
-            return this;
+            return (T) this;
         }
 
-        public AccountBuilder status(Status status) {
+        public T status(Status status) {
             this.status = status;
-            return this;
+            return (T) this;
         }
 
         public Account build() {

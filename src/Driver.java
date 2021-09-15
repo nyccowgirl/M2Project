@@ -1,7 +1,10 @@
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import static java.math.BigDecimal.valueOf;
 
 public class Driver {
 
@@ -69,74 +72,91 @@ public class Driver {
 
         ArrayList<Account> accountList = new ArrayList<>();
 
-        Checking checkAcct1 = (Checking) new Checking.CheckingBuilder(client1).balance(BigDecimal.valueOf(5500.5)).build();
-//        Savings savingsAcct1 = new Savings(client2, new BigDecimal(10000), LocalDate.now());
-//        Credit creditAcct1 = new Credit(new BigDecimal("10000.00"), client3);
-//        Credit creditAcct2 = new Credit(client4, new BigDecimal(-2500), new BigDecimal(5000));
-//        Savings savingsAcct2 = new Savings(client4, new BigDecimal(5000));
-//        Checking checkingAcct2 = new Checking(client3, true, client5, LocalDate.of(1998, 12, 24));
-//
-//        savingsAcct2.suspend();
-//        creditAcct1.setClose(LocalDate.now());
-//        checkingAcct2.setClose(LocalDate.now());
-//
-//        accountList.add(checkAcct1);
-//        accountList.add(checkingAcct2);
-//        accountList.add(savingsAcct1);
-//        accountList.add(savingsAcct2);
-//        accountList.add(creditAcct1);
-//        accountList.add(creditAcct2);
-//
-//        for (Account account: accountList) {
-//            if (account instanceof Checking) {
-//                Checking checking = (Checking) account;
-//                System.out.println("\nThe current account no. " + checking.getAccountNo() + " is a Checking account.");
-//
-//                System.out.println("Current balance on your checkingAccount: " + checking.getBalance());
-//                BigDecimal withdraw = new BigDecimal("1000.99");
-//                System.out.println("Withdrawal amount: " + withdraw + ". Withdrawing...");
-//                checking.withdrawal(withdraw);
-//                System.out.println("Current balance of checking Account: " + checking.getBalance());
-//            }
-//
-//            if (account instanceof Credit) {
-//                Credit credit = (Credit) account;
-//                System.out.println("\n\nThe current account no. " + credit.getAccountNo()  + " is a Credit account.");
-//
-//                System.out.println("Following Credit accounts:\n " + credit + "\n\n and :\n\n " + creditAcct1);
-//
-//                if (credit.equals(creditAcct1)) {
-//                    System.out.println("\nare equal." );
-//                } else {
-//                    System.out.println("\nare NOT equal." );
-//                }
-//            }
-//
-//            if (account instanceof Savings)
-//            {
-//                Savings savings = (Savings) account;
-//                BigDecimal depo = new BigDecimal("1000.00");
-//                System.out.println("\n\nThe current account no. " + savings.getAccountNo()  + " is a Savings account.");
-//
-//                System.out.println("Savings account balance: "  + savings.getBalance() + " before deposit.");
-//                savings.deposit(depo);
-//                System.out.println("Savings balance after $" + depo + ": " + savings.getBalance());
-//            }
-//        }
-//
-//        Collections.sort(accountList, Collections.reverseOrder());
-//
-//        System.out.println("\nSort by account balance in reverse order, then by open date:");
-//        for (Account account: accountList) {
-//            System.out.println(account);
-//            System.out.println();
-//        }
-//
-//        System.out.println("Total Number of Banks: " + Bank.getTotalBanks());
-//        System.out.println("Total Number of Clients: " + Client.getTotalClients());
-//        System.out.println("Total Number of Accounts: " + Account.getTotalAccounts());
-//        System.out.println("Total Checking Balances: " + df.format(Checking.getTotalCheckingBalances()));
-//        System.out.println("Total Savings Balances: " + df.format(Savings.getTotalSavingsBalance()));
-//        System.out.println("Total Available Credit: " + df.format(Credit.totalCreditAvailable()));
+        Checking checkAcct1 = new Checking.Builder(client1)
+                .balance(valueOf(5500.5))
+                .build();
+        Savings savingsAcct1 = new Savings.Builder(client2)
+                .balance(valueOf(10000))
+                .open(LocalDate.now())
+                .build();
+        Credit creditAcct1 = new Credit.Builder(client3)
+                .balance(valueOf(-900))
+                .maturityDate(LocalDate.of(2025, 12, 31))
+                .build();
+        Credit creditAcct2 = new Credit.Builder(client4)
+                .balance(valueOf(-2500))
+                .creditLine(valueOf(5000))
+                .build();
+        Savings savingsAcct2 = new Savings.Builder(client4)
+                .balance(valueOf(5000))
+                .build();
+        Checking checkingAcct2 = new Checking.Builder(client3)
+                .joint(true)
+                .jointClient(client5)
+                .open(LocalDate.of(1998, 12, 24))
+                .build();
+
+        savingsAcct2.suspend();
+        creditAcct1.setClose(LocalDate.now());
+        checkingAcct2.setClose(LocalDate.now());
+
+        accountList.add(checkAcct1);
+        accountList.add(checkingAcct2);
+        accountList.add(savingsAcct1);
+        accountList.add(savingsAcct2);
+        accountList.add(creditAcct1);
+        accountList.add(creditAcct2);
+
+        for (Account account: accountList) {
+            if (account instanceof Checking) {
+                Checking checking = (Checking) account;
+                System.out.println("\nThe current account no. " + checking.getAccountNo() + " is a Checking account.");
+
+                System.out.println("Current balance on your checkingAccount: " + checking.getBalance());
+                BigDecimal withdraw = new BigDecimal("1000.99");
+                System.out.println("Withdrawal amount: " + withdraw + ". Withdrawing...");
+                checking.withdrawal(withdraw);
+                System.out.println("Current balance of checking Account: " + checking.getBalance());
+            }
+
+            if (account instanceof Credit) {
+                Credit credit = (Credit) account;
+                System.out.println("\n\nThe current account no. " + credit.getAccountNo()  + " is a Credit account.");
+
+                System.out.println("Following Credit accounts:\n " + credit + "\n\n and :\n\n " + creditAcct1);
+
+                if (credit.equals(creditAcct1)) {
+                    System.out.println("\nare equal." );
+                } else {
+                    System.out.println("\nare NOT equal." );
+                }
+            }
+
+            if (account instanceof Savings)
+            {
+                Savings savings = (Savings) account;
+                BigDecimal depo = new BigDecimal("1000.00");
+                System.out.println("\n\nThe current account no. " + savings.getAccountNo()  + " is a Savings account.");
+
+                System.out.println("Savings account balance: "  + savings.getBalance() + " before deposit.");
+                savings.deposit(depo);
+                System.out.println("Savings balance after $" + depo + ": " + savings.getBalance());
+            }
+        }
+
+        Collections.sort(accountList, Collections.reverseOrder());
+
+        System.out.println("\nSort by account balance in reverse order, then by open date:");
+        for (Account account: accountList) {
+            System.out.println(account);
+            System.out.println();
+        }
+
+        System.out.println("Total Number of Banks: " + Bank.getTotalBanks());
+        System.out.println("Total Number of Clients: " + Client.getTotalClients());
+        System.out.println("Total Number of Accounts: " + Account.getTotalAccounts());
+        System.out.println("Total Checking Balances: " + df.format(Checking.getTotalCheckingBalances()));
+        System.out.println("Total Savings Balances: " + df.format(Savings.getTotalSavingsBalance()));
+        System.out.println("Total Available Credit: " + df.format(Credit.totalCreditAvailable()));
     }
 }
