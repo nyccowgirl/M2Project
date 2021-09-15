@@ -13,7 +13,7 @@ public class Checking extends Account {
 //        super(builder);
 //    }
 
-    private Checking(Builder builder) {
+    protected Checking(Builder builder) {
         super(builder);
         this.overdraftProtection = builder.overdraftProtection;
     }

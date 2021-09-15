@@ -8,7 +8,7 @@ public class Savings extends Account {
 
     // Constructors
 
-    private Savings(Builder builder) {
+    protected Savings(Builder builder) {
         super(builder);
     }
 

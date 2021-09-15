@@ -12,7 +12,7 @@ public class Credit extends Account {
 //    private static final BigDecimal DEFAULT_CREDIT_LINE = new BigDecimal(5000);
 
     // CONSTRUCTORS
-    private Credit(Builder builder) {
+    protected Credit(Builder builder) {
         super(builder);
         this.maturityDate = builder.maturityDate;
         this.creditLine = builder.creditLine;

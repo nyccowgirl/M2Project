@@ -1,9 +1,14 @@
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Client implements Comparable<Client> {
 
     private int clientId;
     private String clientName;
     private String clientAddress;
     private Bank branch;
+    private List<Account> accountList;                                                  // M3 USING FACTORY
 
     private static int nextClientID = 1;                                                // M2 HOMEWORK STATIC
     private final static String DEFAULT_CLIENT_ADDRESS = "N/A";
@@ -15,6 +20,7 @@ public class Client implements Comparable<Client> {
         this.clientName = clientName;
         this.clientAddress = clientAddress;
         this.branch = branch;
+        this.accountList = new ArrayList<>();
     }
 
     public Client(String clientName, Bank branch) {
@@ -50,6 +56,10 @@ public class Client implements Comparable<Client> {
         this.branch = branch;
     }
 
+    public List<Account> getAccountList() {                                                              // M3 USING FACTORY
+        return accountList;
+    }
+
     // OVERRIDE METHODS
     @Override
     public String toString() {
@@ -81,4 +91,18 @@ public class Client implements Comparable<Client> {
     public static int getTotalClients() {                                                        // M2 HOMEWORK STATIC
         return nextClientID - 1;
     }                           // M2 HOMEWORK STATIC
+
+    public void addAccount(Account acc) {                                                       // M3 USING FACTORY
+        accountList.add(acc);
+    }
+
+    public void addAccount(AccountType type, Client client) {                                   // M3 USING FACTORY
+        Account a = AccountFactory.newAccount(type, client);
+        addAccount(a);
+    }
+
+    public void addAccount(AccountType type, Client client, BigDecimal balance) {                                   // M3 USING FACTORY
+        Account a = AccountFactory.newAccount(type, client, balance);
+        addAccount(a);
+    }
 }
