@@ -15,6 +15,7 @@ public class Account implements Comparable<Account> {
     private LocalDate open;             // Represents date (year, month, day (yyyy-MM-dd))
     private LocalDate close;
     private Status status;                                                                  // M2 HOMEWORK ENUM USE
+    private Transactions trans;                                                             // M3 USING STRATEGY
 
     private static int nextAccountNo = 1;                                                   // M2 HOMEWORK STATIC
     protected final static int DECIMALS = 2;
@@ -97,49 +98,6 @@ public class Account implements Comparable<Account> {
         }
     }
 
-//    // CONSTRUCTORS
-//    public Account(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
-//                   LocalDate open) {
-//        this.accountNo = nextAccountNo;                                                     // M2 HOMEWORK STATIC
-//        nextAccountNo++;                                                                    // M2 HOMEWORK STATIC
-//        this.accountName = accountName;
-//        this.client = client;
-//        this.balance = balance;
-//        this.joint = joint;
-//        this.jointClient = jointClient;
-//        this.open = open;
-//        this.close = open.plusYears(DEFAULT_CLOSE_TERM);
-//        this.status = Status.ACTIVE;                                                        // M2 HOMEWORK ENUM USE
-//    }
-//
-//    public Account(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient) {
-//        this(accountName, client, balance, joint, jointClient, DEFAULT_OPEN_DATE);
-//    }
-//
-//    public Account(String accountName, Client client, BigDecimal balance, LocalDate open) {
-//        this(accountName, client, balance, DEFAULT_JOINT, DEFAULT_JOINT_CLIENT, open);
-//    }
-//
-//    public Account(String accountName, Client client, boolean joint, Client jointClient, LocalDate open) {
-//        this(accountName, client, DEFAULT_BALANCE, joint, jointClient, open);
-//    }
-//
-//    public Account(String accountName, Client client, BigDecimal balance) {
-//        this(accountName, client, balance, DEFAULT_JOINT, DEFAULT_JOINT_CLIENT, DEFAULT_OPEN_DATE);
-//    }
-//
-//    public Account(String accountName, Client client, boolean joint, Client jointClient) {
-//        this(accountName, client, DEFAULT_BALANCE, joint, jointClient, DEFAULT_OPEN_DATE);
-//    }
-//
-//    public Account(String accountName, Client client, LocalDate open) {
-//        this(accountName, client, DEFAULT_BALANCE, DEFAULT_JOINT, DEFAULT_JOINT_CLIENT, open);
-//    }
-//
-//    public Account(String accountName, Client client) {
-//        this(accountName, client, DEFAULT_BALANCE, DEFAULT_JOINT, DEFAULT_JOINT_CLIENT, DEFAULT_OPEN_DATE);
-//    }
-
     // Getters and Setters
     public int getAccountNo() {
         return accountNo;
@@ -180,7 +138,7 @@ public class Account implements Comparable<Account> {
         this.joint = joint;
 
         if (joint && (jointClient == null)) {
-            System.out.println("Please update joint client.");
+            System.out.println("Please add joint client.");
         } else if (!joint) {
             jointClient = DEFAULT_JOINT_CLIENT;
         }
@@ -286,7 +244,7 @@ public class Account implements Comparable<Account> {
     }
 
     public void suspend() {
-    status = Status.SUSPENDED;                                                              // M2 HOMEWORK ENUM USE
+    status = Status.SUSPENDED;                                                             // M2 HOMEWORK ENUM USE
     }
 
     public void reactivate() {                                              // M2 HOMEWORK ENUM USE
@@ -299,6 +257,23 @@ public class Account implements Comparable<Account> {
 
     public static int getTotalAccounts() {                                                  // M2 HOMEWORK STATIC
         return nextAccountNo - 1;
+    }
+
+    public void addInterest(BigDecimal interest) {                                          // M3 USING STRATEGY
+        trans = new Interest();
+        if (balance.compareTo(BigDecimal.valueOf(0)) > 0) {
+            setBalance(trans.calculate(balance, interest));
+        }
+    }
+
+    public void addBonus(BigDecimal bonus) {                                                // M3 USING STRATEGY
+        trans = new Bonus();
+        setBalance(trans.calculate(balance, bonus));
+    }
+
+    public void subtractFees(BigDecimal fees) {                                             // M3 USING STRATEGY
+        trans = new Fees();
+        setBalance(trans.calculate(balance, fees));
     }
 
     // HELPER METHOD

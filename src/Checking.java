@@ -278,4 +278,5 @@ public class Checking extends Account {
     public static BigDecimal getTotalCheckingBalances() {                                       // M2 HOMEWORK STATIC
         return Checking.totalCheckingBalances;
     }
+
 }
