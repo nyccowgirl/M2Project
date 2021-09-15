@@ -6,175 +6,197 @@ public class Checking extends Account {
     private boolean overdraftProtection;        // Can also add overdraft limit for more complexity (or pull from Credit class)
 
     private static BigDecimal totalCheckingBalances = new BigDecimal(0);                // M2 HOMEWORK STATIC
-    private final static String DEFAULT_CHECKING_NAME = "General Checking Account";
-    private final static boolean DEFAULT_OVERDRAFT_PROTECTION = false;
+//    private final static String DEFAULT_CHECKING_NAME = "General Checking Account";
+//    private final static boolean DEFAULT_OVERDRAFT_PROTECTION = false;
 
     // Constructors
-    public Checking(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
-                    LocalDate open, boolean overdraftProtection) {
-        super(accountName, client, balance, joint, jointClient, open);
-        this.overdraftProtection = overdraftProtection;
-        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(balance);       // M2 HOMEWORK STATIC
+    public Checking(AccountBuilder builder) {
+        super(builder);
     }
 
-    public Checking(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
-                    LocalDate open) {
-        super(accountName, client, balance, joint, jointClient, open);
-        this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
-        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(balance);                                          // M2 HOMEWORK STATIC
+    public static class CheckingBuilder extends Account.AccountBuilder {
+
+        private String accountName = "General Checking Account";
+        private boolean overdraftProtection = false;
+
+        public CheckingBuilder(Client client) {
+            super(client);
+
+//            if
+            accountName(accountName);
+        }
+
+        public CheckingBuilder overdraftProtection(boolean overdraftProtection) {
+            this.overdraftProtection = overdraftProtection;
+            return this;
+        }
     }
 
-    public Checking(Client client, BigDecimal balance, boolean joint, Client jointClient, LocalDate open,
-                    boolean overdraftProtection) {
-        this(DEFAULT_CHECKING_NAME, client, balance, joint, jointClient, open, overdraftProtection);
-    }
-
-    public Checking(Client client, BigDecimal balance, boolean joint, Client jointClient, LocalDate open) {
-        this(DEFAULT_CHECKING_NAME, client, balance, joint, jointClient, open, DEFAULT_OVERDRAFT_PROTECTION);
-    }
-
-    public Checking(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
-                    boolean overdraftProtection) {
-        super(accountName, client, balance, joint, jointClient);
-        this.overdraftProtection = overdraftProtection;
-        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(balance);           // M2 HOMEWORK STATIC
-    }
-
-    public Checking(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient) {
-        super(accountName, client, balance, joint, jointClient);
-        this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
-        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(balance);           // M2 HOMEWORK STATIC
-    }
-
-    public Checking(Client client, BigDecimal balance, boolean joint, Client jointClient, boolean overdraftProtection) {
-        this(DEFAULT_CHECKING_NAME, client, balance, joint, jointClient, overdraftProtection);
-    }
-
-    public Checking(Client client, BigDecimal balance, boolean joint, Client jointClient) {
-        this(DEFAULT_CHECKING_NAME, client, balance, joint, jointClient, DEFAULT_OVERDRAFT_PROTECTION);
-    }
-
-    public Checking(String accountName, Client client, BigDecimal balance, LocalDate open,
-                    boolean overdraftProtection) {
-        super(accountName, client, balance, open);
-        this.overdraftProtection = overdraftProtection;
-        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(balance);           // M2 HOMEWORK STATIC
-    }
-
-    public Checking(String accountName, Client client, BigDecimal balance, LocalDate open) {
-        super(accountName, client, balance, open);
-        this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
-        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(balance);           // M2 HOMEWORK STATIC
-    }
-
-    public Checking(Client client, BigDecimal balance, LocalDate open, boolean overdraftProtection) {
-        this(DEFAULT_CHECKING_NAME, client, balance, open, overdraftProtection);
-    }
-
-    public Checking(Client client, BigDecimal balance, LocalDate open) {
-        this(DEFAULT_CHECKING_NAME, client, balance, open, DEFAULT_OVERDRAFT_PROTECTION);
-    }
-
-    public Checking(String accountName, Client client, boolean joint, Client jointClient, LocalDate open,
-                    boolean overdraftProtection) {
-        super(accountName, client, joint, jointClient, open);
-        this.overdraftProtection = overdraftProtection;
-        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(super.getBalance());  // M2 HOMEWORK STATIC
-    }
-
-    public Checking(String accountName, Client client, boolean joint, Client jointClient, LocalDate open) {
-        super(accountName, client, joint, jointClient, open);
-        this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
-        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(super.getBalance());  // M2 HOMEWORK STATIC
-    }
-
-    public Checking(Client client, boolean joint, Client jointClient, LocalDate open, boolean overdraftProtection) {
-        this(DEFAULT_CHECKING_NAME, client, joint, jointClient, open, overdraftProtection);
-    }
-
-    public Checking(Client client, boolean joint, Client jointClient, LocalDate open) {
-        this(DEFAULT_CHECKING_NAME, client, joint, jointClient, open, DEFAULT_OVERDRAFT_PROTECTION);
-    }
-
-    public Checking(String accountName, Client client, BigDecimal balance, boolean overdraftProtection) {
-        super(accountName, client, balance);
-        this.overdraftProtection = overdraftProtection;
-        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(balance);           // M2 HOMEWORK STATIC
-    }
-
-    public Checking(String accountName, Client client, BigDecimal balance) {
-        super(accountName, client, balance);
-        this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
-        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(balance);           // M2 HOMEWORK STATIC
-    }
-
-    public Checking(Client client, BigDecimal balance, boolean overdraftProtection) {
-        this(DEFAULT_CHECKING_NAME, client, balance, overdraftProtection);
-    }
-
-    public Checking(Client client, BigDecimal balance) {
-        this(DEFAULT_CHECKING_NAME, client, balance, DEFAULT_OVERDRAFT_PROTECTION);
-    }
-
-    public Checking(String accountName, Client client, boolean joint, Client jointClient, boolean overdraftProtection) {
-        super(accountName, client, joint, jointClient);
-        this.overdraftProtection = overdraftProtection;
-        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(super.getBalance());  // M2 HOMEWORK STATIC
-    }
-
-    public Checking(String accountName, Client client, boolean joint, Client jointClient) {
-        super(accountName, client, joint, jointClient);
-        this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
-        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(super.getBalance());  // M2 HOMEWORK STATIC
-    }
-
-    public Checking(Client client, boolean joint, Client jointClient, boolean overdraftProtection) {
-        this(DEFAULT_CHECKING_NAME, client, joint, jointClient, overdraftProtection);
-    }
-
-    public Checking(Client client, boolean joint, Client jointClient) {
-        this(DEFAULT_CHECKING_NAME, client, joint, jointClient, DEFAULT_OVERDRAFT_PROTECTION);
-    }
-
-    public Checking(String name, Client client, LocalDate open, boolean overdraftProtection) {
-        super(name, client, open);
-        this.overdraftProtection = overdraftProtection;
-        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(super.getBalance());  // M2 HOMEWORK STATIC
-    }
-
-    public Checking(String name, Client client, LocalDate open) {
-        super(name, client, open);
-        this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
-        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(super.getBalance());  // M2 HOMEWORK STATIC
-    }
-
-    public Checking(Client client, LocalDate open, boolean overdraftProtection) {
-        this(DEFAULT_CHECKING_NAME, client, open, overdraftProtection);
-    }
-
-    public Checking(Client client, LocalDate open) {
-        this(DEFAULT_CHECKING_NAME, client, open, DEFAULT_OVERDRAFT_PROTECTION);
-    }
-
-    public Checking(String name, Client client, boolean overdraftProtection) {
-        super(name, client);
-        this.overdraftProtection = overdraftProtection;
-        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(super.getBalance());  // M2 HOMEWORK STATIC
-    }
-
-    public Checking(String name, Client client) {
-        super(name, client);
-        this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
-        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(super.getBalance());  // M2 HOMEWORK STATIC
-    }
-
-    public Checking(Client client, boolean overdraftProtection) {
-        this(DEFAULT_CHECKING_NAME, client, overdraftProtection);
-    }
-
-    public Checking(Client client) {
-        this(DEFAULT_CHECKING_NAME, client, DEFAULT_OVERDRAFT_PROTECTION);
-    }
+//    public Checking(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
+//                    LocalDate open, boolean overdraftProtection) {
+//        super(accountName, client, balance, joint, jointClient, open);
+//        this.overdraftProtection = overdraftProtection;
+//        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(balance);       // M2 HOMEWORK STATIC
+//    }
+//
+//    public Checking(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
+//                    LocalDate open) {
+//        super(accountName, client, balance, joint, jointClient, open);
+//        this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
+//        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(balance);                                          // M2 HOMEWORK STATIC
+//    }
+//
+//    public Checking(Client client, BigDecimal balance, boolean joint, Client jointClient, LocalDate open,
+//                    boolean overdraftProtection) {
+//        this(DEFAULT_CHECKING_NAME, client, balance, joint, jointClient, open, overdraftProtection);
+//    }
+//
+//    public Checking(Client client, BigDecimal balance, boolean joint, Client jointClient, LocalDate open) {
+//        this(DEFAULT_CHECKING_NAME, client, balance, joint, jointClient, open, DEFAULT_OVERDRAFT_PROTECTION);
+//    }
+//
+//    public Checking(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
+//                    boolean overdraftProtection) {
+//        super(accountName, client, balance, joint, jointClient);
+//        this.overdraftProtection = overdraftProtection;
+//        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(balance);           // M2 HOMEWORK STATIC
+//    }
+//
+//    public Checking(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient) {
+//        super(accountName, client, balance, joint, jointClient);
+//        this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
+//        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(balance);           // M2 HOMEWORK STATIC
+//    }
+//
+//    public Checking(Client client, BigDecimal balance, boolean joint, Client jointClient, boolean overdraftProtection) {
+//        this(DEFAULT_CHECKING_NAME, client, balance, joint, jointClient, overdraftProtection);
+//    }
+//
+//    public Checking(Client client, BigDecimal balance, boolean joint, Client jointClient) {
+//        this(DEFAULT_CHECKING_NAME, client, balance, joint, jointClient, DEFAULT_OVERDRAFT_PROTECTION);
+//    }
+//
+//    public Checking(String accountName, Client client, BigDecimal balance, LocalDate open,
+//                    boolean overdraftProtection) {
+//        super(accountName, client, balance, open);
+//        this.overdraftProtection = overdraftProtection;
+//        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(balance);           // M2 HOMEWORK STATIC
+//    }
+//
+//    public Checking(String accountName, Client client, BigDecimal balance, LocalDate open) {
+//        super(accountName, client, balance, open);
+//        this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
+//        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(balance);           // M2 HOMEWORK STATIC
+//    }
+//
+//    public Checking(Client client, BigDecimal balance, LocalDate open, boolean overdraftProtection) {
+//        this(DEFAULT_CHECKING_NAME, client, balance, open, overdraftProtection);
+//    }
+//
+//    public Checking(Client client, BigDecimal balance, LocalDate open) {
+//        this(DEFAULT_CHECKING_NAME, client, balance, open, DEFAULT_OVERDRAFT_PROTECTION);
+//    }
+//
+//    public Checking(String accountName, Client client, boolean joint, Client jointClient, LocalDate open,
+//                    boolean overdraftProtection) {
+//        super(accountName, client, joint, jointClient, open);
+//        this.overdraftProtection = overdraftProtection;
+//        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(super.getBalance());  // M2 HOMEWORK STATIC
+//    }
+//
+//    public Checking(String accountName, Client client, boolean joint, Client jointClient, LocalDate open) {
+//        super(accountName, client, joint, jointClient, open);
+//        this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
+//        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(super.getBalance());  // M2 HOMEWORK STATIC
+//    }
+//
+//    public Checking(Client client, boolean joint, Client jointClient, LocalDate open, boolean overdraftProtection) {
+//        this(DEFAULT_CHECKING_NAME, client, joint, jointClient, open, overdraftProtection);
+//    }
+//
+//    public Checking(Client client, boolean joint, Client jointClient, LocalDate open) {
+//        this(DEFAULT_CHECKING_NAME, client, joint, jointClient, open, DEFAULT_OVERDRAFT_PROTECTION);
+//    }
+//
+//    public Checking(String accountName, Client client, BigDecimal balance, boolean overdraftProtection) {
+//        super(accountName, client, balance);
+//        this.overdraftProtection = overdraftProtection;
+//        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(balance);           // M2 HOMEWORK STATIC
+//    }
+//
+//    public Checking(String accountName, Client client, BigDecimal balance) {
+//        super(accountName, client, balance);
+//        this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
+//        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(balance);           // M2 HOMEWORK STATIC
+//    }
+//
+//    public Checking(Client client, BigDecimal balance, boolean overdraftProtection) {
+//        this(DEFAULT_CHECKING_NAME, client, balance, overdraftProtection);
+//    }
+//
+//    public Checking(Client client, BigDecimal balance) {
+//        this(DEFAULT_CHECKING_NAME, client, balance, DEFAULT_OVERDRAFT_PROTECTION);
+//    }
+//
+//    public Checking(String accountName, Client client, boolean joint, Client jointClient, boolean overdraftProtection) {
+//        super(accountName, client, joint, jointClient);
+//        this.overdraftProtection = overdraftProtection;
+//        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(super.getBalance());  // M2 HOMEWORK STATIC
+//    }
+//
+//    public Checking(String accountName, Client client, boolean joint, Client jointClient) {
+//        super(accountName, client, joint, jointClient);
+//        this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
+//        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(super.getBalance());  // M2 HOMEWORK STATIC
+//    }
+//
+//    public Checking(Client client, boolean joint, Client jointClient, boolean overdraftProtection) {
+//        this(DEFAULT_CHECKING_NAME, client, joint, jointClient, overdraftProtection);
+//    }
+//
+//    public Checking(Client client, boolean joint, Client jointClient) {
+//        this(DEFAULT_CHECKING_NAME, client, joint, jointClient, DEFAULT_OVERDRAFT_PROTECTION);
+//    }
+//
+//    public Checking(String name, Client client, LocalDate open, boolean overdraftProtection) {
+//        super(name, client, open);
+//        this.overdraftProtection = overdraftProtection;
+//        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(super.getBalance());  // M2 HOMEWORK STATIC
+//    }
+//
+//    public Checking(String name, Client client, LocalDate open) {
+//        super(name, client, open);
+//        this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
+//        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(super.getBalance());  // M2 HOMEWORK STATIC
+//    }
+//
+//    public Checking(Client client, LocalDate open, boolean overdraftProtection) {
+//        this(DEFAULT_CHECKING_NAME, client, open, overdraftProtection);
+//    }
+//
+//    public Checking(Client client, LocalDate open) {
+//        this(DEFAULT_CHECKING_NAME, client, open, DEFAULT_OVERDRAFT_PROTECTION);
+//    }
+//
+//    public Checking(String name, Client client, boolean overdraftProtection) {
+//        super(name, client);
+//        this.overdraftProtection = overdraftProtection;
+//        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(super.getBalance());  // M2 HOMEWORK STATIC
+//    }
+//
+//    public Checking(String name, Client client) {
+//        super(name, client);
+//        this.overdraftProtection = DEFAULT_OVERDRAFT_PROTECTION;
+//        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(super.getBalance());  // M2 HOMEWORK STATIC
+//    }
+//
+//    public Checking(Client client, boolean overdraftProtection) {
+//        this(DEFAULT_CHECKING_NAME, client, overdraftProtection);
+//    }
+//
+//    public Checking(Client client) {
+//        this(DEFAULT_CHECKING_NAME, client, DEFAULT_OVERDRAFT_PROTECTION);
+//    }
 
     // Getters and Setters
     @Override

@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public abstract class Account implements Comparable<Account> {
+public class Account implements Comparable<Account> {
 
     private int accountNo;
     private String accountName;
@@ -20,54 +20,125 @@ public abstract class Account implements Comparable<Account> {
     protected final static int DECIMALS = 2;
     protected final static RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
     private final static BigDecimal DEFAULT_BALANCE = new BigDecimal(0);
-    private final static boolean DEFAULT_JOINT = false;
+//    private final static boolean DEFAULT_JOINT = false;
     private final static Client DEFAULT_JOINT_CLIENT = null;
-    private final static LocalDate DEFAULT_OPEN_DATE = LocalDate.now();
+//    private final static LocalDate DEFAULT_OPEN_DATE = LocalDate.now();
     private final static int DEFAULT_CLOSE_TERM = 100;
     DecimalFormat df = new DecimalFormat("$#,##0.00");
 
-    // CONSTRUCTORS
-    public Account(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
-                   LocalDate open) {
-        this.accountNo = nextAccountNo;                                                     // M2 HOMEWORK STATIC
-        nextAccountNo++;                                                                    // M2 HOMEWORK STATIC
-        this.accountName = accountName;
-        this.client = client;
-        this.balance = balance;
-        this.joint = joint;
-        this.jointClient = jointClient;
-        this.open = open;
-        this.close = open.plusYears(DEFAULT_CLOSE_TERM);
-        this.status = Status.ACTIVE;                                                        // M2 HOMEWORK ENUM USE
+    // Constructors
+    protected Account(AccountBuilder builder) {
+        this.accountNo = builder.accountNo;
+        this.accountName = builder.accountName;
+        this.client = builder.client;
+        this.balance = builder.balance;
+        this.joint = builder.joint;
+        this.jointClient = builder.jointClient;
+        this.open = builder.open;
+        this.close = builder.close;
+        this.status = builder.status;
     }
 
-    public Account(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient) {
-        this(accountName, client, balance, joint, jointClient, DEFAULT_OPEN_DATE);
+    public static class AccountBuilder {
+        private int accountNo;
+        private Client client;
+
+        private String accountName = "";
+        private BigDecimal balance = DEFAULT_BALANCE;
+        private boolean joint = false;
+        private Client jointClient = DEFAULT_JOINT_CLIENT;
+        private LocalDate open = LocalDate.now();
+        private LocalDate close = open.plusYears(DEFAULT_CLOSE_TERM);
+        private Status status = Status.ACTIVE;                                              // M2 HOMEWORK ENUM USE
+
+        public AccountBuilder(Client client) {
+            this.accountNo = nextAccountNo;                                                 // M2 HOMEWORK STATIC
+            nextAccountNo++;                                                                // M2 HOMEWORK STATIC
+            this.client = client;
+        }
+
+        public AccountBuilder accountName(String accountName) {
+            this.accountName = accountName;
+            return this;
+        }
+
+        public AccountBuilder balance(BigDecimal balance) {
+            this.balance = balance;
+            return this;
+        }
+
+        public AccountBuilder joint(boolean joint) {
+            this.joint = joint;
+            return this;
+        }
+
+        public AccountBuilder jointClient(Client jointClient) {
+            this.jointClient = jointClient;
+            return this;
+        }
+
+        public AccountBuilder open(LocalDate open) {
+            this.open = open;
+            return this;
+        }
+
+        public AccountBuilder close(LocalDate close) {
+            this.close = close;
+            return this;
+        }
+
+        public AccountBuilder status(Status status) {
+            this.status = status;
+            return this;
+        }
+
+        public Account build() {
+            return new Account(this);
+        }
     }
 
-    public Account(String accountName, Client client, BigDecimal balance, LocalDate open) {
-        this(accountName, client, balance, DEFAULT_JOINT, DEFAULT_JOINT_CLIENT, open);
-    }
-
-    public Account(String accountName, Client client, boolean joint, Client jointClient, LocalDate open) {
-        this(accountName, client, DEFAULT_BALANCE, joint, jointClient, open);
-    }
-
-    public Account(String accountName, Client client, BigDecimal balance) {
-        this(accountName, client, balance, DEFAULT_JOINT, DEFAULT_JOINT_CLIENT, DEFAULT_OPEN_DATE);
-    }
-
-    public Account(String accountName, Client client, boolean joint, Client jointClient) {
-        this(accountName, client, DEFAULT_BALANCE, joint, jointClient, DEFAULT_OPEN_DATE);
-    }
-
-    public Account(String accountName, Client client, LocalDate open) {
-        this(accountName, client, DEFAULT_BALANCE, DEFAULT_JOINT, DEFAULT_JOINT_CLIENT, open);
-    }
-
-    public Account(String accountName, Client client) {
-        this(accountName, client, DEFAULT_BALANCE, DEFAULT_JOINT, DEFAULT_JOINT_CLIENT, DEFAULT_OPEN_DATE);
-    }
+//    // CONSTRUCTORS
+//    public Account(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
+//                   LocalDate open) {
+//        this.accountNo = nextAccountNo;                                                     // M2 HOMEWORK STATIC
+//        nextAccountNo++;                                                                    // M2 HOMEWORK STATIC
+//        this.accountName = accountName;
+//        this.client = client;
+//        this.balance = balance;
+//        this.joint = joint;
+//        this.jointClient = jointClient;
+//        this.open = open;
+//        this.close = open.plusYears(DEFAULT_CLOSE_TERM);
+//        this.status = Status.ACTIVE;                                                        // M2 HOMEWORK ENUM USE
+//    }
+//
+//    public Account(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient) {
+//        this(accountName, client, balance, joint, jointClient, DEFAULT_OPEN_DATE);
+//    }
+//
+//    public Account(String accountName, Client client, BigDecimal balance, LocalDate open) {
+//        this(accountName, client, balance, DEFAULT_JOINT, DEFAULT_JOINT_CLIENT, open);
+//    }
+//
+//    public Account(String accountName, Client client, boolean joint, Client jointClient, LocalDate open) {
+//        this(accountName, client, DEFAULT_BALANCE, joint, jointClient, open);
+//    }
+//
+//    public Account(String accountName, Client client, BigDecimal balance) {
+//        this(accountName, client, balance, DEFAULT_JOINT, DEFAULT_JOINT_CLIENT, DEFAULT_OPEN_DATE);
+//    }
+//
+//    public Account(String accountName, Client client, boolean joint, Client jointClient) {
+//        this(accountName, client, DEFAULT_BALANCE, joint, jointClient, DEFAULT_OPEN_DATE);
+//    }
+//
+//    public Account(String accountName, Client client, LocalDate open) {
+//        this(accountName, client, DEFAULT_BALANCE, DEFAULT_JOINT, DEFAULT_JOINT_CLIENT, open);
+//    }
+//
+//    public Account(String accountName, Client client) {
+//        this(accountName, client, DEFAULT_BALANCE, DEFAULT_JOINT, DEFAULT_JOINT_CLIENT, DEFAULT_OPEN_DATE);
+//    }
 
     // Getters and Setters
     public int getAccountNo() {
