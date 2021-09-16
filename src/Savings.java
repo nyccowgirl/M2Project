@@ -4,116 +4,59 @@ import java.time.LocalDate;
 public class Savings extends Account {
 
     private static BigDecimal totalSavingsBalances = new BigDecimal(0);                     // M2 HOMEWORK STATIC
-//    private final static String DEFAULT_SAVINGS_NAME = "General Savings Account";
 
-    // Constructors
-
-    protected Savings(Builder builder) {
-        super(builder);
+    // CONSTRUCTORS
+    protected Savings(Account.Builder<?, ?> accountBuilder, Builder savingsBuilder) {
+        super(accountBuilder);
     }
 
-    public static class Builder extends Account.Builder<Builder> {
+    private Savings() {
 
-//        private String accountName = "General Savings Account";
+    }
+
+    public static class Builder extends Account.Builder<Savings, Savings.Builder> {
+
+        private String DEFAULT_SAVINGS_ACCOUNT_NAME = "General Savings Account";
 
         public Builder(Client client) {
             super(client);
         }
 
-//        @Override
-//        public Builder accountName() {
-//            this.accountName(accountName);
-//            return this;
-//        }
+        public Builder accountName() {
+            super.accountName((DEFAULT_SAVINGS_ACCOUNT_NAME));
+            return builder;
+        }
 
-        // IS THIS NEEDED IF EVERYTHING IS CASTED?
+        protected Savings createAccount(Account.Builder<Savings, Builder> builder) {
+            return new Savings(builder, this);
+        }
+
+        protected Savings createAccount() {
+            return new Savings();
+        }
+
+        protected Builder getBuilder() {
+            return this;
+        }
+    }
+    /*
+    public static class Builder extends Account.Builder<Builder> {
+
+        private String accountName = "General Savings Account";
+
+        public Builder(Client client) {
+            super(client);
+//            accountName(accountName);
+        }
+
         public Savings build() {
             return new Savings(this);
         }
     }
 
-//    public Savings(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient,
-//                   LocalDate open) {
-//        super(accountName, client, balance, joint, jointClient, open);
-//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
-//    }
-//
-//    public Savings(Client client, BigDecimal balance, boolean joint, Client jointClient, LocalDate open) {
-//        super(DEFAULT_SAVINGS_NAME, client, balance, joint, jointClient, open);
-//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
-//    }
-//
-//    public Savings(String accountName, Client client, BigDecimal balance, boolean joint, Client jointClient) {
-//        super(accountName, client, balance, joint, jointClient);
-//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
-//    }
-//
-//    public Savings(Client client, BigDecimal balance, boolean joint, Client jointClient) {
-//        super(DEFAULT_SAVINGS_NAME, client, balance, joint, jointClient);
-//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
-//    }
-//
-//    public Savings(String accountName, Client client, BigDecimal balance, LocalDate open) {
-//        super(accountName, client, balance, open);
-//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
-//    }
-//
-//    public Savings(Client client, BigDecimal balance, LocalDate open) {
-//        super(DEFAULT_SAVINGS_NAME, client, balance, open);
-//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
-//    }
-//
-//    public Savings(String accountName, Client client, boolean joint, Client jointClient, LocalDate open) {
-//        super(accountName, client, joint, jointClient, open);
-//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
-//    }
-//
-//    public Savings(Client client, boolean joint, Client jointClient, LocalDate open) {
-//        super(DEFAULT_SAVINGS_NAME, client, joint, jointClient, open);
-//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
-//    }
-//
-//    public Savings(String accountName, Client client, BigDecimal balance) {
-//        super(accountName, client, balance);
-//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
-//    }
-//
-//    public Savings(Client client, BigDecimal balance) {
-//        super(DEFAULT_SAVINGS_NAME, client, balance);
-//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance);               // M2 HOMEWORK STATIC
-//    }
-//
-//    public Savings(String accountName, Client client, boolean joint, Client jointClient) {
-//        super(accountName, client, joint, jointClient);
-//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
-//    }
-//
-//    public Savings(Client client, boolean joint, Client jointClient) {
-//        super(DEFAULT_SAVINGS_NAME, client, joint, jointClient);
-//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
-//    }
-//
-//    public Savings(String accountName, Client client, LocalDate open) {
-//        super(accountName, client, open);
-//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
-//    }
-//
-//    public Savings(Client client, LocalDate open) {
-//        super(DEFAULT_SAVINGS_NAME, client, open);
-//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
-//    }
-//
-//    public Savings(String accountName, Client client) {
-//        super(accountName, client);
-//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
-//    }
-//
-//    public Savings(Client client) {
-//        super(DEFAULT_SAVINGS_NAME, client);
-//        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());    // M2 HOMEWORK STATIC
-//    }
+     */
 
-    // GETTERS/SETTERS
+    // GETTERS & SETTERS
     @Override
     public void setBalance(BigDecimal balance) {                                                // M2 HOMEWORK STATIC
         Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance.subtract(super.getBalance()));

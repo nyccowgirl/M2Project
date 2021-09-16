@@ -1,5 +1,5 @@
 public enum Corporate {
-    CORPORATE("CORP"), HEADQUARTERS("HQ");
+    CORPORATE("CORP"), NOT_APPLICABLE("N/A");
     String address = "N/A";
 
     String abbreviation;
@@ -13,4 +13,8 @@ public enum Corporate {
     }
 
     public String getAddress() { return address; }
+
+    public static Bank getCorp() {
+        return new Bank(CORPORATE.name(), CORPORATE.getAddress());
+    }
 }

@@ -16,9 +16,9 @@ public class Driver {
         // BANK SETUP & TESTS
         System.out.println("BANK CLASS TESTS:\n");
 
-        ArrayList<Bank> branchList = new ArrayList<>();
+        List<Bank> branchList = new ArrayList<>();
 
-        Bank branch1 = new Bank(Corporate.CORPORATE.name(), Corporate.CORPORATE.getAddress());  // M2 HOMEWORK ENUM USE
+        Bank branch1 = Corporate.getCorp();                                                     // M2 HOMEWORK ENUM USE
         Bank branch2 = new Bank("Branch 789", "Vatican City");
         Bank branch3 = new Bank("Branch 654", "Machu Picchu");
 
@@ -29,9 +29,9 @@ public class Driver {
         branchList.add(branch2);
         branchList.add(branch1);
 
+        // comparesTo Test
         Collections.sort(branchList);
-
-        System.out.println("Sorted by bank ID number: ");
+        System.out.println("SORTED by bank ID number: ");
 
         for (Bank branch: branchList) {
             System.out.println(branch);
@@ -40,20 +40,33 @@ public class Driver {
         // CLIENT SETUP & TESTS
         System.out.println("\n\nCLIENT CLASS TESTS:\n");
 
-        ArrayList<Client> clientList = new ArrayList();
+        List<Client> clientList = new ArrayList();
 
-        Client client1 = new Client("Merlin", "Timbuktu", branch2);
-        Client client2 = new Client("Marilyn Monroe", branch3);
-        Client client3 = new Client("Spongebob Squarepants", branch2);
-        Client client4 = new Client("Who's On First?","Lost City of Atlantis", branch1);
-        Client client5 = new Client("Abe Lincoln", "Lincoln Memorial", branch1);
+        Client client1 = new Client.Builder("the Wizard", "Timbuktu")   // M3 USING BUILDER
+                .branch(branch2)
+                .build();
+        Client client2 = new Client.Builder("Monroe", "Marilyn")        // M3 USING BUILDER
+                .branch(branch3)
+                .build();
+        Client client3 = new Client.Builder("Squarepants", "Spongebob") // M3 USING BUILDER
+                .branch(branch2)
+                .build();
+        Client client4 = new Client.Builder("Ass","Dumb")               // M3 USING BUILDER
+                .clientAddress("Lost City of Atlantis")
+                .branch(branch1)
+                .build();
+        Client client5 = new Client.Builder("Lincoln", "Honest Abe")    // M3 USING BUILDER
+                .clientAddress("Lincoln Memorial")
+                .branch(branch1)
+                .build();
 
+        // equals Test
         System.out.println("Is client 3 the same as client 2? " + client3.equals(client2));
         System.out.println("Is client 3 the same as client 4? " + client3.equals(client4));
         System.out.println("Is client 5 the same as client 5? " + client5.equals(client5));
         System.out.println();
 
-        client4.setClientName("Goldilocks");
+        client4.setClientFirstName("Goldilocks");
 
         clientList.add(client1);
         clientList.add(client2);
@@ -61,8 +74,24 @@ public class Driver {
         clientList.add(client4);
         clientList.add(client5);
 
+        // compareTo Test
         Collections.sort(clientList);
-        System.out.println("Sorted by client name, then by client address:");
+        System.out.println("SORTED by client last name, then by client first name:");
+
+        for (Client client: clientList) {
+            System.out.println(client);
+        }
+
+        // Comparator Test
+        Collections.sort(clientList, new Client.SortByClientID());                              // M3 USING COMPARATOR
+        System.out.println("\nSORTED by client ID:");
+
+        for (Client client: clientList) {
+            System.out.println(client);
+        }
+
+        Collections.sort(clientList, new Client.SortByFirstName());                             // M3 USING COMPARATOR
+        System.out.println("\nSORTED by client first name:");
 
         for (Client client: clientList) {
             System.out.println(client);
@@ -71,32 +100,50 @@ public class Driver {
         // ACCOUNT SETUP & TESTS
         System.out.println("\n\nACCOUNT CLASS TESTS:");
 
-        ArrayList<Account> accountList = new ArrayList<>();
+        List<Account> accountList = new ArrayList<>();
 
-        Checking checkAcct1 = new Checking.Builder(client1)                                     // M3 USING BUILDER
+        Checking checkAcct1 = new Checking.Builder(client1)                                            // M3 USING BUILDER
+//                .accountNo()
+                .accountName()
+//                .client(client1)
                 .balance(valueOf(5500.5))
                 .build();
         client1.addAccount(checkAcct1);
-        Savings savingsAcct1 = new Savings.Builder(client2)                                     // M3 USING BUILDER
+        Savings savingsAcct1 = new Savings.Builder(client2)                                            // M3 USING BUILDER
+//                .accountNo()
+                .accountName()
+//                .client(client2)
                 .balance(valueOf(10000))
                 .open(LocalDate.now())
                 .build();
         client2.addAccount(savingsAcct1);
-        Credit creditAcct1 = new Credit.Builder(client3)                                        // M3 USING BUILDER
+        Credit creditAcct1 = new Credit.Builder(client3)                                               // M3 USING BUILDER
+//                .accountNo()
+                .accountName()
+//                .client(client3)
                 .balance(valueOf(-900))
                 .maturityDate(LocalDate.of(2025, 12, 31))
                 .build();
         client3.addAccount(creditAcct1);
-        Credit creditAcct2 = new Credit.Builder(client4)                                        // M3 USING BUILDER
+        Credit creditAcct2 = new Credit.Builder(client4)                                               // M3 USING BUILDER
+//                .accountNo()
+                .accountName()
+//                .client(client4)
                 .balance(valueOf(-2500))
                 .creditLine(valueOf(5000))
                 .build();
         client4.addAccount(creditAcct2);
-        Savings savingsAcct2 = new Savings.Builder(client4)                                     // M3 USING BUILDER
+        Savings savingsAcct2 = new Savings.Builder(client4)                                            // M3 USING BUILDER
+//                .accountNo()
+                .accountName()
+//                .client(client4)
                 .balance(valueOf(5000))
                 .build();
         client4.addAccount(savingsAcct2);
-        Checking checkingAcct2 = new Checking.Builder(client3)                                  // M3 USING BUILDER
+        Checking checkingAcct2 = new Checking.Builder(client3)                                         // M3 USING BUILDER
+//                .accountNo()
+                .accountName()
+//                .client(client3)
                 .joint(true)
                 .jointClient(client5)
                 .open(LocalDate.of(1998, 12, 24))
@@ -106,16 +153,17 @@ public class Driver {
         client3.addAccount(AccountType.SAVINGS, client3, BigDecimal.valueOf(7777));             // M3 USING FACTORY                                     // M3 USING FACTORY
 
 
-        savingsAcct2.suspend();
-        creditAcct1.setClose(LocalDate.now());
-        checkingAcct2.setClose(LocalDate.now());
-
-        System.out.println();
-        System.out.println("Account listing for Client 3:\n");                                  // M3 USING FACTORY
-        for (Account a: client3.getAccountList()) {
-            System.out.println(a);
-        }
-
+        System.out.println(creditAcct1);
+//        savingsAcct2.suspend();
+//        creditAcct1.setClose(LocalDate.now());
+//        checkingAcct2.setClose(LocalDate.now());
+//
+//        // Factory Test
+//        System.out.println("\nAccount listing for Client 3:\n");                                  // M3 USING FACTORY
+//        for (Account a: client3.getAccountList()) {
+//            System.out.println(a);
+//        }
+//
 //        accountList.add(checkAcct1);
 //        accountList.add(checkingAcct2);
 //        accountList.add(savingsAcct1);
@@ -160,19 +208,22 @@ public class Driver {
 //            }
 //        }
 //
+//        // compareTo Test
 //        Collections.sort(accountList, Collections.reverseOrder());
 //
-//        System.out.println("\nSort by account balance in reverse order, then by open date:");
+//        System.out.println("\nSORTED by account balance in reverse order, then by open date:");
 //        for (Account account: accountList) {
 //            System.out.println(account);
 //            System.out.println();
 //        }
 //
-//        System.out.println("Total Number of Banks: " + Bank.getTotalBanks());
-//        System.out.println("Total Number of Clients: " + Client.getTotalClients());
-//        System.out.println("Total Number of Accounts: " + Account.getTotalAccounts());
-//        System.out.println("Total Checking Balances: " + df.format(Checking.getTotalCheckingBalances()));
-//        System.out.println("Total Savings Balances: " + df.format(Savings.getTotalSavingsBalance()));
-//        System.out.println("Total Available Credit: " + df.format(Credit.totalCreditAvailable()));
+//        // Static Variables Tests
+//        System.out.println("Total Number of Banks: " + Bank.getTotalBanks());                       // M2 HOMEWORK STATIC
+//        System.out.println("Total Number of Clients: " + Client.getTotalClients());                 // M2 HOMEWORK STATIC
+//        System.out.println("Total Number of Accounts: " + Account.getTotalAccounts());              // M2 HOMEWORK STATIC
+//        System.out.println("Total Checking Balances: " + df.format(Checking.getTotalCheckingBalances())); // M2 HOMEWORK STATIC
+//        System.out.println("Total Savings Balances: " + df.format(Savings.getTotalSavingsBalance())); // M2 HOMEWORK STATIC
+//        System.out.println("Total Credit Balances: " + df.format(Credit.getTotalCreditUtilization().negate())); // M2 HOMEWORK STATIC
+//        System.out.println("Total Available Credit: " + df.format(Credit.totalCreditAvailable()));  // M2 HOMEWORK STATIC
     }
 }

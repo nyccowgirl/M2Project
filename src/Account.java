@@ -6,6 +6,27 @@ import java.math.RoundingMode;
 
 public class Account implements Comparable<Account> {
 
+    protected int accountNo;
+    protected String accountName;
+    protected Client client;
+    protected BigDecimal balance = DEFAULT_BALANCE;
+    protected boolean joint = false;
+    protected Client jointClient = DEFAULT_JOINT_CLIENT;
+    protected LocalDate open = LocalDate.now();
+    protected LocalDate close = open.plusYears(DEFAULT_CLOSE_TERM);
+    protected Status status = Status.ACTIVE;
+    protected Transactions trans;
+
+
+//    protected String accountName = "";
+//    protected BigDecimal balance = DEFAULT_BALANCE;
+//    protected boolean joint = false;
+//    protected Client jointClient = DEFAULT_JOINT_CLIENT;
+//    protected LocalDate open = LocalDate.now();
+//    protected LocalDate close = open.plusYears(DEFAULT_CLOSE_TERM);
+//    protected Status status = Status.ACTIVE;
+
+    /*
     private int accountNo;
     private String accountName;
     private Client client;
@@ -16,18 +37,34 @@ public class Account implements Comparable<Account> {
     private LocalDate close;
     private Status status;                                                                  // M2 HOMEWORK ENUM USE
     private Transactions trans;                                                             // M3 USING STRATEGY
+*/
 
     private static int nextAccountNo = 1;                                                   // M2 HOMEWORK STATIC
     protected final static int DECIMALS = 2;
     protected final static RoundingMode ROUNDING_MODE = RoundingMode.HALF_EVEN;
     private final static BigDecimal DEFAULT_BALANCE = new BigDecimal(0);
-//    private final static boolean DEFAULT_JOINT = false;
     private final static Client DEFAULT_JOINT_CLIENT = null;
-//    private final static LocalDate DEFAULT_OPEN_DATE = LocalDate.now();
     private final static int DEFAULT_CLOSE_TERM = 100;
-    DecimalFormat df = new DecimalFormat("$#,##0.00");
+    protected static DecimalFormat df = new DecimalFormat("$#,##0.00");
 
-    // Constructors
+    // CONSTRUCTORS
+    protected Account(Builder<?, ?> builder) {
+        this.accountNo = builder.account.accountNo;
+        this.accountName = builder.account.accountName;
+        this.client = builder.account.client;
+        this.balance = builder.account.balance;
+        this.joint = builder.account.joint;
+        this.jointClient = builder.account.jointClient;
+        this.open = builder.account.open;
+        this.close = builder.account.close;
+        this.status = builder.account.status;
+    }
+
+    protected Account() {
+
+    }
+
+    /*
     protected Account(Builder builder) {
         this.accountNo = builder.accountNo;
         this.accountName = builder.accountName;
@@ -39,7 +76,87 @@ public class Account implements Comparable<Account> {
         this.close = builder.close;
         this.status = builder.status;
     }
+     */
 
+    protected abstract static class Builder<T extends Account, B extends Builder<T, B>> {
+        protected T account;
+        protected B builder;
+
+        protected int accountNo;
+        protected Client client;
+
+//        protected String accountName = "";
+//        protected BigDecimal balance = DEFAULT_BALANCE;
+//        protected boolean joint = false;
+//        protected Client jointClient = DEFAULT_JOINT_CLIENT;
+//        protected LocalDate open = LocalDate.now();
+//        protected LocalDate close = open.plusYears(DEFAULT_CLOSE_TERM);
+//        protected Status status = Status.ACTIVE;
+
+        public Builder(Client client) {
+            builder = getBuilder();
+            account = createAccount();
+            account.accountNo = nextAccountNo;
+            nextAccountNo++;
+            account.client = client;
+        }
+
+//        public B accountNo() {
+//            account.accountNo = nextAccountNo;
+//            nextAccountNo++;
+//            return builder;
+//        }
+
+//        public B client(Client client) {
+//            account.client = client;
+//            return builder;
+//        }
+
+        public B accountName(String accountName) {
+            account.accountName = accountName;
+            return builder;
+        }
+
+        public B balance(BigDecimal balance) {
+            account.balance = balance;
+            return builder;
+        }
+
+        public B joint(boolean joint) {
+            account.joint = joint;
+            return builder;
+        }
+
+        public B jointClient(Client jointClient) {
+            account.jointClient = jointClient;
+            return builder;
+        }
+
+        public B open(LocalDate open) {
+            account.open = open;
+            return builder;
+        }
+
+        public B close(LocalDate close) {
+            account.close = close;
+            return builder;
+        }
+
+        public B status(Status status) {
+            account.status = status;
+            return builder;
+        }
+
+        public T build() {
+            return createAccount(builder);
+        }
+
+        protected abstract T createAccount(Builder<T, B> builder);
+        protected abstract T createAccount();
+        protected abstract B getBuilder();
+
+    }
+    /*
     public static class Builder<T extends Builder<T>> {
         private int accountNo;
         private Client client;
@@ -97,8 +214,9 @@ public class Account implements Comparable<Account> {
             return new Account(this);
         }
     }
+     */
 
-    // Getters and Setters
+    // GETTERS & SETTERS
     public int getAccountNo() {
         return accountNo;
     }
@@ -192,7 +310,7 @@ public class Account implements Comparable<Account> {
                 "\n\tJoint Account: " + (joint ? "yes" : "no") +
                 "\n\tJoint ID: " + (joint ? jointClient.getClientId() : "N/A") +
                 "\n\tOpen Date: " + open + "\tClose Date: " + (status != Status.INACTIVE ? "N/A" : close) +
-                "\n\tStatus: " + status.getAbbreviation();                      // M2 HOMEWORK ENUM USE
+                "\n\tStatus: " + status.getAbbreviation();                                  // M2 HOMEWORK ENUM USE
     }
 
     @Override
@@ -289,5 +407,5 @@ public class Account implements Comparable<Account> {
         }
     }
 
-    // TO DO: Add helper method to check if close date is expired and should be extended.
+    // Consider adding helper method to check if close date is expired and should be extended.
 }

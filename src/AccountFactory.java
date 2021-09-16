@@ -7,9 +7,9 @@ public class AccountFactory {
         Account acc = null;
 
         switch (type) {
-            case CHECKING -> acc = new Checking(new Checking.Builder(client));
-            case SAVINGS -> acc = new Savings(new Savings.Builder(client));
-            case CREDIT -> acc = new Credit(new Credit.Builder(client));
+            case CHECKING -> acc = new Checking.Builder(client).accountName().build();
+            case SAVINGS -> acc = new Savings.Builder(client).accountName().build();
+            case CREDIT -> acc = new Credit.Builder(client).accountName().build();
             case NOT_APPLICABLE -> System.out.println("Not a valid account type.");
             default -> throw new IllegalArgumentException("Unexpected value: " + type);
         }
@@ -22,9 +22,9 @@ public class AccountFactory {
         Account acc = null;
 
         switch (type) {
-            case CHECKING -> acc = new Checking(new Checking.Builder(client).balance(balance));
-            case SAVINGS -> acc = new Savings(new Savings.Builder(client).balance(balance));
-            case CREDIT -> acc = new Credit(new Credit.Builder(client).balance(balance));
+            case CHECKING -> acc = new Checking.Builder(client).accountName().balance(balance).build();
+            case SAVINGS -> acc = new Savings.Builder(client).accountName().balance(balance).build();
+            case CREDIT -> acc = new Credit.Builder(client).accountName().balance(balance).build();
             case NOT_APPLICABLE -> System.out.println("Not a valid account type.");
             default -> throw new IllegalArgumentException("Unexpected value: " + type);
         }

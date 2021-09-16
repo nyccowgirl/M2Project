@@ -19,7 +19,7 @@ public class Bank implements Comparable<Bank> {
         this(bankName, DEFAULT_BANK_ADDRESS);
     }
 
-    // GETTERS/SETTERS
+    // GETTERS & SETTERS
     public int getBankId() {
         return this.bankId;
     }
@@ -44,7 +44,6 @@ public class Bank implements Comparable<Bank> {
         this.bankAddress = bankAddress;
     }
 
-
     // OVERRIDE METHODS
     @Override
     public String toString() {
@@ -67,7 +66,7 @@ public class Bank implements Comparable<Bank> {
         return Integer.valueOf(bankId).compareTo(Integer.valueOf(obj.getBankId()));
     }
 
-    // CLASS-SPECIFIC METHODS
+    // CLASS-SPECIFIC METHOD
     public static int getTotalBanks() {                                                    // M2 HOMEWORK STATIC
         return nextBankID - 1;
     }                               // M2 HOMEWORK STATIC
