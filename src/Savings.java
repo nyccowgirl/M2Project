@@ -8,11 +8,10 @@ public class Savings extends Account {
     // CONSTRUCTORS
     protected Savings(Account.Builder<?, ?> accountBuilder, Builder savingsBuilder) {
         super(accountBuilder);
+        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(super.getBalance());
     }
 
-    private Savings() {
-
-    }
+    private Savings() {}
 
     public static class Builder extends Account.Builder<Savings, Savings.Builder> {
 
@@ -39,22 +38,6 @@ public class Savings extends Account {
             return this;
         }
     }
-    /*
-    public static class Builder extends Account.Builder<Builder> {
-
-        private String accountName = "General Savings Account";
-
-        public Builder(Client client) {
-            super(client);
-//            accountName(accountName);
-        }
-
-        public Savings build() {
-            return new Savings(this);
-        }
-    }
-
-     */
 
     // GETTERS & SETTERS
     @Override
@@ -89,9 +72,35 @@ public class Savings extends Account {
         }
     }
 
+    @Override
+    public void addInterest(BigDecimal interest) {
+        BigDecimal current = balance;
+        super.addInterest(interest);                                                            // M3 USING STRATEGY
+        updateTotalSavingsBalances(current);
+    }
+
+    @Override
+    public void addBonus(BigDecimal bonus) {
+        BigDecimal current = balance;
+        super.addBonus(bonus);                                                                  // M3 USING STRATEGY
+        updateTotalSavingsBalances(current);
+    }
+
+    @Override
+    public void subtractFees(BigDecimal fees) {
+        BigDecimal current = balance;
+        super.subtractFees(fees);                                                               // M3 USING STRATEGY
+        updateTotalSavingsBalances(current);
+    }
+
     // CLASS-SPECIFIC METHOD
     public static BigDecimal getTotalSavingsBalance() {                                         // M2 HOMEWORK STATIC
         return Savings.totalSavingsBalances;
+    }
+
+    // HELPER METHOD
+    private void updateTotalSavingsBalances(BigDecimal current) {
+        Savings.totalSavingsBalances = Savings.totalSavingsBalances.add(balance.subtract(current));
     }
 
 }

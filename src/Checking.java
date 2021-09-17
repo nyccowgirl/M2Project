@@ -2,6 +2,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Checking extends Account {
+
     private boolean overdraftProtection = false;        // Can also add overdraft limit for more complexity (or pull from Credit class)
 
     private static BigDecimal totalCheckingBalances = new BigDecimal(0);                // M2 HOMEWORK STATIC
@@ -10,22 +11,13 @@ public class Checking extends Account {
     private Checking(Account.Builder<?, ?> accountBuilder, Builder checkingBuilder) {
         super(accountBuilder);
         this.overdraftProtection = checkingBuilder.account.overdraftProtection;
+        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(super.getBalance());
     }
 
-    private Checking() {
+    private Checking() {}
 
-    }
-    /*
-    protected Checking(Builder builder) {
-        super(builder);
-        this.overdraftProtection = builder.overdraftProtection;
-    }
-
-     */
-
+    // BUILDER
     public static class Builder extends Account.Builder<Checking, Checking.Builder> {
-
-//        private boolean overdraftProtection;
 
         private String DEFAULT_CHECKING_ACCOUNT_NAME = "General Checking Account";
 
@@ -56,29 +48,6 @@ public class Checking extends Account {
         }
     }
 
-    /*
-    public static class Builder extends Account.Builder<Builder> {
-
-        private String accountName = "General Checking Account";
-        private boolean overdraftProtection = false;
-
-        public Builder(Client client) {
-            super(client);
-//            accountName(accountName);
-        }
-
-        public Builder overdraftProtection(boolean overdraftProtection) {
-            this.overdraftProtection = overdraftProtection;
-            return this;
-        }
-
-        public Checking build() {
-            return new Checking(this);
-        }
-    }
-
-     */
-
     // GETTERS & SETTERS
     @Override
     public void setBalance(BigDecimal balance) {                                                // M2 HOMEWORK STATIC
@@ -108,7 +77,7 @@ public class Checking extends Account {
     // OVERRIDE METHODS
     @Override
     public String toString() {
-        return super.toString() + "\n\tOverdraft Protection: " + (overdraftProtection ? "yes" : "no");
+        return super.toString() + "\n\tOverdraft Protection: " + (overdraftProtection ? "Yes" : "No");
     }
 
     @Override
@@ -121,7 +90,6 @@ public class Checking extends Account {
         }
     }
 
-    // CLASS-SPECIFIC METHODS
     @Override
     public void deposit(BigDecimal amount) {                                                    // M2 HOMEWORK STATIC
         super.deposit(amount);
@@ -142,7 +110,35 @@ public class Checking extends Account {
         }
     }
 
+    // CLASS-SPECIFIC METHOD
     public static BigDecimal getTotalCheckingBalances() {                                       // M2 HOMEWORK STATIC
         return Checking.totalCheckingBalances;
+    }
+
+    // STRATEGY METHODS
+    @Override
+    public void addInterest(BigDecimal interest) {
+        BigDecimal current = super.getBalance();
+        super.addInterest(interest);                                                            // M3 USING STRATEGY
+        updateTotalCheckingBalances(current);
+    }
+
+    @Override
+    public void addBonus(BigDecimal bonus) {
+        BigDecimal current = super.getBalance();
+        super.addBonus(bonus);                                                                  // M3 USING STRATEGY
+        updateTotalCheckingBalances(current);
+    }
+
+    @Override
+    public void subtractFees(BigDecimal fees) {
+        BigDecimal current = super.getBalance();
+        super.subtractFees(fees);                                                               // M3 USING STRATEGY
+        updateTotalCheckingBalances(current);
+    }
+
+    // HELPER METHOD
+    private void updateTotalCheckingBalances(BigDecimal current) {
+        Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(super.getBalance().subtract(current));
     }
 }

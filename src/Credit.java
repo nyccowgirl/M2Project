@@ -15,26 +15,12 @@ public class Credit extends Account {
         super(accountBuilder);
         this.maturityDate = creditBuilder.account.maturityDate;
         this.creditLine = creditBuilder.account.creditLine;
-    }
-
-    private Credit() {
-
-    }
-
-    /*
-    protected Credit(Builder builder) {
-        super(builder);
-        this.maturityDate = builder.maturityDate;
-        this.creditLine = builder.creditLine;
         addTotalCredit();
     }
 
-     */
+    private Credit() {}
 
     public static class Builder extends Account.Builder<Credit, Credit.Builder> {
-
-//        private LocalDate maturityDate = super.account.getOpen().plusYears(DEFAULT_MATURITY_TERM);
-//        private BigDecimal creditLine = new BigDecimal(5000);
 
         private String DEFAULT_CREDIT_ACCOUNT_NAME = "General Credit Account";
 
@@ -69,37 +55,6 @@ public class Credit extends Account {
             return this;
         }
     }
-    /*
-    public static class Builder extends Account.Builder<Builder> {
-
-        private String accountName = "General Credit Line";
-        private LocalDate maturityDate = super.build().getOpen().plusYears(DEFAULT_MATURITY_TERM);
-        private BigDecimal creditLine = new BigDecimal(5000);
-
-        public Builder(Client client) {
-            super(client);
-//            accountName(accountName);
-        }
-
-        public Builder maturityDate(LocalDate maturityDate) {
-            if (maturityDate.compareTo(super.build().getOpen()) >= 0) {
-                this.maturityDate = maturityDate;
-            }
-            return this;
-        }
-
-        public Builder creditLine(BigDecimal creditLine) {
-            this.creditLine = creditLine;
-            return this;
-        }
-
-        // IS THIS NEEDED IF EVERYTHING IS CASTED?
-        public Credit build() {
-            return new Credit(this);
-        }
-    }
-
-     */
 
     // GETTERS & SETTERS
     @Override
@@ -182,21 +137,47 @@ public class Credit extends Account {
         }
     }
 
+    @Override
+    public void addInterest(BigDecimal interest) {
+        BigDecimal current = balance;
+        super.addInterest(interest);                                                            // M3 USING STRATEGY
+        updateTotalCreditBalances(current);
+    }
+
+    @Override
+    public void addBonus(BigDecimal bonus) {
+        BigDecimal current = balance;
+        super.addBonus(bonus);                                                                  // M3 USING STRATEGY
+        updateTotalCreditBalances(current);
+    }
+
+    @Override
+    public void subtractFees(BigDecimal fees) {
+        BigDecimal current = balance;
+        super.subtractFees(fees);                                                               // M3 USING STRATEGY
+        updateTotalCreditBalances(current);
+    }
+
+    // CLASS-SPECIFIC METHODS
     public static BigDecimal getTotalCreditLines() {                                // M2 HOMEWORK STATIC
         return Credit.totalCreditLines;
-    }
+    }           // M2 HOMEWORK STATIC
 
     public static BigDecimal getTotalCreditUtilization() {                          // M2 HOMEWORK STATIC
         return Credit.totalCreditUtilization;
-    }
+    } // M2 HOMEWORK STATIC
 
-    public static BigDecimal totalCreditAvailable() {                                       // M2 HOMEWORK STATIC
+    public static BigDecimal totalCreditAvailable() {                                           // M2 HOMEWORK STATIC
         return Credit.totalCreditLines.subtract(Credit.totalCreditUtilization);
     }
 
-    // HELPER METHOD
+    // HELPER METHODS
     private void addTotalCredit() {
-        Credit.totalCreditLines = Credit.totalCreditLines.add(creditLine);                  // M2 HOMEWORK STATIC
+        Credit.totalCreditLines = Credit.totalCreditLines.add(creditLine);                          // M2 HOMEWORK STATIC
         Credit.totalCreditUtilization = Credit.totalCreditUtilization.subtract(super.getBalance()); // M2 HOMEWORK STATIC
+    }
+
+    private void updateTotalCreditBalances(BigDecimal current) {
+        Credit.totalCreditUtilization = Credit.totalCreditUtilization.add(balance.subtract(current));
     }
 }

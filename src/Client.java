@@ -1,4 +1,5 @@
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -10,13 +11,11 @@ public class Client implements Comparable<Client> {
     private String clientFirstName;
     private String clientAddress;
     private Bank branch;
-    private List<Account> accountList;                                                  // M3 USING FACTORY
+    private List<Account> accountList;                                                          // M3 USING FACTORY
 
-    private static int nextClientID = 1;                                                // M2 HOMEWORK STATIC
-    private final static Bank DEFAULT_CORP = new Bank(Corporate.CORPORATE.name(), Corporate.CORPORATE.getAddress());  // M2 HOMEWORK ENUM USE
+    private static int nextClientID = 1;                                                        // M2 HOMEWORK STATIC
 
-
-    // CONSTRUCTORS
+    // CONSTRUCTOR
     public Client(Builder builder) {
         this.clientId = builder.clientID;
         this.clientLastName = builder.clientLastName;
@@ -26,17 +25,18 @@ public class Client implements Comparable<Client> {
         this.accountList = builder.accountList;
     }
 
+    // BUILDER
     public static class Builder {
         private int clientID;
         private String clientLastName, clientFirstName;
 
         private String clientAddress = "";
-        private Bank branch = Corporate.getCorp();                                      // M2 HOMEWORK ENUM USE
+        private Bank branch = Corporate.getCorp();                                              // M2 HOMEWORK ENUM USE
         private List<Account> accountList = new ArrayList<>();
 
         public Builder(String clientLastName, String clientFirstName) {
-            this.clientID = nextClientID;                                                 // M2 HOMEWORK STATIC
-            nextClientID++;                                                               // M2 HOMEWORK STATIC
+            this.clientID = nextClientID;                                                       // M2 HOMEWORK STATIC
+            nextClientID++;                                                                     // M2 HOMEWORK STATIC
             this.clientLastName = clientLastName;
             this.clientFirstName = clientFirstName;
         }
@@ -126,14 +126,20 @@ public class Client implements Comparable<Client> {
     }
 
     // CLASS-SPECIFIC METHODS
+    public void printAccounts() {
+        System.out.print("Account numbers for " + clientFirstName + " " + clientLastName + " (Client ID #" + clientId +
+                "): [ ");
+        for (Account account: accountList) {
+            System.out.print(account.getAccountNo() + ", ");
+        }
+        System.out.println("]");
+    }
+
     public static int getTotalClients() {                                                        // M2 HOMEWORK STATIC
         return nextClientID - 1;
     }                           // M2 HOMEWORK STATIC
 
-    public static Bank getDefaultCorp() {                                                       // M2 HOMEWORK STATIC
-        return DEFAULT_CORP;
-    }
-
+    // FACTORY METHODS
     public void addAccount(Account acc) {                                                       // M3 USING FACTORY
         accountList.add(acc);
     }
@@ -143,9 +149,20 @@ public class Client implements Comparable<Client> {
         addAccount(a);
     }
 
-    public void addAccount(AccountType type, Client client, BigDecimal balance) {                                   // M3 USING FACTORY
+    public void addAccount(AccountType type, Client client, BigDecimal balance) {                // M3 USING FACTORY
         Account a = AccountFactory.newAccount(type, client, balance);
         addAccount(a);
+    }
+
+    public void addAccount(AccountType type, Client client, BigDecimal balance, boolean joint,  // M3 USING FACTORY
+                           Client jointClient, boolean overdraft, LocalDate maturityDate,
+                           BigDecimal creditLine) {
+        Account a = AccountFactory.newAccount(type, client, balance, joint, jointClient, overdraft, maturityDate,
+                creditLine);
+        addAccount(a);
+        if (joint) {
+            jointClient.addAccount(a);
+        }
     }
 
     // COMPARATOR CLASSES
@@ -169,4 +186,5 @@ public class Client implements Comparable<Client> {
             return a.clientFirstName.compareToIgnoreCase(b.clientFirstName);
         }
     }
+
 }

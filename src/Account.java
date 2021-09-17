@@ -12,32 +12,10 @@ public class Account implements Comparable<Account> {
     protected BigDecimal balance = DEFAULT_BALANCE;
     protected boolean joint = false;
     protected Client jointClient = DEFAULT_JOINT_CLIENT;
-    protected LocalDate open = LocalDate.now();
+    protected LocalDate open = LocalDate.now();                 // Represents date (year, month, day (yyyy-MM-dd))
     protected LocalDate close = open.plusYears(DEFAULT_CLOSE_TERM);
-    protected Status status = Status.ACTIVE;
-    protected Transactions trans;
-
-
-//    protected String accountName = "";
-//    protected BigDecimal balance = DEFAULT_BALANCE;
-//    protected boolean joint = false;
-//    protected Client jointClient = DEFAULT_JOINT_CLIENT;
-//    protected LocalDate open = LocalDate.now();
-//    protected LocalDate close = open.plusYears(DEFAULT_CLOSE_TERM);
-//    protected Status status = Status.ACTIVE;
-
-    /*
-    private int accountNo;
-    private String accountName;
-    private Client client;
-    private BigDecimal balance;
-    private boolean joint;              // Maybe only add in personal account if we separate client types further
-    private Client jointClient;         // Default to null if joint is false
-    private LocalDate open;             // Represents date (year, month, day (yyyy-MM-dd))
-    private LocalDate close;
-    private Status status;                                                                  // M2 HOMEWORK ENUM USE
+    protected Status status = Status.ACTIVE;                                                // M2 HOMEWORK ENUM USE
     private Transactions trans;                                                             // M3 USING STRATEGY
-*/
 
     private static int nextAccountNo = 1;                                                   // M2 HOMEWORK STATIC
     protected final static int DECIMALS = 2;
@@ -60,57 +38,20 @@ public class Account implements Comparable<Account> {
         this.status = builder.account.status;
     }
 
-    protected Account() {
+    protected Account() {}
 
-    }
-
-    /*
-    protected Account(Builder builder) {
-        this.accountNo = builder.accountNo;
-        this.accountName = builder.accountName;
-        this.client = builder.client;
-        this.balance = builder.balance;
-        this.joint = builder.joint;
-        this.jointClient = builder.jointClient;
-        this.open = builder.open;
-        this.close = builder.close;
-        this.status = builder.status;
-    }
-     */
-
+    // BUILDER
     protected abstract static class Builder<T extends Account, B extends Builder<T, B>> {
         protected T account;
         protected B builder;
 
-        protected int accountNo;
-        protected Client client;
-
-//        protected String accountName = "";
-//        protected BigDecimal balance = DEFAULT_BALANCE;
-//        protected boolean joint = false;
-//        protected Client jointClient = DEFAULT_JOINT_CLIENT;
-//        protected LocalDate open = LocalDate.now();
-//        protected LocalDate close = open.plusYears(DEFAULT_CLOSE_TERM);
-//        protected Status status = Status.ACTIVE;
-
         public Builder(Client client) {
             builder = getBuilder();
             account = createAccount();
-            account.accountNo = nextAccountNo;
-            nextAccountNo++;
+            account.accountNo = nextAccountNo;                                              // M2 HOMEWORK STATIC
+            nextAccountNo++;                                                                // M2 HOMEWORK STATIC
             account.client = client;
         }
-
-//        public B accountNo() {
-//            account.accountNo = nextAccountNo;
-//            nextAccountNo++;
-//            return builder;
-//        }
-
-//        public B client(Client client) {
-//            account.client = client;
-//            return builder;
-//        }
 
         public B accountName(String accountName) {
             account.accountName = accountName;
@@ -154,67 +95,7 @@ public class Account implements Comparable<Account> {
         protected abstract T createAccount(Builder<T, B> builder);
         protected abstract T createAccount();
         protected abstract B getBuilder();
-
     }
-    /*
-    public static class Builder<T extends Builder<T>> {
-        private int accountNo;
-        private Client client;
-
-        private String accountName = "";
-        private BigDecimal balance = DEFAULT_BALANCE;
-        private boolean joint = false;
-        private Client jointClient = DEFAULT_JOINT_CLIENT;
-        private LocalDate open = LocalDate.now();
-        private LocalDate close = open.plusYears(DEFAULT_CLOSE_TERM);
-        private Status status = Status.ACTIVE;                                              // M2 HOMEWORK ENUM USE
-
-        public Builder(Client client) {
-            this.accountNo = nextAccountNo;                                                 // M2 HOMEWORK STATIC
-            nextAccountNo++;                                                                // M2 HOMEWORK STATIC
-            this.client = client;
-        }
-
-        public Builder accountName(String accountName) {
-            this.accountName = accountName;
-            return this;
-        }
-
-        public T balance(BigDecimal balance) {
-            this.balance = balance;
-            return (T) this;
-        }
-
-        public T joint(boolean joint) {
-            this.joint = joint;
-            return (T) this;
-        }
-
-        public T jointClient(Client jointClient) {
-            this.jointClient = jointClient;
-            return (T) this;
-        }
-
-        public T open(LocalDate open) {
-            this.open = open;
-            return (T) this;
-        }
-
-        public T close(LocalDate close) {
-            this.close = close;
-            return (T) this;
-        }
-
-        public T status(Status status) {
-            this.status = status;
-            return (T) this;
-        }
-
-        public Account build() {
-            return new Account(this);
-        }
-    }
-     */
 
     // GETTERS & SETTERS
     public int getAccountNo() {
@@ -229,12 +110,12 @@ public class Account implements Comparable<Account> {
         this.accountName = accountName;
     }
 
-    public Client getClientID() {
+    public Client getClient() {
         return client;
     }
 
     // Should be rare but in cases of transfer of accounts to other parties for death or divorce, etc.
-    public void setClientID(Client client) {
+    public void setClient(Client client) {
         this.client = client;
     }
 
@@ -266,7 +147,7 @@ public class Account implements Comparable<Account> {
         return jointClient;
     }
 
-    public void setJointID(Client jointClient) {
+    public void setJointClient(Client jointClient) {
         if (joint) {
             this.jointClient = jointClient;
         } else {
@@ -293,12 +174,16 @@ public class Account implements Comparable<Account> {
         if ((open.compareTo(close) <= 0) && (close.compareTo(LocalDate.now()) <= 0)) {
             this.close = close;
             balance = DEFAULT_BALANCE;
-            this.status = Status.INACTIVE;                                                  // M2 HOMEWORK ENUM USE
+            this.status = Status.CLOSED;                                                  // M2 HOMEWORK ENUM USE
             return true;
         } else {
             return false;
         }
     }
+
+    public Status getStatus() {                                                 // M2 HOMEWORK ENUM USE
+        return status;
+    }                                           // M2 HOMEWORK ENUM USE
 
     // OVERRIDE METHODS
     @Override
@@ -307,9 +192,9 @@ public class Account implements Comparable<Account> {
                 "\n\tAccount Name: " + accountName +
                 "\n\tClient ID: " + client.getClientId() +
                 "\n\tAccount Balance: " + df.format(balance.setScale(DECIMALS, ROUNDING_MODE)) +
-                "\n\tJoint Account: " + (joint ? "yes" : "no") +
+                "\n\tJoint Account: " + (joint ? "Yes" : "No") +
                 "\n\tJoint ID: " + (joint ? jointClient.getClientId() : "N/A") +
-                "\n\tOpen Date: " + open + "\tClose Date: " + (status != Status.INACTIVE ? "N/A" : close) +
+                "\n\tOpen Date: " + open + "\tClose Date: " + (status != Status.CLOSED ? "N/A" : close) +
                 "\n\tStatus: " + status.getAbbreviation();                                  // M2 HOMEWORK ENUM USE
     }
 
@@ -342,7 +227,7 @@ public class Account implements Comparable<Account> {
     public void deposit(BigDecimal amount) {
         if (amount.compareTo(BigDecimal.valueOf(0)) < 0) {
             System.out.println("Deposit cannot be negative.");
-        } else if (status == Status.SUSPENDED || status == Status.INACTIVE) {   // M2 HOMEWORK ENUM USE
+        } else if (status == Status.SUSPENDED || status == Status.CLOSED) {                   // M2 HOMEWORK ENUM USE
             System.out.println("Account is closed or suspended. Deposit cannot be accepted.");
         } else {
             this.balance = balance.add(amount);
@@ -358,25 +243,31 @@ public class Account implements Comparable<Account> {
     }
 
     public void printBalance() {
-        System.out.println("Current balance: " + balance);
+        System.out.println("Current balance: " + df.format(balance.setScale(DECIMALS, ROUNDING_MODE)));
     }
 
-    public void suspend() {
-    status = Status.SUSPENDED;                                                             // M2 HOMEWORK ENUM USE
-    }
+    public void suspend() {status = Status.SUSPENDED;}                                      // M2 HOMEWORK ENUM USE
 
-    public void reactivate() {                                              // M2 HOMEWORK ENUM USE
+    public void reactivate() {                                                              // M2 HOMEWORK ENUM USE
+        if (status == Status.CLOSED) {
+            close = open.plusYears(DEFAULT_CLOSE_TERM);
+        }
+
         status = Status.ACTIVE;
-    }                                   // M2 HOMEWORK ENUM USE
+    }
 
-    public Status getStatus() {                                                 // M2 HOMEWORK ENUM USE
-        return status;
-    }                                           // M2 HOMEWORK ENUM USE
+    public void close() {                                                                   // M2 HOMEWORK ENUM USE
+        if (status != Status.CLOSED) {
+            status = Status.CLOSED;
+            close = LocalDate.now();
+        }
+    }
 
     public static int getTotalAccounts() {                                                  // M2 HOMEWORK STATIC
         return nextAccountNo - 1;
     }
 
+    // STRATEGY METHODS
     public void addInterest(BigDecimal interest) {                                          // M3 USING STRATEGY
         trans = new Interest();
         if (balance.compareTo(BigDecimal.valueOf(0)) > 0) {

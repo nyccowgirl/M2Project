@@ -1,5 +1,5 @@
 public enum Status {                                                // M2 HOMEWORK ENUM
-    ACTIVE("A"), INACTIVE("C"), SUSPENDED("S");
+    ACTIVE("A"), CLOSED("C"), SUSPENDED("S");
 
     String abbreviation;
 
