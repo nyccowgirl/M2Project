@@ -22,15 +22,13 @@ public class Credit extends Account {
 
     public static class Builder extends Account.Builder<Credit, Credit.Builder> {
 
-        private String DEFAULT_CREDIT_ACCOUNT_NAME = "General Credit Account";
+        private final String DEFAULT_CREDIT_ACCOUNT_NAME = "General Credit Account";
 
         public Builder(Client client) {
             super(client);
-        }
-
-        public Builder accountName() {
-            super.accountName(DEFAULT_CREDIT_ACCOUNT_NAME);
-            return builder;
+            if (account.accountName == null) {
+                accountName(DEFAULT_CREDIT_ACCOUNT_NAME);
+            }
         }
 
         public Builder maturityDate(LocalDate maturityDate) {
@@ -159,15 +157,13 @@ public class Credit extends Account {
     }
 
     // CLASS-SPECIFIC METHODS
-    public static BigDecimal getTotalCreditLines() {                                // M2 HOMEWORK STATIC
-        return Credit.totalCreditLines;
-    }           // M2 HOMEWORK STATIC
+    public static BigDecimal getTotalCreditLines() {return Credit.totalCreditLines;}             // M2 HOMEWORK STATIC
 
     public static BigDecimal getTotalCreditUtilization() {                          // M2 HOMEWORK STATIC
         return Credit.totalCreditUtilization;
     } // M2 HOMEWORK STATIC
 
-    public static BigDecimal totalCreditAvailable() {                                           // M2 HOMEWORK STATIC
+    public static BigDecimal totalCreditAvailable() {                                               // M2 HOMEWORK STATIC
         return Credit.totalCreditLines.subtract(Credit.totalCreditUtilization);
     }
 
