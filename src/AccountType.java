@@ -11,4 +11,5 @@ public enum AccountType {
     public String getAbbreviation() {
         return abbreviation;
     }
+
 }

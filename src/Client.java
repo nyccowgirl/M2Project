@@ -35,8 +35,8 @@ public class Client implements Comparable<Client> {
         private List<Account> accountList = new ArrayList<>();
 
         public Builder(String clientLastName, String clientFirstName) {
-            this.clientID = nextClientID;                                                       // M2 HOMEWORK STATIC
-            nextClientID++;                                                                     // M2 HOMEWORK STATIC
+            this.clientID = nextClientID;                                                           // M2 HOMEWORK STATIC
+            nextClientID++;                                                                         // M2 HOMEWORK STATIC
             this.clientLastName = clientLastName;
             this.clientFirstName = clientFirstName;
         }
@@ -137,29 +137,30 @@ public class Client implements Comparable<Client> {
 
     public static int getTotalClients() {                                                        // M2 HOMEWORK STATIC
         return nextClientID - 1;
-    }                           // M2 HOMEWORK STATIC
+}                               // M2 HOMEWORK STATIC
 
     // FACTORY METHODS
-    public void addAccount(Account acc) {                                                       // M3 USING FACTORY
+    public void addAccount(Account acc) {                                                           // M3 USING FACTORY
         accountList.add(acc);
     }
 
-    public void addAccount(AccountType type, Client client) {                                   // M3 USING FACTORY
+    public void addAccount(AccountType type, Client client) {                                       // M3 USING FACTORY
         Account a = AccountFactory.newAccount(type, client);
         addAccount(a);
     }
 
-    public void addAccount(AccountType type, Client client, BigDecimal balance) {                // M3 USING FACTORY
+    public void addAccount(AccountType type, Client client, BigDecimal balance) {                   // M3 USING FACTORY
         Account a = AccountFactory.newAccount(type, client, balance);
         addAccount(a);
     }
 
-    public void addAccount(AccountType type, Client client, BigDecimal balance, boolean joint,  // M3 USING FACTORY
-                           Client jointClient, boolean overdraft, LocalDate maturityDate,
+    public void addAccount(AccountType type, String accountName, Client client, BigDecimal balance, // M3 USING FACTORY
+                           boolean joint, Client jointClient, boolean overdraft, LocalDate maturityDate,
                            BigDecimal creditLine) {
-        Account a = AccountFactory.newAccount(type, client, balance, joint, jointClient, overdraft, maturityDate,
-                creditLine);
+        Account a = AccountFactory.newAccount(type, accountName, client, balance, joint, jointClient, overdraft,
+                maturityDate, creditLine);
         addAccount(a);
+
         if (joint) {
             jointClient.addAccount(a);
         }

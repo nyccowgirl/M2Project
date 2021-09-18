@@ -70,4 +70,5 @@ public class Bank implements Comparable<Bank> {
     public static int getTotalBanks() {                                                    // M2 HOMEWORK STATIC
         return nextBankID - 1;
     }                               // M2 HOMEWORK STATIC
+
 }

@@ -19,15 +19,13 @@ public class Checking extends Account {
     // BUILDER
     public static class Builder extends Account.Builder<Checking, Checking.Builder> {
 
-        private String DEFAULT_CHECKING_ACCOUNT_NAME = "General Checking Account";
+        private final String DEFAULT_CHECKING_ACCOUNT_NAME = "General Checking Account";
 
         public Builder(Client client) {
             super(client);
-        }
-
-        public Builder accountName() {
-            super.accountName(DEFAULT_CHECKING_ACCOUNT_NAME);
-            return builder;
+            if (account.accountName == null) {
+                accountName(DEFAULT_CHECKING_ACCOUNT_NAME);
+            }
         }
 
         public Builder overdraftProtection(boolean overdraftProtection) {
@@ -141,4 +139,5 @@ public class Checking extends Account {
     private void updateTotalCheckingBalances(BigDecimal current) {
         Checking.totalCheckingBalances = Checking.totalCheckingBalances.add(super.getBalance().subtract(current));
     }
+
 }

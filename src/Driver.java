@@ -104,35 +104,32 @@ public class Driver {
         List<Account> accountList = new ArrayList<>();
 
         Checking checkAcct1 = new Checking.Builder(client1)                                         // M3 USING BUILDER
-                .accountName()
                 .balance(valueOf(5500.5))
                 .build();
         client1.addAccount(checkAcct1);                                                             // M3 USING FACTORY
         Savings savingsAcct1 = new Savings.Builder(client2)                                         // M3 USING BUILDER
-                .accountName()
                 .balance(valueOf(10000))
                 .open(LocalDate.now())
                 .build();
         client2.addAccount(savingsAcct1);                                                           // M3 USING FACTORY
         Credit creditAcct1 = new Credit.Builder(client3)                                            // M3 USING BUILDER
-                .accountName()
+                .accountName("Revolving Credit Line")
                 .balance(valueOf(-900))
                 .maturityDate(LocalDate.of(2025, 12, 31))
                 .build();
         client3.addAccount(creditAcct1);                                                            // M3 USING FACTORY
         Credit creditAcct2 = new Credit.Builder(client4)                                            // M3 USING BUILDER
-                .accountName()
-                .balance(valueOf(-2500))
-                .creditLine(valueOf(5000))
+                .accountName("30-Year Home Mortgage")
+                .balance(valueOf(-250000))
+                .creditLine(valueOf(500000))
                 .build();
         client4.addAccount(creditAcct2);                                                            // M3 USING FACTORY
         Savings savingsAcct2 = new Savings.Builder(client4)                                         // M3 USING BUILDER
-                .accountName()
+                .accountName("5-Year CD")
                 .balance(valueOf(5000))
                 .build();
         client4.addAccount(savingsAcct2);                                                           // M3 USING FACTORY
         Checking checkingAcct2 = new Checking.Builder(client3)                                      // M3 USING BUILDER
-                .accountName()
                 .joint(true)
                 .jointClient(client5)
                 .open(LocalDate.of(1998, 12, 24))
@@ -240,8 +237,8 @@ public class Driver {
         System.out.println("Total Credit Balances: " + df.format(Credit.getTotalCreditUtilization().negate())); // M2 HOMEWORK STATIC
         System.out.println("Total Available Credit: " + df.format(Credit.totalCreditAvailable()));  // M2 HOMEWORK STATIC
 
-        // Factory Tests - User Input:
-
+        // Factory Tests - User Input (Comment in block comment to comment out this section):       // M3 USING FACTORY
+//        /*
         Scanner scan = new Scanner(System.in);
 
         boolean add = false;
@@ -270,18 +267,42 @@ public class Driver {
             boolean overdraft = false;
             int term = 0;
             BigDecimal creditLine = new BigDecimal(0);
+            String choice6, accountName = null;
 
             switch (choice2) {
                 case 1: type = AccountType.CHECKING;
+                        System.out.print("Is this a general checking account? (Y/N) ");
+                        choice6 = scan.nextLine();
+
+                        if (choice6.equalsIgnoreCase("N")) {
+                            System.out.print("Enter the name of the checking account: ");
+                            accountName = scan.nextLine();
+                        }
+
                         System.out.print("Does this account have overdraft protection? (Y/N) ");
                         String choice5 = scan.nextLine();
+
                         if (choice5.equalsIgnoreCase("Y")) {
                             overdraft = true;
                         }
                         break;
                 case 2: type = AccountType.SAVINGS;
+                        System.out.print("Is this a general savings account? (Y/N) ");
+                        choice6 = scan.nextLine();
+
+                        if (choice6.equalsIgnoreCase("N")) {
+                            System.out.print("Enter the name of the savings account: ");
+                            accountName = scan.nextLine();
+                        }
                         break;
                 case 3: type = AccountType.CREDIT;
+                        System.out.print("Is this a general credit account? (Y/N) ");
+                        choice6 = scan.nextLine();
+                        if (choice6.equalsIgnoreCase("N")) {
+                            System.out.print("Enter the name of the credit account: ");
+                            accountName = scan.nextLine();
+                        }
+
                         System.out.print("Enter the term (in years): ");
                         term = Integer.parseInt(scan.nextLine());
                         System.out.print("Enter the credit line: ");
@@ -331,8 +352,8 @@ public class Driver {
             BigDecimal balance = scan.nextBigDecimal();
             scan.nextLine();
 
-            client.addAccount(type, client, balance, joint, jointClient, overdraft, LocalDate.now().plusYears(term),
-                    creditLine);                                                                // M3 USING FACTORY
+            client.addAccount(type, accountName, client, balance, joint, jointClient, overdraft,
+                    LocalDate.now().plusYears(term), creditLine);                                   // M3 USING FACTORY
 
             System.out.print("Would you like to add another account? (Y/N) ");
             String again = scan.nextLine();
@@ -343,6 +364,7 @@ public class Driver {
             }
 
         } while (add);
+//        */
 
         // Static Variables Tests (POST USER INPUT FACTORY TESTS)
         System.out.println("Total Number of Banks: " + Bank.getTotalBanks());                       // M2 HOMEWORK STATIC
@@ -353,4 +375,5 @@ public class Driver {
         System.out.println("Total Credit Balances: " + df.format(Credit.getTotalCreditUtilization().negate())); // M2 HOMEWORK STATIC
         System.out.println("Total Available Credit: " + df.format(Credit.totalCreditAvailable()));  // M2 HOMEWORK STATIC
     }
+
 }

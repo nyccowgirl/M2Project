@@ -15,15 +15,13 @@ public class Savings extends Account {
 
     public static class Builder extends Account.Builder<Savings, Savings.Builder> {
 
-        private String DEFAULT_SAVINGS_ACCOUNT_NAME = "General Savings Account";
+        private final String DEFAULT_SAVINGS_ACCOUNT_NAME = "General Savings Account";
 
         public Builder(Client client) {
             super(client);
-        }
-
-        public Builder accountName() {
-            super.accountName((DEFAULT_SAVINGS_ACCOUNT_NAME));
-            return builder;
+            if (account.accountName == null) {
+                accountName(DEFAULT_SAVINGS_ACCOUNT_NAME);
+            }
         }
 
         protected Savings createAccount(Account.Builder<Savings, Builder> builder) {

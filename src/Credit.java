@@ -159,21 +159,20 @@ public class Credit extends Account {
     // CLASS-SPECIFIC METHODS
     public static BigDecimal getTotalCreditLines() {return Credit.totalCreditLines;}             // M2 HOMEWORK STATIC
 
-    public static BigDecimal getTotalCreditUtilization() {                          // M2 HOMEWORK STATIC
-        return Credit.totalCreditUtilization;
-    } // M2 HOMEWORK STATIC
+    public static BigDecimal getTotalCreditUtilization() {return Credit.totalCreditUtilization;} // M2 HOMEWORK STATIC
 
-    public static BigDecimal totalCreditAvailable() {                                               // M2 HOMEWORK STATIC
+    public static BigDecimal totalCreditAvailable() {                                           // M2 HOMEWORK STATIC
         return Credit.totalCreditLines.subtract(Credit.totalCreditUtilization);
     }
 
     // HELPER METHODS
-    private void addTotalCredit() {
-        Credit.totalCreditLines = Credit.totalCreditLines.add(creditLine);                          // M2 HOMEWORK STATIC
-        Credit.totalCreditUtilization = Credit.totalCreditUtilization.subtract(super.getBalance()); // M2 HOMEWORK STATIC
+    private void addTotalCredit() {                                                             // M2 HOMEWORK STATIC
+        Credit.totalCreditLines = Credit.totalCreditLines.add(creditLine);
+        Credit.totalCreditUtilization = Credit.totalCreditUtilization.subtract(super.getBalance());
     }
 
-    private void updateTotalCreditBalances(BigDecimal current) {
+private void updateTotalCreditBalances(BigDecimal current) {                                    // M2 HOMEWORK STATIC
         Credit.totalCreditUtilization = Credit.totalCreditUtilization.add(balance.subtract(current));
     }
+
 }
